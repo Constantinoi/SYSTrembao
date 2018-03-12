@@ -1,95 +1,114 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.base')
 
-        <title>Laravel</title>
+@section('conteudo')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Pedido <small>Monte o seu pedido!</small></h3>
+              </div>
 
-            .full-height {
-                height: 100vh;
-            }
+          </div>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+            <div class="clearfix"></div>
 
-            .position-ref {
-                position: relative;
-            }
+    <div class="row">
+              <div class="col-md-10  col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Produtos <small>lista de produtos</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Bebida</a>
+                          </li>
+                          <li><a href="#">Refeição</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          
+                          <th>Nome</th>
+                          <th>Descrição</th>
+                          <th>Valor Unitário</th>
+                          <th>Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                            <td>Coca-Cola</td>
+                            <td>2 Litros</td>
+                            <td>2,50</td>
+                            <td> <button class="btn btn-primary fa fa-plus-square-o" > Adicionar </button>  </td>
 
-            .content {
-                text-align: center;
-            }
+                        </tr>
+                        
+                        
+                      </tbody>
+                    </table>
 
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+                  </div>
                 </div>
-            @endif
+              </div>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+              <div class="col-md-10 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Pedido <small>Detalhes do Pedido</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Quantidade</th>
+                          <th>Produto</th>
+                          <th>Descrição</th>
+                          <th>Valor</th>
+                          <th>Ações</th>
+                        </tr>
+                    </thead>
+                <tbody>  
+                      <td>2</td>
+                      <td>Coca-Cola</td>
+                      <td>2 litros</td>
+                      <td>5,00 </td>
+                      <td><button class="btn btn-danger">Remover</button></td>
+                </tbody>
+                    </table>
+
+                  </div>
                 </div>
-            </div>
-        </div>
-    </body>
-</html>
+              </div>
+
+@endsection
