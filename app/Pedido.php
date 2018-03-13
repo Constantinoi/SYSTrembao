@@ -15,6 +15,18 @@ class Pedido extends Model
         return $this->belongsToMany(Produto::class);
     }
 
+    public function pedido_produto(){
+        return $this->hasMany(DetalheProduto::class);
+    }
+
+   
+
+    public static function consultaId($where)
+    {
+        $pedido = self::where($where)->first(['id']);
+        return !empty($pedido->id) ? $pedido->id : null;
+    }
+
 
     public function adicionaProduto($produto)
     {

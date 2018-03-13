@@ -22,15 +22,20 @@ class CreateProdutosTable extends Migration
         });
 
         Schema::create('pedidos_produtos', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('pedido_id')->unsigned(); // unsigned: somente inteiros positivos
+            $table->integer('produto_id')->unsigned();  // unsigned: somente inteiros positivos
+           // unsigned: somente inteiros positivos
+            $table->timestamps();
+            
             $table->integer('quantidade');
-            $table->float('valor_total');
-            $table->integer('pedido_id')->unsigned();
-            $table->integer('produto_id')->unsigned();
+            $table->float('valor');
+           
 
             $table->foreign('pedido_id')->references('id')->on('pedidos')->onDelete('cascade');
             $table->foreign('produto_id')->references('id')->on('produtos')->onDelete('cascade');
 
-            $table->primary(['pedido_id','produto_id']);
+            
         });
     }
 
@@ -41,6 +46,7 @@ class CreateProdutosTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('pedidos_produtos');
         Schema::dropIfExists('produtos');
     }
 }

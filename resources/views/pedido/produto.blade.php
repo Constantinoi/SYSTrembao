@@ -2,8 +2,7 @@
 
 @section('conteudo')
 
-
-          <div class="">
+<div class="">
             <div class="page-title">
               <div class="title_left">
                 <h3>Pedido <small>Monte o pedido!</small></h3>
@@ -46,19 +45,23 @@
                           <th>Valor Unitário</th>
                           <td>Quantidade</td>
                           <th>Ações</th>
+
                         </tr>
                       </thead>
                       <tbody>
+                        @foreach($produtos as $produto)
+                        <form class="form-horizontal" method="post"  action="{{route('pedidos.produto.store',$pedido->id)}}" >
+                        {{ csrf_field() }}
                         <tr>
-                            <td>Coca-Cola</td>
-                            <td>2 Litros</td>
-                            <td>2,50</td>
-                            <td>  <input type="number" min="1" max="10" > </input> </td>
-                            <td>   <button class="btn btn-primary fa fa-plus-square-o" > Adicionar </button>  </td>
+                            <td>{{$produto->nome}}</td>
+                            <td>{{$produto->descricao}}</td>
+                            <td>{{$produto->valor}}</td>
+                            <td>  <input name="quantidade" type="number" min="1" max="10" required> </input> </td>
+                            <td>   <button name="produto_id" value="{{$produto->id}}" class="btn btn-primary fa fa-plus-square-o" > Adicionar </button>  </td>
 
                         </tr>
-                        
-                        
+                        </form>
+                       @endforeach                        
                       </tbody>
                     </table>
 
@@ -100,13 +103,21 @@
                           <th>Ações</th>
                         </tr>
                     </thead>
-                <tbody>  
-                      <td>2</td>
-                      <td>Coca-Cola</td>
-                      <td>2 litros</td>
-                      <td>5,00 </td>
-                      <td><button class="btn btn-danger fa fa-minus-square-o"> Remover</button></td>
-                </tbody>
+                <tbody>   
+                  @foreach($detalhes as $detalhe)
+                  <tr>
+                      <td>{{$detalhe->quantidade}}</td>
+                      <td>{{$detalhe->produtos->nome}}</td>
+                      <td>{{$detalhe->produtos->descricao}}</td>  
+                      <td>{{$detalhe->valor}} </td>
+                      <form method="post" action="{{route('pedidos.produto.destroy',[$pedido->id,$detalhe->produtos->id])}}">
+                          {{ method_field('DELETE') }}
+                          {{ csrf_field() }}
+                        <td><button  class="btn btn-danger fa fa-minus-square-o"> Remover</button></td>
+                      </form>
+                    </tr>
+                  @endforeach     
+               </tbody>
                     </table>
 
                   </div>
