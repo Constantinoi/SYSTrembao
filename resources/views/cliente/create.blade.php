@@ -26,7 +26,7 @@
     <div class="x_content">
                     <br />
                     <form action="{{route('cliente.store')}}" method="post" data-parsley-validate class="form-horizontal form-label-left">
-                    {{csrf_field()}}
+                    {{ csrf_field() }}
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome"> Nome <span class="required">*</span>
                         </label>
@@ -60,22 +60,11 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="observacoes" class="control-label col-md-3 col-sm-3 col-xs-12">Observações</label>
+                        <label for="observacao" class="control-label col-md-3 col-sm-3 col-xs-12">Observações</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <textarea  class="form-control col-md-7 col-xs-12" type="text" name="observacoes" row="5" ></textarea>
+                          <textarea  class="form-control col-md-7 col-xs-12" type="text" name="observacao" row="5" ></textarea>
                         </div>
                       </div>
-                      </div>
-                      <div class="ln_solid"></div>                 
-                  </div>
-              </div>
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Endereço</h2>
-                    <div class="clearfix"></div>
-                  </div>
-    <div class="x_content">
-                    <br />
                       <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Cep</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -90,8 +79,7 @@
                         </div>
                       </div>
                       
-                      <div class="row">
-                    
+                                         
                         <div class="col-md-4 col-sm-6 col-xs-6 col-md-offset-2">
                           <div class="form-group">
                             <label for="numero" class="control-label col-md-3 col-sm-3 col-xs-12">Número</label>
@@ -100,6 +88,7 @@
                             </div>
                           </div>
                         </div>
+
                         <div class=" col-sm-4 ">
                           <div class="form-group">
                             <label for="numero" class="control-label col-md-3 col-sm-3 col-xs-12">Bairro</label>
@@ -109,18 +98,22 @@
                           </div>
                         </div>
   
-                      </div>
+                     
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Complemento<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" name="complemento" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
-                      </div>
-                      </div>
-                      <div class="ln_solid"></div>
-                      <div class="form-group">
-                      </div>
+                    </div>
+                      
+                      <div class="ln_solid"></div>                 
+                  </div>
+              </div>
+               
+                 
+                   
+                
                       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <button type="submit" class="btn btn-success">Cadastrar</button>
 						              <button class="btn btn-primary" type="reset">Limpar</button>          

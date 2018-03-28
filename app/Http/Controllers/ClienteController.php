@@ -54,8 +54,8 @@ protected function validarCliente($request){
      */
     public function create()
     {
-        $enderecos = Endereco::all();
-        return view('cliente.create', compact('enderecos'));
+        //$enderecos = Endereco::all();
+        return view('cliente.create');
     }
 
     /**
@@ -66,19 +66,22 @@ protected function validarCliente($request){
      */
     public function store(Request $request)
     {
-    $validator = $this->validarCliente($request);
-    if($validator->fails()){
-        return redirect()->back()->withErrors($validator->errors());
-    }
+
+        // criar classe RequestCliente
+        $validator = $this->validarCliente($request);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator->errors());
+        }
 
         $dados = $request->all();
 
+        //dd($dados);
         $endereco = Endereco::create($dados);
         $dados['endereco_id'] = $endereco->id;
 
         Cliente::create($dados,'endereco_id');
 
-        return redirect()->route('clientes.index');
+        return redirect()->route('cliente.index');
     }
 
     /**

@@ -41,7 +41,7 @@
                             <td>{{$cliente->nome}}</td>
                             <td>{{$cliente->data_nascimento}}</td>
                             <td>{{$cliente->telefone_1}}</td>                                                                 
-                            <td>{{$clienteo->telefone_2}}</td>
+                            <td>{{$cliente->telefone_2}}</td>
                         </tr>
                         @endforeach
                       </tbody>

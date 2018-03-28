@@ -30,7 +30,7 @@ class CreateClientesTable extends Migration
             $table->string('data_nascimento');
             $table->string('telefone_1');
             $table->string('telefone_2');
-            $table->string('observacao');
+            $table->string('observacao')->nullable();
             $table->integer('endereco_id')->unsigned();
             $table->foreign('endereco_id')->references('id')->on('enderecos')->onDelete('cascade');
             $table->timestamps();
