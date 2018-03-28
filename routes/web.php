@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('pedidos/create','PedidoController@create')->name('pedidos.create');
 Route::post('pedidos/produto/', ['as'=>'pedidos.produto.store','uses'=>'PedidoController@produtoStore']);
 Route::delete('/pedidos/produto/{pedido}/{produto}', ['as'=>'pedidos.produto.destroy','uses'=>'PedidoController@produtoDestroy']);
+
+Route::resource('cliente', 'ClienteController');

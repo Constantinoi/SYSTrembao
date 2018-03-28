@@ -78,8 +78,9 @@
                   </li>
                   <li><a><i class="fa fa-users"></i> Clientes <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="#">Cadastrar Cliente</a></li>
-                      <li><a href="#">Lista de Clientes</a></li>
+                      <li><a href="{{route('cliente.create')}}">Cadastrar Cliente</a></li>
+                      <li><a href="{{route('cliente.index')}}">Lista de Clientes</a></li>
+                      <li><a href="#">Editar Clientes</a></li>
              
                     </ul>
                   </li>
