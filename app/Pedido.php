@@ -7,26 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Pedido extends Model
 {
     protected $table = "pedidos";
-    protected $fillable = ['valor_total','observacao'];
+    protected $fillable = ['valor_total','observacao','status'];
 
 
 
     public function produtos (){
-        return $this->belongsToMany(Produto::class);
+        return $this->belongsToMany(Produto::class)
+            ->withPivot('quantidade', 'valor')
+            ->withTimestamps();
     }
+ 
 
-    public function pedido_produto(){
-        return $this->hasMany(DetalheProduto::class);
-    }
-
-   
-
-    public static function consultaId($where)
+    public static function checkPedido($where)
     {
-        $pedido = self::where($where)->first(['id']);
-        return !empty($pedido->id) ? $pedido->id : null;
+        $pedido = Pedido::where($where)->first(['id']);
+        return !empty($pedido->id) ? $pedido->id : null; // se não for vazio ele retorna o id do pedido
     }
-
 
     public function adicionaProduto($produto)
     {
@@ -41,6 +37,7 @@ class Pedido extends Model
         return $this->produtos()->attach($produto);
 
     }
+
     public function existeProduto($produto)
     {
         if (is_string($produto)) {
@@ -50,10 +47,11 @@ class Pedido extends Model
         return (boolean) $this->produtos()->find($produto->id);
 
     }
+
     public function removeProduto($produto)
     {
         if (is_string($produto)) {
-            $produto = Produto::where('nome','=',$produto)->firstOrFail();
+            $produto = Produto::where('produto_id','=',$produto)->firstOrFail();
         }
 
         return $this->produtos()->detach($produto);

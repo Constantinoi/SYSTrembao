@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -12,6 +12,8 @@
 
     <!-- Bootstrap -->
     <link href="{{ asset ('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="{{asset('build/css/custom.min.css')}}" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="{{asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- NProgress -->
@@ -26,8 +28,7 @@
     <link href="{{asset('pnotify/dist/pnotify.nonblock.css')}}" rel="stylesheet">
     -->
 
-    <!-- Custom Theme Style -->
-    <link href="{{asset('build/css/custom.min.css')}}" rel="stylesheet">
+    
   </head>
 
   <body class="nav-md">
@@ -35,8 +36,9 @@
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
+            
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Trêm Bão!</span></a>
+              <a href="#" class="site_title"><i class="fa fa-cutlery"></i> <span>Trêm Bão!</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -53,52 +55,40 @@
             </div>
             <!-- /menu profile quick info -->
 
-            <br />
-
+            
+        
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>General</h3>
+                <h3>Painel do Admin</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Pedidos <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-list"></i> Pedidos <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('pedidos.create') }}">Iniciar Pedido</a></li>
                       <li><a href="#">Lista de Pedidos</a></li>
                       
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Produtos <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-cutlery"></i> Produtos <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="#">Cadastrar Produto</a></li>
                       <li><a href="#">Lista de Produtos</a></li>
                       
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-desktop"></i> Clientes <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-users"></i> Clientes <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="#">Cadastrar Cliente</a></li>
                       <li><a href="#">Lista de Clientes</a></li>
              
                     </ul>
                   </li>
-                
+                </ul>
               </div>
-
             </div>
             <!-- /sidebar menu -->
 
-            <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-            
-             
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-            </div>
-            <!-- /menu footer buttons -->
+           
           </div>
         </div>
 
@@ -163,34 +153,22 @@
             </nav>
           </div>
         </div>
+   
         <!-- /top navigation -->
 
         <!-- Conteudo -->
+        
         <div class="right_col" role="main">
-          <div class="clearfix"></div>
+          <div class="">
             @yield('conteudo')
 
-        </div>
-
-        <!-- FimConteudo -->
- <!-- /footer content
-        <footer>
-          <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
           </div>
           <div class="clearfix"></div>
-        </footer>
-        -->
-      </div>
-    </div>
+        </div> 
+        
+    
 
-    <div id="custom_notifications" class="custom-notifications dsp_none">
-      <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
-      </ul>
-      <div class="clearfix"></div>
-      <div id="notif-group" class="tabbed_notifications"></div>
-    </div>
-
+        <!-- FimConteudo -->
     <!-- jQuery -->
     <script src="{{asset('jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap -->
@@ -209,7 +187,15 @@
     <script src="{{('pnotify/dist/pnotify.nonblock.js')}}"></script>
 
     <!-- Custom Theme Scripts -->
-    <script src="{{asset('build/js/custom.min.js')}}"></script>
-	
+    <script src="{{asset('build/js/custom.min.js')}}"></script>   
+  
+    
+ 
+    @yield('scripts');
+
+      </div>
+      <div class="clearfix"></div>s
+    </div>
   </body>
+  
 </html>

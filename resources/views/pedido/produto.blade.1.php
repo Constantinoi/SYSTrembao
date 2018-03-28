@@ -50,15 +50,15 @@
                       </thead>
                       <tbody>
                         @foreach($produtos as $produto)
-                        <form class="form-horizontal" method="post"  action="{{route('pedidos.produto.store')}}" >
+                        <form class="form-horizontal" method="#"  action="#" >
                         {{ csrf_field() }}
-                        <input type="hidden" name="pedido_id" value="{{ isset($pedido) ? $pedido->id : null }}" ></input>
+                        <input class="hidden" name="pedido_id" value="{{ isset($pedido)  ? $pedido->id  : null }}" > </input>
                         <tr>
-                            <td name="prod_nome" >{{$produto->nome}}</td>
-                            <td name="prod_descr" >{{$produto->descricao}}</td>
-                            <td name="prod_valor" >{{$produto->valor}}</td>
-                            <td> <input  name="quantidade" type="number" min="1" max="10" required> </input> </td>
-                            <td> <button name="produto_id" value="{{$produto->id}}" class="btn btn-primary fa fa-plus-square-o" > Adicionar </button>  </td>
+                            <td>{{$produto->nome}}</td>
+                            <td>{{$produto->descricao}}</td>
+                            <td>{{$produto->valor}}</td>
+                            <td> <input name="quantidade" type="number" min="1" max="10" required> </input> </td>
+                            <td> <button data-cart-add="{{$produto->id}}" name="produto_id" value="{{$produto->id}}" class="btn btn-primary fa fa-plus-square-o" > Adicionar </button>  </td>
 
                         </tr>
                         </form>
@@ -112,10 +112,10 @@
                       <td>{{$detalhe->nome}}</td>
                       <td>{{$detalhe->descricao}}</td>  
                       <td>{{$detalhe->valor}} </td>
-                      <form method="post" action="{{route('pedidos.produto.destroy',[$pedido->id, $detalhe->id])}}">
+                      <form method="#" action="#">
                           {{ method_field('DELETE') }}
                           {{ csrf_field() }}
-                      <td><button  class="btn btn-danger fa fa-minus-square-o">Remover</button></td>
+                        <td><button data-cart-remove-id="$detalhe->produto_id"  class="btn btn-danger fa fa-minus-square-o"> Remover</button></td>
                       </form>
                     </tr>
                   @endforeach

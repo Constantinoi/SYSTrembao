@@ -25,68 +25,56 @@ class PedidoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-
-        //associar status, mesa , cliente e observacao do cliente
-        $pedido = Pedido::create([
-            
-            'observacao'=>'teste'
-        ]);
+    {     
 
         $produtos = Produto::all();
-        $detalhes = PedidoProduto::where('pedido_id','=',$pedido);
+        
 
-        return view('pedido.produto', compact('pedido', 'produtos','detalhes')); 
+        return view('pedido.produto', compact('produtos')); 
     }
 
-    public function produtoStore(Request $request,$id)
+    public function produtoStore(Request $request, Pedido $pedido)
     {
-        $pedido = Pedido::find($id);
+        
         $dados = $request->all();
+
+        $pedido = Pedido::find($pedido->id);
         $produto = Produto::find($dados['produto_id']);
+        //dd($pedido);
         $quantidade = $dados['quantidade'];
+
         if( empty($produto->id) ) {
            // $req->session()->flash('mensagem-falha', 'Produto não encontrado em nossa loja!');
             return redirect()->back();
         }
 
-/*
-        $pedido = Pedido::consultaId([
-            'user_id' => $idusuario,
-            'status'  => 'RE' // Reservada
+        // verificar se está aberto e se pertence ao cliente
+        // $pedido = Pedido::checkPedido([
+        //     'status'  => 'A',
+        //     'id'      => $pedido->id // aberto
+        //     ]);
+        //dd($pedido);
+        
+        if( empty($pedido) ) {
+            $pedido = Pedido::create([
+                'status' => 'A'
             ]);
-
-        if( empty($idpedido) ) {
-            $pedido_novo = Pedido::create([
-                'user_id' => $idusuario,
-                'status'  => 'RE'
-                ]);
-
-            $idpedido = $pedido_novo->id;
-
         }
-*/
-        PedidoProduto::create([
-            'pedido_id'  => $pedido->id,
-            'produto_id' => $produto->id,
-            'valor'      => $produto->valor,
-            'quantidade'     =>  $dados['quantidade']
-            ]);      
 
-      
-        $produtos = Produto::all();
-        $detalhes = PedidoProduto::where('pedido_id','=',$pedido->id)->get();
+            //dd($pedido_novo); 
 
+        $pedido->produtos()->attach($produto->id, 
+                                    [
+                                    'quantidade' => $dados['quantidade'], 
+                                    'valor' => 00.00                                                                                                
+                                    ]);     
+             
+        $produtos = Produto::all();      
         //dd($pedido,$dados,$produto,$detalhes);
-        return view('pedido.produto', compact('pedido', 'produtos','detalhes')); 
+        return view('pedido.produto', compact('pedido', 'produtos')); 
     }
  
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
         //
@@ -140,6 +128,7 @@ class PedidoController extends Controller
        // $dados = $request->all();
         
         $pedido = Pedido::find($pedido_id);
+        $produto = Produto::find($produto_id);
         // $pedido = Pedido::consultaId([
         //     'id'      => $idpedido,
         //     'user_id' => $idusuario,
@@ -151,42 +140,43 @@ class PedidoController extends Controller
         //     return redirect()->route('carrinho.index');
         // }
 
-        $where_produto = [
-            'pedido_id'  => $pedido_id,
-            'produto_id' => $produto_id
-        ];
+                    // $where_produto = [
+                    //     'pedido_id'  => $pedido_id,
+                    //     'produto_id' => $produto_id
+                    // ];
 
-        $produto = PedidoProduto::where($where_produto)->orderBy('id')->first();
+                    //$produto = PedidoProduto::where($where_produto)->orderBy('id')->first();
+        
+        
         // if( empty($produto->id) ) {
         //     $req->session()->flash('mensagem-falha', 'Produto não encontrado no carrinho!');
         //     return redirect()->route('carrinho.index');
         // }
 
-        // if( $remove_apenas_item ) {
-        //     $where_produto['id'] = $produto->id;
-        // }
+    
 
         //dd($produto);
-        $where_produto['id'] = $produto->id;
-        PedidoProduto::where($where_produto)->delete();
+                    // $where_produto['id'] = $produto->id;
+                    // PedidoProduto::where($where_produto)->delete();
 
-        $check_pedido = PedidoProduto::where([
-            'pedido_id' => $produto->pedido_id
-            ])->exists();
+        // $check_pedido = PedidoProduto::where([
+        //     'pedido_id' => $produto->pedido_id
+        //     ])->exists();
 
-        if( !$check_pedido ) {
-            Pedido::where([
-                'id' => $produto->pedido_id
-                ])->delete();
-        }
+        // if( !$check_pedido ) {
+        //     Pedido::where([
+        //         'id' => $produto->pedido_id
+        //         ])->delete();
+        // }
 
        // $req->session()->flash('mensagem-sucesso', 'Produto removido do carrinho com sucesso!');
+       $pedido->removeProduto($produto);
        $produtos = Produto::all();
-       $detalhes = PedidoProduto::where('pedido_id','=',$pedido->id)->get();
+                                //$detalhes = PedidoProduto::where('pedido_id','=',$pedido->id)->get();
 
        //dd($pedido,$dados,$produto,$detalhes);
-       return view('pedido.produto', compact('pedido', 'produtos','detalhes'));
+       return view('pedido.produto', compact('pedido', 'produtos'));
 
-        return redirect()->route('');
+       
     }
 }

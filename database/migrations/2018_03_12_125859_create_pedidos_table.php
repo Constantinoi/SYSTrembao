@@ -15,6 +15,7 @@ class CreatePedidosTable extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('status');
             $table->float('valor_total')->default(0);
             $table->string('observacao')->nullable();
             $table->timestamps();
