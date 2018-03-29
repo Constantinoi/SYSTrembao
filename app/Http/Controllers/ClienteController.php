@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Request\ClienteRequest;
 use App\Cliente;
 use App\Endereco;
 use Illuminate\Support\Facades\DB;
@@ -62,15 +63,11 @@ class ClienteController extends Controller
         $this->Validate($request,[
             
             'nome'=> 'alpha|min:4|max:100',
-            'telefone_1'=>'numeric',
-            'telefone_2'=>'numeric'
-
+    
         ],[
         'nome.alpha'=>'O Campo Nome deve Conter apenas Letras',
         'nome.min'=>'Mínimo 4 Caracteres',
-        'nome.max'=>'Máximo 100 Caracteres',
-        'telefone_1.numeric'=>'O Campo Telefone deve Conter apenas Números',
-        'telefone_2.numeric'=>'O Campo Celular deve Conter apenas Números'
+        'nome.max'=>'Máximo 100 Caracteres'
         ]);
 
         $dados = $request->all();

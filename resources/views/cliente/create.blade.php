@@ -48,7 +48,7 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Data de Nascimento<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input name="data_nascimento" class="date form-control col-md-7 col-xs-12" type="date" required="required" value="{{old('data_nascimento')}}">
+                          <input name="data_nascimento" class="date form-control col-md-7 col-xs-12" type="text" id="data_nascimento" required="required" value="{{old('data_nascimento')}}">
                         </div>
                       </div>
                       <div class="row">
@@ -56,7 +56,7 @@
                           <div class="form-group">
                             <label for="telefone_1" class="control-label col-md-3 col-sm-3 col-xs-12">Telefone</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_1"  value="{{old('telefone_1')}}" >
+                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_1" id="telefone_1"  value="{{old('telefone_1')}}" >
                             </div>
                           </div>
                         </div>
@@ -64,7 +64,7 @@
                           <div class="form-group">
                             <label for="telefone_2" class="control-label col-md-3 col-sm-3 col-xs-12">Celular</span></label>
                             <div class="col-md-6 col-sm-4 col-xs-12">
-                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_2" classe="telefone"  value="{{old('telefone_2')}}">
+                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_2" id="telefone_2" classe="telefone"  value="{{old('telefone_2')}}">
                             </div>
                           </div>
                         </div>
@@ -94,7 +94,7 @@
                           <div class="form-group">
                             <label for="numero" class="control-label col-md-3 col-sm-3 col-xs-12">Número<span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input  class="form-control col-md-7 col-xs-12" type="text" name="num"  value="{{old('num')}}">
+                              <input  class="form-control col-md-7 col-xs-12" type="text" name="num" id="num"  value="{{old('num')}}">
                             </div>
                           </div>
                         </div>

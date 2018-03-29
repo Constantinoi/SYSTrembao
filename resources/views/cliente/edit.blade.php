@@ -31,7 +31,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Data de Nascimento<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input name="data_nascimento" class="date form-control col-md-7 col-xs-12" required="required" type="text" value="{{date( 'd/m/Y', strtotime ($cliente->data_nascimento))}}">
+                          <input name="data_nascimento" id="data_nascimento" class="date form-control col-md-7 col-xs-12" required="required" type="text" value="{{date( 'd/m/Y', strtotime ($cliente->data_nascimento))}}">
                         </div>
                       </div>
                       <div class="row">
@@ -39,7 +39,7 @@
                           <div class="form-group">
                             <label for="telefone_1" class="control-label col-md-3 col-sm-3 col-xs-12">Telefone</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_1" data-inputmask="'mask' : '(99) 99999-9999'" value="{{$cliente->telefone_1}}">
+                              <input  class="form-control col-md-7 col-xs-12" type="text" id="telefone_1"  name="telefone_1" value="{{$cliente->telefone_1}}">
                             </div>
                           </div>
                         </div>
@@ -47,7 +47,7 @@
                           <div class="form-group">
                             <label for="telefone_2" class="control-label col-md-3 col-sm-3 col-xs-12">Celular</label>
                             <div class="col-md-6 col-sm-4 col-xs-12">
-                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_2" value="{{$cliente->telefone_2}}">
+                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_2" id="telefone_2" value="{{$cliente->telefone_2}}">
                             </div>
                           </div>
                         </div>
@@ -61,7 +61,7 @@
                       <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Cep</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="cep"  required="required" class="form-control col-md-7 col-xs-12" value="{{$cliente->endereco->cep}}">
+                          <input type="text" name="cep" id="cep"  required="required" onblur="pesquisacep(this.value);" class="form-control col-md-7 col-xs-12"  value="{{$cliente->endereco->cep}}">
                         </div>
                       </div>
                       <div class="form-group">
@@ -76,7 +76,7 @@
                           <div class="form-group">
                             <label for="numero" class="control-label col-md-3 col-sm-3 col-xs-12">Número</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input  class="form-control col-md-7 col-xs-12" type="text" name="num" value="{{$cliente->endereco->num}}">
+                              <input  class="form-control col-md-7 col-xs-12" type="text" name="num" id="num" value="{{$cliente->endereco->num}}">
                             </div>
                           </div>
                         </div>
