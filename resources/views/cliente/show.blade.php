@@ -1,19 +1,20 @@
 
-@extends ('layouts.admin')
+@extends ('layouts.base')
 
-@section('content')
+@section('conteudo')
     <div class="panel panel-default">
         
-            <div class="panel-heading">Detalhes do cargo</div>
+            <div class="panel-heading">Detalhes do Cliente</div>
             <div class="panel-body">
                 <div class="row">
                         <div class="col-md-12">
                         
                             <h4>Sobre o Cargo</h4>
 
-                            <p>Nome Cargo: {{$cargo->nomeCargo}}</p>
-                            <p>Tempo de Experiência: {{$cargo->tempoExperiencia}}</p>
-                            <p>Escolaridade: {{$cargo->escolaridade->tipo}}</p>
+                            <p>Nome Cliente : {{$cliente->nome}}</p>
+                            <p>Data de Nascimento: {{$cliente->data_nascimento}}</p>
+                            <p>Telefone: {{$cliente->telefone_1}}</p>                                                                 
+                            <p>Celular: {{$cliente->telefone_2}}</p>
                         
                         </div>
                 </div>

@@ -5,22 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cliente;
 use App\Endereco;
-use Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 
 
 class ClienteController extends Controller
 {
-protected function validarCliente($request){
-    $validator = Validator::make($request->all(), [
-            "nome" => "required"
-
-   ]);
-   return $validator;
-}
-
-
     /**
      * Display a listing of the resource.
      *
@@ -68,10 +58,20 @@ protected function validarCliente($request){
     {
 
         // criar classe RequestCliente
-        $validator = $this->validarCliente($request);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator->errors());
-        }
+
+        $this->Validate($request,[
+            
+            'nome'=> 'alpha|min:4|max:100',
+            'telefone_1'=>'numeric',
+            'telefone_2'=>'numeric'
+
+        ],[
+        'nome.alpha'=>'O Campo Nome deve Conter apenas Letras',
+        'nome.min'=>'Mínimo 4 Caracteres',
+        'nome.max'=>'Máximo 100 Caracteres',
+        'telefone_1.numeric'=>'O Campo Telefone deve Conter apenas Números',
+        'telefone_2.numeric'=>'O Campo Celular deve Conter apenas Números'
+        ]);
 
         $dados = $request->all();
 
@@ -94,7 +94,7 @@ protected function validarCliente($request){
     {
         $cliente = Cliente::find($id);
  
-        return view('clientes.show', compact('cliente'));
+        return view('cliente.show', compact('cliente'));
     }
 
     /**
@@ -108,7 +108,7 @@ protected function validarCliente($request){
        $endereco = Endereco::all();
        $cliente = Cliente::find($id);
  
-        return view('clientes.edit', compact('cliente','endereco'));
+        return view('cliente.edit', compact('cliente','endereco'));
     }
 
     /**
@@ -120,17 +120,17 @@ protected function validarCliente($request){
      */
     public function update(Request $request, $id)
     {
-        $validator = $this->validarCliente($request);
-         
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator->errors());
-        }
  
         $cliente = Cliente::find($id);
+        $endereco=Endereco::find($cliente->endereco_id);
+
         $dados = $request->all();
         $cliente->update($dados);
+        $endereco->update($dados);
+
+        
          
-        return redirect()->route('clientes.index');
+        return redirect()->route('cliente.index');
     
     }
 
@@ -143,13 +143,15 @@ protected function validarCliente($request){
     public function destroy($id)
     {
         Cliente::find($id)->delete();
-        return redirect()->route('clientes.index');
+        return redirect()->route('cliente.index');
     }
     public function remover($id)
     {
         $cliente = Cliente::find($id);
+        
+
  
-        return view('clientes.remove', compact('cliente'));
+        return view('cliente.remove', compact('cliente'));
     }
     
     
