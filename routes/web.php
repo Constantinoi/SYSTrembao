@@ -23,3 +23,7 @@ Route::delete('/pedidos/produto/{pedido}/{produto}', ['as'=>'pedidos.produto.des
 
 Route::get('/cliente/remove/{id}','ClienteController@remover')->name('cliente.remove');
 Route::resource('cliente', 'ClienteController');
+
+Route::resource('produto', 'ProdutoController');
+Route::POST('addPost','PostController@addPost');
+Route::POST('editPost','PostController@editPost');

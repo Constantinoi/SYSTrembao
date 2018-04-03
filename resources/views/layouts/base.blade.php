@@ -193,11 +193,57 @@
     <script src="{{asset('build/js/custom.min.js')}}"></script>   
   
     
- 
-    @yield('scripts');
+    {{--AJAX add Formulario produto--}}
+    <script type="text/javascript">
+      $(document).on('click','.create-modal', function(){
+        $('#create').modal('show');
+        $('.form-horizontal').show();
+        $('.modal-title').text('Adicionar Produto');
+      });
+      //function Add(Save)
+       $("#add").click(function() {
+    $.ajax({
+      type: 'POST',
+      url: 'addPost',
+      data: {
+        '_token': $('input[name=_token]').val(),
+        'nome': $('input[name=nome]').val(),
+        'descricao': $('input[name=descricao]').val(),
+        'valor': $('input[name=valor]').val()
+      },
+      success: function(data){
+        if ((data.errors)) {
+          $('.error').removeClass('hidden');
+          $('.error').text(data.errors.nome);
+          $('.error').text(data.errors.descricao);
+          $('.error').text(data.errors.valor);
+        } else {
+          $('.error').remove();
+          $('#table').append("<tr class='post" + data.id + "'>"+
+          "<td>" + data.id + "</td>"+
+          "<td>" + data.nome + "</td>"+
+          "<td>" + data.descricao + "</td>"+
+          "<td>" + data.valor + "</td>"+
+          "<td><button class='show-modal btn btn-info btn-sm' data-id='" + data.id + "' data-nome='" + data.nome + "' data-descricao='" + data.descricao +"' data-valor='" + data.valor + "'><span class='fa fa-eye'></span></button><button class='edit-modal btn btn-warning btn-sm' data-id='" + data.id + "' data-nome='" + data.nome + "' data-descricao='" + data.descricao +"' data-valor='" + data.valor + "'><span class='glyphicon glyphicon-pencil'></span></button><button class='delete-modal btn btn-danger btn-sm' data-id='" + data.id + "' data-nome='" + data.nome + "' data-descricao='" + data.descricao +"' data-valor='" + data.valor + "'><span class='glyphicon glyphicon-trash'></span></button></td>"+
+          "</tr>");
+        }
+        },
+        });
+        $('#nome').val('');
+        $('#descricao').val('');
+        $('#valor').val('');
+    });
+    
+      $(document).on('click', '.show-modal', function() {
+        $('#show').modal('show');
+        $('.modal-title').text('Show Post');
+        });
+      </script>
+    
+      @yield('scripts');
 
       </div>
-      <div class="clearfix"></div>s
+      <div class="clearfix"></div>
     </div>
   </body>
   
