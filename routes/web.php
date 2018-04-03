@@ -11,19 +11,27 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','PedidoController@welcome');
+
+Route::resource('cliente', 'ClienteController');
+Route::resource('pedido', 'PedidoController');
 
 
+Route::get('pedido/edit/{pedido}', 'PedidoController@edit')->name('pedido.edit');
+Route::put('pedido/update', 'PedidoController@update');
 
-Route::get('pedidos/create','PedidoController@create')->name('pedidos.create');
-Route::post('pedidos/produto/', ['as'=>'pedidos.produto.store','uses'=>'PedidoController@produtoStore']);
-Route::delete('/pedidos/produto/{pedido}/{produto}', ['as'=>'pedidos.produto.destroy','uses'=>'PedidoController@produtoDestroy']);
-
+<<<<<<< HEAD
+Route::POST('/pedido/store', 'PedidoController@store');
+Route::delete('pedido/destroy/all', 'PedidoController@destroyAll');
+Route::get('/pedido/index', 'PedidoController@index');
+=======
 Route::get('/cliente/remove/{id}','ClienteController@remover')->name('cliente.remove');
 Route::resource('cliente', 'ClienteController');
+<<<<<<< HEAD
 
 Route::resource('produto', 'ProdutoController');
 Route::POST('addPost','PostController@addPost');
 Route::POST('editPost','PostController@editPost');
+=======
+>>>>>>> 629b23f31d1d4e2ab13e03a36f6665255901c87c
+>>>>>>> 4fbd9fd2c36db3a118fdd194d27e754a354d37af
