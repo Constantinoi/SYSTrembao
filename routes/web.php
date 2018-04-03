@@ -11,14 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-
-Route::get('pedidos/create','PedidoController@create')->name('pedidos.create');
-Route::post('pedidos/produto/', ['as'=>'pedidos.produto.store','uses'=>'PedidoController@produtoStore']);
-Route::delete('/pedidos/produto/{pedido}/{produto}', ['as'=>'pedidos.produto.destroy','uses'=>'PedidoController@produtoDestroy']);
+Route::get('/','PedidoController@welcome');
 
 Route::resource('cliente', 'ClienteController');
+Route::resource('pedido', 'PedidoController');
+
+
+Route::get('pedido/edit/{pedido}', 'PedidoController@edit')->name('pedido.edit');
+Route::put('pedido/update', 'PedidoController@update');
+
+Route::POST('/pedido/store', 'PedidoController@store');
+Route::delete('pedido/destroy/all', 'PedidoController@destroyAll');
+Route::get('/pedido/index', 'PedidoController@index');

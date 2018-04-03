@@ -7,7 +7,8 @@
     var cart = []; // array de carrinhos de compras
     
     //  descrição do objeto
-    function Produto(nome, valor, qtd){    
+    function Produto(id, nome, valor, qtd){    
+        this.id = id;
         this.nome = nome;
         this.valor = valor;
         this.qtd = qtd;     
@@ -33,7 +34,7 @@
     var obj = {};
 
     // add um produto
-    obj.addProduto = function(nome, valor, qtd){     
+    obj.addProduto = function(id, nome, valor, qtd){     
         for(var i in cart){
             if(cart[i].nome === nome){   //não add produto se já existir um  igual no carrinho
                 cart[i].qtd += qtd; // add à quantidade existente
@@ -41,7 +42,7 @@
                 return;
             }
         }
-        var produto = new Produto(nome, valor, qtd);
+        var produto = new Produto(id, nome, valor, qtd);
         cart.push(produto); 
         saveCart();
     };
@@ -106,7 +107,7 @@
         return totalCost;
     };
 
-    // pega todos os objetos na array original  e  retorna uma cópia
+    // retorna uma cópia da array original
     obj.listCart = function(){    
         var cartCopy = [];
         for(var i in cart){

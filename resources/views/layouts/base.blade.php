@@ -3,6 +3,7 @@
 
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="csrf_token" content="{{ csrf_token() }}" />
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,6 +23,7 @@
     <link href="{{asset('/iCheck/skins/flat/green.css')}}" rel="stylesheet">
     <!-- bootstrap-progressbar -->
     <link href="{{asset('/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')}}" rel="stylesheet">
+    
     <!-- PNotify 
     <link href="{{asset('pnotify/dist/pnotify.css')}}" rel="stylesheet">
     <link href="{{asset('pnotify/dist/pnotify.buttons.css')}}" rel="stylesheet">
@@ -46,7 +48,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="#" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Bem Vindo,</span>
@@ -64,7 +66,7 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-list"></i> Pedidos <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ route('pedidos.create') }}">Iniciar Pedido</a></li>
+                      <li><a href="{{ route('pedido.create') }}">Iniciar Pedido</a></li>
                       <li><a href="#">Lista de Pedidos</a></li>
                       
                     </ul>
@@ -104,7 +106,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                    <img src="#" alt="">John Doe
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -128,7 +130,7 @@
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="#" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -188,10 +190,19 @@
     <script src="{{('pnotify/dist/pnotify.nonblock.js')}}"></script>
 
     <!-- Custom Theme Scripts -->
-    <script src="{{asset('build/js/custom.min.js')}}"></script>   
-  
+    <script src="{{asset('build/js/custom.min.js')}}"></script>  
     
- 
+    <!-- Carrinho de compras -->
+    <script src="{{asset('js/shoppingCart.js')}}"></script>
+
+    <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        }
+    });
+    </script>
+    
     @yield('scripts');
 
       </div>

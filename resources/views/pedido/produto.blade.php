@@ -38,27 +38,23 @@
 
                     <table class="table table-hover">
                       <thead>
-                        <tr>
-                          
+                        <tr>                          
                           <th>Nome</th>
                           <th>Descrição</th>
-                          <th>Valor Unitário</th>
-                          <td>Quantidade</td>
+                          <th>Valor Unit</th>                   
                           <th>Ações</th>
-
                         </tr>
                       </thead>
                       <tbody>
                         @foreach($produtos as $produto)
-                        <form class="form-horizontal" method="post"  action="{{route('pedidos.produto.store')}}" >
+                       <!-- <form class="form-horizontal" method="post"  action="{{route('pedido.store')}}" >
                         {{ csrf_field() }}
-                        <input type="hidden" name="pedido_id" value="{{ isset($pedido) ? $pedido->id : null }}" ></input>
+                        <input type="hidden" name="pedido_id" value="{{ isset($pedido) ? $pedido->id : null }}" ></input>-->
                         <tr>
                             <td name="prod_nome" >{{$produto->nome}}</td>
                             <td name="prod_descr" >{{$produto->descricao}}</td>
                             <td name="prod_valor" >{{$produto->valor}}</td>
-                            <td> <input  name="quantidade" type="number" min="1" max="10" required> </input> </td>
-                            <td> <button name="produto_id" value="{{$produto->id}}" class="btn btn-primary fa fa-plus-square-o" > Adicionar </button>  </td>
+                            <td><button data-nome="{{$produto->nome}}"  data-valor="{{$produto->valor}}"  name="produto_id" value="{{$produto->id}}" class="add-to-cart btn btn-primary"> Adicionar </button></td>
 
                         </tr>
                         </form>
@@ -93,35 +89,29 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-
+                  <button class="btn btn-danger" id="clear-cart">Limpar Pedido</button>
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>Quantidade</th>
-                          <th>Produto</th>
-                          <th>Descrição</th>
-                          <th>Valor</th>
-                          <th>Ações</th>
+                          <th>Produto </th>
+                          <th colspan="2"> Quantd</th>
+                          <th>Valor</th> 
                         </tr>
-                    </thead>
-                <tbody>
-                  @if( isset($pedido) )   
-                  @foreach($pedido->produtos as $detalhe)
-                  <tr>
-                      <td>{{$detalhe->pivot->quantidade}}</td>
-                      <td>{{$detalhe->nome}}</td>
-                      <td>{{$detalhe->descricao}}</td>  
-                      <td>{{$detalhe->valor}} </td>
-                      <form method="post" action="{{route('pedidos.produto.destroy',[$pedido->id, $detalhe->id])}}">
-                          {{ method_field('DELETE') }}
-                          {{ csrf_field() }}
-                      <td><button  class="btn btn-danger fa fa-minus-square-o">Remover</button></td>
-                      </form>
-                    </tr>
-                  @endforeach
-                  @endif     
-               </tbody>
+                      </thead>
+                      <tbody id="show-cart">
+                      <!-- -->
+                          <tr>
+                          
+                            
+                          
+                          </tr>
+                            
+                     </tbody>
                     </table>
+                    <tfoot >
+                        <div> Total de itens: <span id="count-cart"></span></div>
+                        <div> Sub Total:      <span id="total-cart"></span></div>               
+                    </tfood>
 
                   </div>
                 </div>
