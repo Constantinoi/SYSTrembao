@@ -81,9 +81,7 @@
                   <li><a><i class="fa fa-users"></i> Clientes <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{route('cliente.create')}}">Cadastrar Cliente</a></li>
-                      <li><a href="{{route('cliente.index')}}">Lista de Clientes</a></li>
-                      <li><a href="#">Editar Clientes</a></li>
-             
+                      <li><a href="{{route('cliente.index')}}">Lista de Clientes</a></li>             
                     </ul>
                   </li>
                 </ul>
@@ -174,6 +172,10 @@
         <!-- FimConteudo -->
     <!-- jQuery -->
     <script src="{{asset('jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{asset('js/jquery.mask.min.js')}}"></script>
+    <!-- filtros -->
+    <script src="{{asset('js/filtros.js')}}"></script> <!-- cep -->
+    <script src="{{asset('js/mask.js')}}"></script>
     <!-- Bootstrap -->
     <script src="{{asset('bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- FastClick -->

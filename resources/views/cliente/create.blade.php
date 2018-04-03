@@ -25,36 +25,46 @@
                   </div>
     <div class="x_content">
                     <br />
+                    @if(count($errors) > 0)
+                      <div class="alert alert-danger">
+                        <ul>
+                          @foreach($errors->all() as $error)
+                            <li>
+                              {{$error}}
+                            </li>
+                          @endforeach
+                        </ul>
+                      </div>
+                    @endif
                     <form action="{{route('cliente.store')}}" method="post" data-parsley-validate class="form-horizontal form-label-left">
                     {{ csrf_field() }}
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome"> Nome <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="nome" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" name="nome"  class="form-control col-md-7 col-xs-12" value="{{old('nome')}}" required="required">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Data de Nascimento<span class="required">*</span>
-                        </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Data de Nascimento<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input name="data_nascimento" class="date form-control col-md-7 col-xs-12" required="required" type="date">
+                          <input name="data_nascimento" class="date form-control col-md-7 col-xs-12" type="text" id="data_nascimento" required="required" value="{{old('data_nascimento')}}">
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-4 col-sm-6 col-xs-6 col-md-offset-2">
                           <div class="form-group">
-                            <label for="telefone_1" class="control-label col-md-3 col-sm-3 col-xs-12">Telefone</label>
+                            <label for="telefone_1" class="control-label col-md-3 col-sm-3 col-xs-12">Telefone</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_1" data-inputmask="'mask' : '(99) 99999-9999'">
+                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_1" id="telefone_1"  value="{{old('telefone_1')}}" >
                             </div>
                           </div>
                         </div>
                          <div class="col-md-4 col-sm-4 col-xs-6">
                           <div class="form-group">
-                            <label for="telefone_2" class="control-label col-md-3 col-sm-3 col-xs-12">Celular</label>
+                            <label for="telefone_2" class="control-label col-md-3 col-sm-3 col-xs-12">Celular</span></label>
                             <div class="col-md-6 col-sm-4 col-xs-12">
-                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_2">
+                              <input  class="form-control col-md-7 col-xs-12" type="text" name="telefone_2" id="telefone_2" classe="telefone"  value="{{old('telefone_2')}}">
                             </div>
                           </div>
                         </div>
@@ -62,48 +72,47 @@
                       <div class="form-group">
                         <label for="observacao" class="control-label col-md-3 col-sm-3 col-xs-12">Observações</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <textarea  class="form-control col-md-7 col-xs-12" type="text" name="observacao" row="5" ></textarea>
+                          <input  class="form-control col-md-7 col-xs-12" type="text" name="observacao" row="5"  value="{{old('observacao')}}" >
                         </div>
                       </div>
                       <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Cep</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Cep<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="cep"  required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" name="cep" onblur="pesquisacep(this.value);" class="form-control col-md-7 col-xs-12" id="cep" required="required" value="{{old('cep')}}">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Logradouro
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Logradouro<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="logradouro" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" name="logradouro" required="required" id="logradouro" class="form-control col-md-7 col-xs-12"  value="{{old('logradouro')}}">
                         </div>
                       </div>
                       
                                          
                         <div class="col-md-4 col-sm-6 col-xs-6 col-md-offset-2">
                           <div class="form-group">
-                            <label for="numero" class="control-label col-md-3 col-sm-3 col-xs-12">Número</label>
+                            <label for="numero" class="control-label col-md-3 col-sm-3 col-xs-12">Número<span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input  class="form-control col-md-7 col-xs-12" type="text" name="num">
+                              <input  class="form-control col-md-7 col-xs-12" type="text" name="num" id="num"  value="{{old('num')}}">
                             </div>
                           </div>
                         </div>
 
                         <div class=" col-sm-4 ">
                           <div class="form-group">
-                            <label for="numero" class="control-label col-md-3 col-sm-3 col-xs-12">Bairro</label>
+                            <label for="numero" class="control-label col-md-3 col-sm-3 col-xs-12">Bairro<span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input  class="form-control col-md-7 col-xs-12" type="text" name="bairro" >
+                              <input  class="form-control col-md-7 col-xs-12" type="text" id="bairro" name="bairro" required="required"  value="{{old('bairro')}}">
                             </div>
                           </div>
                         </div>
   
                      
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Complemento<span class="required">*</span>
-                        </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Complemento</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="complemento" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" name="complemento"  class="form-control col-md-7 col-xs-12"  value="{{old('complemento')}}">
                         </div>
                     </div>
                       
