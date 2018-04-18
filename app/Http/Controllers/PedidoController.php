@@ -10,6 +10,16 @@ use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
+<<<<<<< HEAD
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('produto.index', compact('produtos'));
+=======
     
     public function index(){
         //$pedidos = Pedido::whereDate('created_at', today())->get(); 
@@ -33,6 +43,7 @@ class PedidoController extends Controller
         $produtos_json = json_encode($produtos);
 
         return ($produtos_json);
+>>>>>>> 4fbd9fd2c36db3a118fdd194d27e754a354d37af
     }
     
    
