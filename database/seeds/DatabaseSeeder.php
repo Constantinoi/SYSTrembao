@@ -9,8 +9,17 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+    
     public function run()
     {
          $this->call(ProdutoSeeder::class);
+         $this->call(UserSeeder::class);
+         $this->call(PapelSeeder::class);
+         $this->call(PermissaoSeeder::class);
+         $this->call(PapelPermissaoSeeder::class);
+         $this->call(PapelUserSeeder::class);
+         $this->call(MesaSeeder::class);
+        ;
+         
     }
 }

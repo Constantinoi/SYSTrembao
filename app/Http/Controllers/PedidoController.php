@@ -5,13 +5,19 @@ namespace App\Http\Controllers;
 use App\Pedido;
 use App\Produto;
 use App\PedidoProduto;
+use App\Mesa;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
     
     public function index(){
-       
+        //$pedidos = Pedido::whereDate('created_at', today())->get(); 
+
+        // $pedido = Pedido::latest()->first();
+        
+                		
+        // dd($pedidos);
     }
     
     public function show(Request $request){
@@ -29,34 +35,36 @@ class PedidoController extends Controller
         return ($produtos_json);
     }
     
-    public function welcome(){          
-
-        $pedidos = Pedido::where('status','A')->get()->sortKeysDesc();
-        // dd($pedidos);
-        return view ('welcome', compact('pedidos'));
-    }
-  
-    public function create()
-    {     
+   
+    public function createMesa(Mesa $mesa){
         $produtos = Produto::all();
+        $mesas = Mesa::where('status','A')->get()->sort();
+        if($mesa){
+            //dd($mesa);
+            return view('pedido.create', compact('produtos','mesa','mesas')); 
+        }
+
+    }
+    public function create(){     
+        $produtos = Produto::all();
+        $mesas = Mesa::where('status','A')->get()->sort();
       
-        return view('pedido.create', compact('produtos')); 
+        return view('pedido.create', compact('produtos','mesas')); 
     }
 
     public function store(Request $request){   
        
         $produtos_json = $request->input('produtos'); 
         $valor_total = $request->input('valor_total');
-        
+        $mesa_id = $request->input('mesa_id');
+
         // método que transforma JSON em uma array PHP associativa
         $produtos = json_decode($produtos_json, true);
         //print_r($produtos);       // Dump all data of the Array
         
         //criar pedido
-        $pedido = Pedido::create([
-            'status' => 'A',
-            'valor_total' => $valor_total
-        ]);
+        $pedido = Pedido::novoPedido($valor_total, $mesa_id);
+       
         //verifica se existe um pedido
         if($pedido){
             //insere todos os produtos da array no pedido
@@ -68,11 +76,19 @@ class PedidoController extends Controller
                                         'quantidade' => $value['qtd'], 
                                         'valor' =>  $value['valor']                                                                                                
                                         ]);
-            }           
+            }
+
+        $mesa = Mesa::find($mesa_id);
+
+        $mesa->status = 'F';
+
+        $mesa->save();           
         }     
+
+        
      
-        // retorna a array de produtos no formato json 
-        return response()->json($produtos);       
+        // retorna o pedido no formato json 
+        return response()->json($pedido);       
     }  
 
     public function edit (Pedido $pedido)
@@ -94,6 +110,9 @@ class PedidoController extends Controller
         $pedido = Pedido::find($pedido_id);
          ////////// deleta todos os produtos       ///////////
         $pedido->produtos()->detach();
+        //////////////// atualiza o novo valorTotal //////////////
+        $pedido->valor_total = $valor_total;
+        $pedido->save();
        
         
         // método que transforma JSON em uma array PHP associativa
@@ -122,12 +141,18 @@ class PedidoController extends Controller
     }
 
  
-
-     public function destroyAll(Request $request){
+    //cancela Pedido
+     public function cancelaPedido(Request $request){
 
         $pedido_id = $request->input('pedido_id'); 
         $pedido = Pedido::find($pedido_id);
-        $pedido->produtos()->detach();
+        $pedido->status = 'C';
+        $pedido->save();
+        
+        $mesa = Mesa::find($pedido->mesa_id);
+        $mesa->status = 'A';
+        $mesa->save();
+
         $pedido->delete();
 
         
@@ -136,8 +161,19 @@ class PedidoController extends Controller
         ]);
 
      }
-     public function destroy(){
+     public function destroy(Request $request ){
+        $pedido_id = $request->input('pedido_id'); 
+        $pedido = Pedido::find($pedido_id); 
+        $pedido->status = 'F';
+        $pedido->save();
 
+        $mesa = Mesa::find($pedido->mesa_id);
+        $mesa->status = 'A';
+        $mesa->save();
+        
+        return response()->json([
+            'success' => 'Record has been deleted successfully!'
+        ]);
     }
     // public function produtoDestroy($pedido_id,$produto_id)
     // {

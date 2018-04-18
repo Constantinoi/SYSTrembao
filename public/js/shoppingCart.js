@@ -25,12 +25,10 @@
         // String  to JSON  
         this.cart = JSON.parse(localStorage.getItem("shoppingCart"));   
     };
-
     loadCart();
     // END*************************** Private methods and properties ******************************END //  
     
-    // *************************** Public methods and properties ****************************** //  
-   
+    // *************************** Public methods and properties ****************************** //     
     var obj = {};
 
     // add um produto

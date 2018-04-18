@@ -2,18 +2,63 @@
 
 @section('conteudo')
 
-<div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Pedido <small>Monte o pedido!</small></h3>
+  <div class="">  
+    <div class="page-title">
+      <div class="title_left">
+        <h3>Pedido <small>Monte o pedido!</small></h3>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+        <div class="row">
+              <div class="col-md-10  col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><i class="fa fa-align-left"></i> Informações <small>Mesa | Tipo | Cliente</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li> 
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <form class="form-inline">
+                      <div class="form-group">
+                        <label class="" for="mesa_id">Mesa: 
+                        <select class="" name="mesa_id" id="mesa_id">
+                              
+                              @foreach($mesas as $valor)
+                                @if(isset($mesa) && $mesa->numero === $valor->numero )
+                                  <option value="{{$valor->id}}" selected>{{$valor->numero}}</option>
+                                @else
+                                  <option value="{{$valor->id}}" >{{$valor->numero}}</option>
+                                @endif    
+                              @endforeach                           
+                            
+                        </select>
+                        </label>
+                      </div>
+                      <div class="form-group">
+                        <label class="" for="tipo_pedido">Tipo: 
+                          <select id="tipo_pedido" name="tipo_pedido">
+                            <option value="Local">Local</option>
+                            <option value="Viagem">Viagem</option>
+                            <option value="Delivery">Delivery</option>                          
+                          </select>
+                        </label>    
+                      </div>
+                      <div class="form-group">
+                          <label class="" for="cliente_id">Cliente:                          
+                          <input name"cliente_id" type="text" disabled>
+                          </label>   
+                      </div>
+                        <button class="btn btn-primary fa fa-ok"> Escolher </button>
+                        <button class="btn btn-success fa fa-plus"> Cadastrar Cliente</button>                        
+                    </form>                 
+                  </div>
+                </div>
               </div>
+            
 
-          </div>
-          
-
-            <div class="clearfix"></div>
-
-    <div class="row">
               <div class="col-md-10  col-sm-6 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
@@ -30,7 +75,7 @@
                           </li>
                         </ul>
                       </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                     
                       </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -47,20 +92,16 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($produtos as $produto)
-                     
+                        @foreach($produtos as $produto)                     
                         <tr>
                             <td name="prod_nome" >{{$produto->nome}}</td>
                             <td name="prod_descr" >{{$produto->descricao}}</td>
                             <td name="prod_valor" >{{$produto->valor}}</td>
                             <td><button data-id="{{$produto->id}}" data-nome="{{$produto->nome}}"  data-valor="{{$produto->valor}}"   class="add-to-cart btn btn-primary btn-xs"> Adicionar </button></td>
-
-                        </tr>
-                        
+                        </tr>                        
                        @endforeach                        
                       </tbody>
                     </table>
-
                   </div>
                 </div>
               </div>
@@ -72,18 +113,7 @@
                     <h2>Pedido <small>Detalhes do Pedido</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
+                      </li>                      
                     </ul>
                     <div class="clearfix"></div>
                   </div>
@@ -101,7 +131,7 @@
                         {{csrf_field()}} 
                        
                         <tbody id="show-cart">
-                          
+                            <!-- Ajax popula aqui -->
                         </tbody>
                     </table>
                     <tfoot >
@@ -112,11 +142,12 @@
                         <div class="col-md-offset-10">
                             <button id="finish-cart" class="btn btn-success glyphicon glyphicon-ok"> Finalizar</button>    
                         </div>               
-                    </tfood>
+                    </tfoot>
                      <!--  </form>  --> 
                   </div>
                 </div>
               </div>
+              
 
 @endsection
 
@@ -184,15 +215,18 @@
         var cartArray = shoppingCart.listCart();
         //alert(cartArray);
         var cart = JSON.stringify(cartArray);
-        alert(cart);
+        //alert(cart);
         var valorTotal = shoppingCart.totalCost();
-       
+        mesa_id = $('#mesa_id').val();
+        //alert(mesa_id);
+
         $.ajax({
             type: "POST",
             url: "/pedido/store",
             data: { 
               produtos : cart,
-              valor_total : valorTotal
+              valor_total : valorTotal,
+              mesa_id : $('#mesa_id ').val()
               },
             dataType: "json",
             

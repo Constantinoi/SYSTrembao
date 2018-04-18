@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Permissao;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -23,8 +24,17 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
-
-        //
-    }
+        foreach ($this->listaPermissoes() as $permissao) {
+            Gate::define($permissao->nome,function($user) use($permissao){
+           return $user->temUmPapelDestes($permissao->papeis);
+            });
+       }
+  
+      }
+  
+      public function listaPermissoes()
+      {
+        return Permissao::with('papeis')->get();
+       }
+    
 }

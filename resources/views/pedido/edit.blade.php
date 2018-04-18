@@ -252,10 +252,11 @@
     $("#finish-cart").click(function(event){
         // cópia do cart
         var cartArray = shoppingCart.listCart();
-        //alert(cartArray);
+        // JSON array no formato String
         var cart = JSON.stringify(cartArray);
        // alert(cart);
         var valorTotal = shoppingCart.totalCost();
+        
        
         $.ajax({
             type: "POST",
@@ -272,7 +273,7 @@
                 var gg= JSON.stringify(data);
                 var loc = window.location;
                 window.location = null;
-               // window.location = "welcome";
+               // redirect para a home
                 window.location ="/";
             },
             error: function(data) { // What to do if we fail
