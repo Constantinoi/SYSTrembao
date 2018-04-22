@@ -35,13 +35,15 @@ class HomeController extends Controller
         }//se não, verificar se existem mesas fechadas com datas anteriores e liberar
         else{
             $mesas = Mesa::all();
-           // $mesas->sortBy('numero');
-            // dd($mesas);
+            $mesas->sortBy('numero');
+            
             foreach($mesas as $mesa){
                 if($mesa->status === 'F'){
                     $mesa->status = 'A';
+                    $mesa->save();
                 }
             }
+            //dd($mesas);
             return view ('home', compact('pedidos','mesas'));   
         }
     }
