@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PapelRequest;
+use App\Http\Requests\PermissaoRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\User;
 use App\Papel;
 use App\Permissao;
-use Validator;
+
 
 class PapelController extends Controller
 { public function index()
     {
       
-      if(Gate::denies('Lista de papéis')){
+      if(Gate::denies('Administrador')){
         abort(403,"Não autorizado!");
       }
 
@@ -25,7 +27,7 @@ class PapelController extends Controller
 
     public function permissao($id)
     {
-      if(Gate::denies('Editar papel')){
+      if(Gate::denies('Administrador')){
         abort(403,"Não autorizado!");
       }
 
@@ -37,7 +39,7 @@ class PapelController extends Controller
 
     public function permissaoStore(Request $request,$id)
     {
-        if(Gate::denies('Editar papel')){
+        if(Gate::denies('Administrador')){
           abort(403,"Não autorizado!");
         }
         $papel = Papel::find($id);
@@ -49,7 +51,7 @@ class PapelController extends Controller
 
     public function permissaoDestroy($id,$permissao_id)
     {
-      if(Gate::denies('Editar papel')){
+      if(Gate::denies('Administrador')){
         abort(403,"Não autorizado!");
       }
 
@@ -68,7 +70,7 @@ class PapelController extends Controller
      */
     public function create()
     {
-      if(Gate::denies('Criar papel')){
+      if(Gate::denies('Administrador')){
         abort(403,"Não autorizado!");
       }
 
@@ -83,10 +85,10 @@ class PapelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PapelRequest $request)
     {
 
-      if(Gate::denies('Criar papel')){
+      if(Gate::denies('Administrador')){
         abort(403,"Não autorizado!");
       }
 
@@ -118,7 +120,7 @@ class PapelController extends Controller
      */
     public function edit($id)
     {
-      if(Gate::denies('Editar papel')){
+      if(Gate::denies('Administrador')){
         abort(403,"Não autorizado!");
       }
       if(Papel::find($id)->nome == "Admin"){
@@ -141,7 +143,7 @@ class PapelController extends Controller
      */
     public function update(Request $request, $id)
     {
-      if(Gate::denies('Editar papel')){
+      if(Gate::denies('Administrador')){
         abort(403,"Não autorizado!");
       }
 
@@ -163,7 +165,7 @@ class PapelController extends Controller
      */
     public function destroy($id)
     {
-      if(Gate::denies('Deletar papel')){
+      if(Gate::denies('Administrador')){
         abort(403,"Não autorizado!");
       }
 

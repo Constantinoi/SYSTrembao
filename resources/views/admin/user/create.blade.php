@@ -2,80 +2,63 @@
 
 @section('conteudo')    
 @can('Criar usuário')
-<div class="container">
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
-            <div class="panel-heading">Criar usuário</div>
+        <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-10 col-sm-10 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Criar usuário<small>cadastro de um novo usuário</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>                     
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                        
+                  <div class="x_content">
+                  <br/>
+                    <form class="form-horizontal" method="POST" action="{{ route('user.store') }}">
+                        {{ csrf_field() }}
 
-            <div class="panel-body">
-                <form class="form-horizontal" method="POST" action="{{ route('user.store') }}">
-                    {{ csrf_field() }}
+                         @include('admin.user._user')
 
-                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                        <label for="name" class="col-md-4 control-label">Nome</label>
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="control-label col-md-3 col-sm-3 col-xs-12">Senha</label>
 
-                        <div class="col-md-6">
-                            <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="password" type="password" class="form-control col-md-7 col-xs-12" name="password" required>
 
-                            @if ($errors->has('name'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
-                            @endif
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        <label for="email" class="col-md-4 control-label">E-Mail</label>
+                        <div class="form-group">
+                            <label for="password-confirm" class="control-label col-md-3 col-sm-3 col-xs-12">Confirmar Senha</label>
 
-                        <div class="col-md-6">
-                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                            @if ($errors->has('email'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="password-confirm" type="password" class="form-control col-md-7 col-xs-12" name="password_confirmation" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                        <label for="password" class="col-md-4 control-label">Senha</label>
-
-                        <div class="col-md-6">
-                            <input id="password" type="password" class="form-control" name="password" required>
-
-                            @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
+                        <div class="ln_solid"></div>
+                        
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <a href="{{ route('user.index') }}" class="btn btn-primary">Voltar</a>
+                                <button class="btn btn-warning" type="reset">Limpar</button>
+                                <button  type="submit" class="btn btn-success">Registrar</button>                              
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="password-confirm" class="col-md-4 control-label">Confirmar Senha</label>
-
-                        <div class="col-md-6">
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                        </div>
-                    </div>        
-
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
-                        <a href="{{ route('user.index') }}" class="btn btn-primary">Voltar</a>
-                            <button href="{{ url()->previous() }}" type="submit" class="btn btn-success">Registrar                               
-                            </button>
-                            
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                  </div>                 
+                </div>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
-</div>
 
 @endcan  
 

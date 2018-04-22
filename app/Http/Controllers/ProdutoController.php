@@ -19,6 +19,9 @@ class ProdutoController extends Controller
      */
     public function index()
     {
+        if(Gate::denies('Manter Produtos')){
+            abort(403,"Não autorizado!");
+        }  
         $produto = Produto::all();
         return view('produto.index',compact('produto'));
     }

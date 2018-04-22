@@ -1,39 +1,22 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\User;
 use App\Papel;
-use Validator;
 
 class UserController extends Controller
 {
-    protected function validarEdit($request){
-        $validator = Validator::make($request->all(),
-            ['name' => 'required|string|max:255',
-            'email' => 'nullable',
-            'password' => 'nullable',
-       
-       
-        ]);
-        return $validator;
-    }
-    protected function validarUsuario($request){
-        $validator = Validator::make($request->all(),
-            ['name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-       
-        ]);
-        return $validator;
-    }
+    
+   
 
     public function index()
     {
-        if(Gate::denies('Lista de usuários')){
+        if(Gate::denies('Administrador')){
             abort(403,"Não autorizado!");
           }
         $users = User::all();
@@ -48,7 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        if(Gate::denies('Criar usuário')){
+        if(Gate::denies('Administrador')){
             abort(403,"Não autorizado!");
         }       
         
@@ -63,17 +46,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-       if(Gate::denies('Criar usuário')){
+       if(Gate::denies('Administrador')){
            abort(403,"Não autorizado!");
-         }
-       $validator = $this->validarUsuario($request);
-       if($validator->fails()){
-           return redirect()->back()->withErrors($validator->errors());
-       }
-
-
+        }
+  
           $data = $request->all(); 
         
           $user = User::create(
@@ -83,10 +61,7 @@ class UserController extends Controller
                 'password' => bcrypt($data['password'])                    
                 ]);
 
-                             
-
             return redirect()->route('user.index');
-       
     }
 
     /**
@@ -108,18 +83,21 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if(Gate::denies('Editar usuário')){
+        if(Gate::denies('Administrador')){
             abort(403,"Não autorizado!");
-          }
-          $user = User::find($id);
+        }
 
-         // if($user->name  == "Admin"){
-         //   return redirect()->route('usuarios.index');
-         // }
-          
-          
+        $user = User::find($id);
+        
+        // try{
+        //     $password = $user->password;
+        //     $decrypted = decrypt($password);
+        //     $user->password = $decrypted;
+        // } catch (DecryptException $e) {
+        //     dd($e);
+        // }   
               
-          return view('admin.user.edit',compact('user'));
+        return view('admin.user.edit',compact('user'));
        
     }
 
@@ -130,15 +108,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        if(Gate::denies('Editar usuário')){
+        if(Gate::denies('Administrador')){
             abort(403,"Não autorizado!");
           }
-        $validator = $this->validarEdit($request);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator->errors());
-        }
+       
 
         if($request['name']){
             $data = $request->all();
@@ -164,7 +139,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {   
-        if(Gate::denies('Deletar usuário')){
+        if(Gate::denies('Administrador')){
             abort(403,"Não autorizado!");
           }
           $user = User::find($id)->delete();
@@ -173,7 +148,7 @@ class UserController extends Controller
       
     }
     public function remover($id){
-        if(Gate::denies('Deletar usuário')){
+        if(Gate::denies('Administrador')){
             abort(403,"Não autorizado!");
             
           }
@@ -192,7 +167,7 @@ class UserController extends Controller
 
    public function papel($id)
    {
-     if(Gate::denies('Editar usuário')){
+     if(Gate::denies('Administrador')){
        abort(403,"Não autorizado!");
      }
 
@@ -204,7 +179,7 @@ class UserController extends Controller
 
    public function papelStore(Request $request,$id)
    {
-       if(Gate::denies('Criar usuário')){
+       if(Gate::denies('Administrador')){
          abort(403,"Não autorizado!");
        }
        $usuario = User::find($id);
@@ -216,7 +191,7 @@ class UserController extends Controller
 
    public function papelDestroy($id,$papel_id)
    {
-     if(Gate::denies('Deletar usuário')){
+     if(Gate::denies('Administrador')){
        abort(403,"Não autorizado!");
      }
 

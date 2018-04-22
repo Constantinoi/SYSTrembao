@@ -17,9 +17,9 @@ class AdminController extends Controller
 
     public function index()
     {
-        // if(Gate::denies('Painel do Admin')){
-        //     abort(403,"Não autorizado!");
-        // }             
+        if(Gate::denies('Administrador')){
+            abort(403,"Não autorizado!");
+        }             
         $users = User::all();
         $papeis = Papel::all();            
         return view('admin.index',compact('users','papeis'));   
@@ -43,6 +43,9 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        if(Gate::denies('Administrador')){
+            abort(403,"Não autorizado!");
+        }   
         $dados = $request->all();
         $user = User::create($dados);
         return redirect()->route('admin.index');

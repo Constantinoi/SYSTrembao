@@ -46,7 +46,7 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Data de Nascimento<span class="required">*</span></label>
+                        <label for="data_nascimento" class="control-label col-md-3 col-sm-3 col-xs-12">Data de Nascimento<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input name="data_nascimento" class="date form-control col-md-7 col-xs-12" type="text" id="data_nascimento" required="required" value="{{old('data_nascimento')}}">
                         </div>
@@ -76,59 +76,58 @@
                         </div>
                       </div>
                       <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Cep<span class="required">*</span></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cep">Cep<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" name="cep" onblur="pesquisacep(this.value);" class="form-control col-md-7 col-xs-12" id="cep" required="required" value="{{old('cep')}}">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Logradouro<span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="logradouro">Logradouro<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" name="logradouro" required="required" id="logradouro" class="form-control col-md-7 col-xs-12"  value="{{old('logradouro')}}">
                         </div>
                       </div>
                       
-                                         
+                      <div class="row">                 
                         <div class="col-md-4 col-sm-6 col-xs-6 col-md-offset-2">
                           <div class="form-group">
-                            <label for="numero" class="control-label col-md-3 col-sm-3 col-xs-12">Número<span class="required">*</span></label>
+                            <label for="num" class="control-label col-md-3 col-sm-3 col-xs-12">Número<span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <input  class="form-control col-md-7 col-xs-12" type="text" name="num" id="num"  value="{{old('num')}}">
                             </div>
                           </div>
                         </div>
-
-                        <div class=" col-sm-4 ">
+                        
+                        <div class="col-md-4 col-sm-4 col-xs-6">
                           <div class="form-group">
-                            <label for="numero" class="control-label col-md-3 col-sm-3 col-xs-12">Bairro<span class="required">*</span></label>
+                            <label for="bairro" class="control-label col-md-3 col-sm-3 col-xs-12">Bairro<span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <input  class="form-control col-md-7 col-xs-12" type="text" id="bairro" name="bairro" required="required"  value="{{old('bairro')}}">
                             </div>
                           </div>
                         </div>
+                      </div>
   
                      
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Complemento</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="complemento">Complemento</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" name="complemento"  class="form-control col-md-7 col-xs-12"  value="{{old('complemento')}}">
                         </div>
                     </div>
                       
-                      <div class="ln_solid"></div>                 
-                  </div>
-              </div>
-               
-                 
-                   
-                
+                      <div class="ln_solid"></div>      
+
                       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <button type="submit" class="btn btn-success">Cadastrar</button>
 						              <button class="btn btn-primary" type="reset">Limpar</button>          
                       </div>
-                    </form>
-                     
+
+                    </form>           
+                  </div>
+              </div>
+                                
                   </div>             
                 </div>       
               </div>     

@@ -12,6 +12,7 @@ class Pedido extends Model
     // status do pedido  = A = aberto, F = fechado, C = cancelado
 
     
+    
 
     //  Métodos de Relacionamento   //
     public function mesa(){
@@ -77,14 +78,16 @@ class Pedido extends Model
 
     //verifica o número do último pedido
     public static function ultimoPedido(){
-        //retorna uma collection com todos os pedidos realizados no dia
-        // $pedido = Pedido::whereDate('created_at', today()); 
+        //retorna o último pedido  realizado no dia
+        $pedido = Pedido::whereDate('created_at', today())->latest()->first(); 
 
-        //retorna o último pedido realizado coms a data de hoje
-        $pedido = Pedido::latest()->first();
         return $pedido;
     }
    
+    public static function listaPedidos(){
+        
+       
+    }
 
     public function addProdutos($produtos){
 

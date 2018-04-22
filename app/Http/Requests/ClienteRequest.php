@@ -17,11 +17,13 @@ class ClienteRequest extends FormRequest
     }
     public function Messages(){
         return [
-            'nome.alpha'=>'O Campo Nome deve Conter apenas Letras',
+            'nome.required'=>'Informe o nome do Cliente',
             'nome.min'=>'Mínimo 4 Caracteres',
             'nome.max'=>'Máximo 100 Caracteres',
-            'telefone_1.numeric'=>'O Campo Telefone deve Conter apenas Números',
-        'telefone_2.numeric'=>'O Campo Celular deve Conter apenas Números'
+            'telefone_1.min'=>'O Campo Telefone deve Conter no mínimo 14 dígitos',
+            'telefone_1.max'=>'O Campo Telefone deve Conter até 15 dígitos',
+            'telefone_2.min'=>'O Campo Celular deve Conter no mínimo 15 dígitos',
+            'telefone_2.max'=>'O Campo Celular deve Conter até 15 dígitos'
         ];
     }
     /**
@@ -32,9 +34,9 @@ class ClienteRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'=> 'alpha|min:4|max:100',
-            'telefone_1'=>'numeric',
-            'telefone_2'=>'numeric'
+            'nome'=> 'required|min:4|max:100',
+            'telefone_1'=>'required|min:14|max:15',
+            'telefone_2'=>'required|min:15|max:15'
         ];
     }
 }

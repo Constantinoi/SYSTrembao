@@ -229,7 +229,7 @@
         
         $.ajax({
             type: "post",
-            url: "/pedido/destroy/all",
+            url: "/pedido/cancelaPedido",
             data: {
                     pedido_id :  $(this).attr("data-id"),
                     _method : "delete"

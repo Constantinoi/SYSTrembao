@@ -11,7 +11,7 @@
 	@endif
 <div class="container">
 	<div class="row"> 
-		<div class='col-md-10 col-md-offset-2'>
+		<div class='col-md-12 col-sm-12 col-xs-12'>
 			<div class="panel panel-default">
 				<div class="panel-heading"><h3>Remover o Usuário</h3></div>
 					<div class="panel-body">

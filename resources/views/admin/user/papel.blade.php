@@ -1,46 +1,69 @@
 @extends('layouts.base')
 
 @section('conteudo')
+<a href="{{ route('papeis.index') }}" class="btn btn-primary">Voltar</a>
+            <div class="col-md-10 col-sm-10 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Papéis <small>Selecione o Papel</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
 
-    <div class="row col-md-8 col-sm-6 col-xs-12 ">
-    <div class="x_panel">
-		<div class="x_title"><h3>Lista de Papéis para {{$usuario->name}}</h3></div>
-
-		        <div class="col-md-10  col-md-offset-1  ">
-                <div class="panel panel">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">Selecione o Papel </h2>
-                    </div>
-                    <form class="form-horizontal" action="{{route('user.papel.store',$usuario->id)}}" method="post">
-                        {{ csrf_field() }}
-                        <div class="input-field">
-                            <select name="papel_id">
-                                @foreach($papel as $valor)
-                                <option value="{{$valor->id}}">{{$valor->nome}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <br>
-                            <button class="btn btn-success">Adicionar</button>
-                            <a href="{{ route('user.index') }}" class="btn btn-primary">Voltar</a>
-                    </form>
-                </div>
-            </div>
-
-	
-		<div class="row">
-            <div class="col-md-10  col-md-offset-1">
-                <table class="table table-bordered">
-                    <thead>
+                    <table id="" class="table">
+                      <thead>
                         <tr>
+                          <th>Nome</th>
+                          <th>Descrição</th>
+                          <th>Ação</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <form class="form-horizontal" action="{{route('user.papel.store',$usuario->id)}}" method="post">
+                            {{ csrf_field() }}
+                            @foreach($papel as $valor)
+                                <tr>                          
+                                    <td>{{$valor->nome}}</td>
+                                    <td>{{$valor->descricao}}</td>
+                                    <td> 
+                                        <button name="papel_id" class="btn btn-primary"  value="{{$valor->id}}">Adicionar</button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </form>
+                      </tbody>
+                    </table>                 
 
+                  </div>
+                </div>
+              </div>
+
+         <div class="col-md-10 col-sm-10 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Lista de Papéis para {{$usuario->name}}<small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <table id="" class="table">
+                      <thead>
+                        <tr>
                             <th>Papel</th>
                             <th>Descrição</th>
                             <th>Ação</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($usuario->papeis as $papel)
+                      </thead>
+                      <tbody>
+                      @foreach($usuario->papeis as $papel)
                         <tr>
                             <td>{{ $papel->nome }}</td>
                             <td>{{ $papel->descricao }}</td>
@@ -55,13 +78,13 @@
                             </td>
                         </tr>
                     @endforeach
-                    </tbody>
-                </table>
-            </div>
-           
-		</div>
+                      </tbody>
+                    </table>
 
-	</div>
-    </div>
+                  </div>
+                </div>
+              </div>
+
+    
     
 @endsection

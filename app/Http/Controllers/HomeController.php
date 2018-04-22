@@ -24,13 +24,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $pedido = Pedido::latest()->first();
-    
-        $pedidos = Pedido::where('status','A')->whereDate('created_at' ,today())->get()->sortKeys();                  
-                    
-        // $pedidos = Pedido::where('status','A')->get()->sortKeys();
+        //collection com pedidos de hj
+        $pedidos = Pedido::where('status','A')->whereDate('created_at' , today())->get()->sort();
         $mesas = Mesa::where('status','A')->get()->sort();
-        //   dd($pedidos);
-        return view ('home', compact('pedidos','mesas'));
+        
+        //se existirem pedidos HOJE, Listar
+        if($pedidos->isNotEmpty()){  
+            //dd($pedidos);          
+            return view ('home', compact('pedidos','mesas'));
+        }//se não, verificar se existem mesas fechadas com datas anteriores e liberar
+        else{
+            $mesas = Mesa::all();
+           // $mesas->sortBy('numero');
+            // dd($mesas);
+            foreach($mesas as $mesa){
+                if($mesa->status === 'F'){
+                    $mesa->status = 'A';
+                }
+            }
+            return view ('home', compact('pedidos','mesas'));   
+        }
     }
 }

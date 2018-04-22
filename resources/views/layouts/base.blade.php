@@ -63,7 +63,9 @@
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <h3>Painel de ações</h3>
+                
                 <ul class="nav side-menu">
+                @can('Administrador')
                  <li><a><i class="fa fa-dashboard"></i> Administrativo <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{route ('user.index')}}">Usuários</a></li>
@@ -71,6 +73,8 @@
                       
                     </ul>
                   </li>
+                @endcan
+                @can('Manter Pedidos')
                   <li><a><i class="fa fa-list"></i> Pedidos <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('pedido.create') }}">Iniciar Pedido</a></li>
@@ -78,6 +82,8 @@
                       
                     </ul>
                   </li>
+                  @endcan
+                  @can('Manter Produtos')
                   <li><a><i class="fa fa-cutlery"></i> Produtos <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="#">Cadastrar Produto</a></li>
@@ -85,12 +91,15 @@
                       
                     </ul>
                   </li>
+                  @endcan
+                  @can('Manter Clientes')
                   <li><a><i class="fa fa-users"></i> Clientes <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{route('cliente.create')}}">Cadastrar Cliente</a></li>
                       <li><a href="{{route('cliente.index')}}">Lista de Clientes</a></li>             
                     </ul>
                   </li>
+                  @endcan
                 </ul>
               </div>
             </div>
@@ -209,10 +218,25 @@
     <!-- PNotify -->
     <script src="{{asset('pnotify/dist/pnotify.js')}}"></script>
     <script src="{{asset('pnotify/dist/pnotify.buttons.js')}}"></script>
-    <script src="{{('pnotify/dist/pnotify.nonblock.js')}}"></script>
+    <script src="{{asset('pnotify/dist/pnotify.nonblock.js')}}"></script>
 
     <!-- Custom Theme Scripts -->
     <script src="{{asset('build/js/custom.min.js')}}"></script>  
+
+     <!-- Datatables -->
+     <script src="{{asset('datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{asset('datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('datatables.net-buttons-bs/js/buttons.bootstrap.min.js')}}"></script>
+    <script src="{{asset('datatables.net-buttons/js/buttons.flash.min.js')}}"></script>
+    <script src="{{asset('datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
+    <script src="{{asset('datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
+    <script src="{{asset('datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
+    <script src="{{asset('datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
+    <
     
     <!-- Carrinho de compras -->
     <script src="{{asset('js/shoppingCart.js')}}"></script>
@@ -225,62 +249,8 @@
     });
     </script>
     
-<<<<<<< HEAD
-    @yield('scripts')
-=======
-<<<<<<< HEAD
-    {{--AJAX add Formulario produto--}}
-    <script type="text/javascript">
-      $(document).on('click','.create-modal', function(){
-        $('#create').modal('show');
-        $('.form-horizontal').show();
-        $('.modal-title').text('Adicionar Produto');
-      });
-      //function Add(Save)
-       $("#add").click(function() {
-    $.ajax({
-      type: 'POST',
-      url: 'addPost',
-      data: {
-        '_token': $('input[name=_token]').val(),
-        'nome': $('input[name=nome]').val(),
-        'descricao': $('input[name=descricao]').val(),
-        'valor': $('input[name=valor]').val()
-      },
-      success: function(data){
-        if ((data.errors)) {
-          $('.error').removeClass('hidden');
-          $('.error').text(data.errors.nome);
-          $('.error').text(data.errors.descricao);
-          $('.error').text(data.errors.valor);
-        } else {
-          $('.error').remove();
-          $('#table').append("<tr class='post" + data.id + "'>"+
-          "<td>" + data.id + "</td>"+
-          "<td>" + data.nome + "</td>"+
-          "<td>" + data.descricao + "</td>"+
-          "<td>" + data.valor + "</td>"+
-          "<td><button class='show-modal btn btn-info btn-sm' data-id='" + data.id + "' data-nome='" + data.nome + "' data-descricao='" + data.descricao +"' data-valor='" + data.valor + "'><span class='fa fa-eye'></span></button><button class='edit-modal btn btn-warning btn-sm' data-id='" + data.id + "' data-nome='" + data.nome + "' data-descricao='" + data.descricao +"' data-valor='" + data.valor + "'><span class='glyphicon glyphicon-pencil'></span></button><button class='delete-modal btn btn-danger btn-sm' data-id='" + data.id + "' data-nome='" + data.nome + "' data-descricao='" + data.descricao +"' data-valor='" + data.valor + "'><span class='glyphicon glyphicon-trash'></span></button></td>"+
-          "</tr>");
-        }
-        },
-        });
-        $('#nome').val('');
-        $('#descricao').val('');
-        $('#valor').val('');
-    });
-    
-      $(document).on('click', '.show-modal', function() {
-        $('#show').modal('show');
-        $('.modal-title').text('Show Post');
-        });
-      </script>
-    
-      @yield('scripts');
-=======
     @yield('scripts');
->>>>>>> 4fbd9fd2c36db3a118fdd194d27e754a354d37af
->>>>>>> fca51f20b15c8ce4b63a737f5c8bcbde97218a88
+
 
       </div>
       <div class="clearfix"></div>

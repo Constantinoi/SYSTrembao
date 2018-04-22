@@ -4,33 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Pedido;
 use App\Produto;
-use App\PedidoProduto;
 use App\Mesa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PedidoController extends Controller
 {
-<<<<<<< HEAD
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('produto.index', compact('produtos'));
-=======
     
     public function index(){
-        //$pedidos = Pedido::whereDate('created_at', today())->get(); 
 
+        if(Gate::denies('Manter Pedidos')){
+            abort(403,"Não autorizado!");
+        }  
+        // $pedidos = Pedido::whereDate('created_at', today())->get(); 
+        $pedidos = Pedido::where('status', 'A')->get(); 
         // $pedido = Pedido::latest()->first();
         
                 		
-        // dd($pedidos);
+         dd($pedidos);
     }
     
     public function show(Request $request){
+
+        if(Gate::denies('Manter Pedidos')){
+            abort(403,"Não autorizado!");
+        }  
 
         $pedido_id = $request->input('id');
         $pedido = Pedido::find($pedido_id);
@@ -43,11 +41,13 @@ class PedidoController extends Controller
         $produtos_json = json_encode($produtos);
 
         return ($produtos_json);
->>>>>>> 4fbd9fd2c36db3a118fdd194d27e754a354d37af
     }
     
    
     public function createMesa(Mesa $mesa){
+        if(Gate::denies('Manter Pedidos')){
+            abort(403,"Não autorizado!");
+        }  
         $produtos = Produto::all();
         $mesas = Mesa::where('status','A')->get()->sort();
         if($mesa){
@@ -57,6 +57,9 @@ class PedidoController extends Controller
 
     }
     public function create(){     
+        if(Gate::denies('Manter Pedidos')){
+            abort(403,"Não autorizado!");
+        }  
         $produtos = Produto::all();
         $mesas = Mesa::where('status','A')->get()->sort();
       
@@ -64,6 +67,9 @@ class PedidoController extends Controller
     }
 
     public function store(Request $request){   
+        if(Gate::denies('Manter Pedidos')){
+            abort(403,"Não autorizado!");
+        }  
        
         $produtos_json = $request->input('produtos'); 
         $valor_total = $request->input('valor_total');
@@ -88,12 +94,12 @@ class PedidoController extends Controller
                                         'valor' =>  $value['valor']                                                                                                
                                         ]);
             }
-
+        
         $mesa = Mesa::find($mesa_id);
 
         $mesa->status = 'F';
 
-        $mesa->save();           
+        $mesa->update();           
         }     
 
         
@@ -104,6 +110,10 @@ class PedidoController extends Controller
 
     public function edit (Pedido $pedido)
     {
+
+        if(Gate::denies('Manter Pedidos')){
+            abort(403,"Não autorizado!");
+        }  
         
         $produtos = Produto::all();
 
@@ -112,21 +122,27 @@ class PedidoController extends Controller
 
     public function update(Request $request)
     {
+
+        if(Gate::denies('Manter Pedidos')){
+            abort(403,"Não autorizado!");
+        }  
         $produtos_json = $request->input('produtos'); 
         $valor_total = $request->input('valor_total');
 
 
         $pedido_id = $request->input('pedido_id');
-        //////////// pega o pedido    /////////////
+        // pega o pedido    
         $pedido = Pedido::find($pedido_id);
-         ////////// deleta todos os produtos       ///////////
+
+         // deleta todos os produtos       
         $pedido->produtos()->detach();
-        //////////////// atualiza o novo valorTotal //////////////
+
+        /// atualiza o novo valorTotal 
         $pedido->valor_total = $valor_total;
         $pedido->save();
        
         
-        // método que transforma JSON em uma array PHP associativa
+        // método que transforma uma array JSON em uma array PHP associativa
         $produtos = json_decode($produtos_json, true);
         if($produtos == null){
             $pedido = $pedido->delete();
@@ -146,7 +162,7 @@ class PedidoController extends Controller
                                         ]);
             }           
         }     
-     
+        
         // retorna a array de produtos no formato json 
         return response()->json($produtos);       
     }
@@ -155,6 +171,10 @@ class PedidoController extends Controller
     //cancela Pedido
      public function cancelaPedido(Request $request){
 
+        if(Gate::denies('Manter Pedidos')){
+            abort(403,"Não autorizado!");
+        }  
+
         $pedido_id = $request->input('pedido_id'); 
         $pedido = Pedido::find($pedido_id);
         $pedido->status = 'C';
@@ -162,7 +182,7 @@ class PedidoController extends Controller
         
         $mesa = Mesa::find($pedido->mesa_id);
         $mesa->status = 'A';
-        $mesa->save();
+        $mesa->update();
 
         $pedido->delete();
 
@@ -173,6 +193,10 @@ class PedidoController extends Controller
 
      }
      public function destroy(Request $request ){
+
+        if(Gate::denies('Manter Pedidos')){
+            abort(403,"Não autorizado!");
+        }  
         $pedido_id = $request->input('pedido_id'); 
         $pedido = Pedido::find($pedido_id); 
         $pedido->status = 'F';
@@ -180,7 +204,7 @@ class PedidoController extends Controller
 
         $mesa = Mesa::find($pedido->mesa_id);
         $mesa->status = 'A';
-        $mesa->save();
+        $mesa->update();
         
         return response()->json([
             'success' => 'Record has been deleted successfully!'
@@ -249,6 +273,11 @@ class PedidoController extends Controller
 
     public function produtoStore(Request $request)
     {
+
+        if(Gate::denies('Manter Pedidos')){
+            abort(403,"Não autorizado!");
+        }  
+        
         $dados = $request->all();
         $produtos = [];
         dd($dados);

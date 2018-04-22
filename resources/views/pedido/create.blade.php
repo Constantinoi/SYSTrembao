@@ -8,12 +8,13 @@
         <h3>Pedido <small>Monte o pedido!</small></h3>
       </div>
     </div>
+    
     <div class="clearfix"></div>
         <div class="row">
               <div class="col-md-10  col-sm-6 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2><i class="fa fa-align-left"></i> Informações <small>Mesa | Tipo | Cliente</small></h2>
+                    <h2><i class="fa fa-align-left"></i> Informações <small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li> 
@@ -80,6 +81,7 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>
+                  
                   <div class="x_content">
 
                     <table class="table table-hover">

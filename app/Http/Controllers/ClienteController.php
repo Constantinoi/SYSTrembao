@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Request\ClienteRequest;
+use App\Http\Requests\ClienteRequest;
 use App\Cliente;
 use App\Endereco;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
 
 
 class ClienteController extends Controller
@@ -18,7 +19,9 @@ class ClienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-
+        if(Gate::denies('Manter Clientes')){
+            abort(403,"Não autorizado!");
+        }   
 
         $qtd = $request['qtd'] ?: 8;
         $page = $request['page'] ?: 1;
@@ -45,6 +48,9 @@ class ClienteController extends Controller
      */
     public function create()
     {
+        if(Gate::denies('Manter Clientes')){
+            abort(403,"Não autorizado!");
+        }   
         //$enderecos = Endereco::all();
         return view('cliente.create');
     }
@@ -55,21 +61,11 @@ class ClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClienteRequest $request)
     {
-
-        // criar classe RequestCliente
-
-        $this->Validate($request,[
-            
-            'nome'=> 'alpha|min:4|max:100',
-    
-        ],[
-        'nome.alpha'=>'O Campo Nome deve Conter apenas Letras',
-        'nome.min'=>'Mínimo 4 Caracteres',
-        'nome.max'=>'Máximo 100 Caracteres'
-        ]);
-
+        if(Gate::denies('Manter Clientes')){
+            abort(403,"Não autorizado!");
+        }   
         $dados = $request->all();
 
         //dd($dados);
@@ -89,6 +85,9 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
+        if(Gate::denies('Manter Clientes')){
+            abort(403,"Não autorizado!");
+        }   
         $cliente = Cliente::find($id);
  
         return view('cliente.show', compact('cliente'));
@@ -102,6 +101,9 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
+        if(Gate::denies('Manter Clientes')){
+            abort(403,"Não autorizado!");
+        }   
        $endereco = Endereco::all();
        $cliente = Cliente::find($id);
  
@@ -117,6 +119,9 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(Gate::denies('Manter Clientes')){
+            abort(403,"Não autorizado!");
+        }   
  
         $cliente = Cliente::find($id);
         $endereco=Endereco::find($cliente->endereco_id);
@@ -139,11 +144,17 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
+        if(Gate::denies('Manter Clientes')){
+            abort(403,"Não autorizado!");
+        }   
         Cliente::find($id)->delete();
         return redirect()->route('cliente.index');
     }
     public function remover($id)
     {
+        if(Gate::denies('Manter Clientes')){
+            abort(403,"Não autorizado!");
+        }   
         $cliente = Cliente::find($id);
         
 
