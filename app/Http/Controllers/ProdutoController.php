@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Request\ProdutoRequest;
 use App\Produto;
-use Validator;
-use response;
-use illuminate\support\Facedes\input;
-use App\http\Requests;
+use App\Tipo;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
+use Intervention\Image\ImageManagerStatic as Image; 
 
 
 class ProdutoController extends Controller
@@ -17,13 +18,25 @@ class ProdutoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        if(Gate::denies('Manter Produtos')){
-            abort(403,"Não autorizado!");
-        }  
-        $produto = Produto::all();
-        return view('produto.index',compact('produto'));
+    public function index(Request $request){
+
+
+        $qtd = $request['qtd'] ?: 8;
+        $page = $request['page'] ?: 1;
+        $buscar = $request['buscar'];
+ 
+        Paginator::currentPageResolver(function () use ($page){
+            return $page;
+        });
+ 
+        if($buscar){
+            $produtos = Produto::where('nome','=', $buscar)->paginate($qtd);
+        }else{  
+            $produtos =Produto::paginate($qtd);
+ 
+        }
+        $produtos = $produtos->appends(Request::capture()->except('page'));
+        return view('produtos.index', compact('produtos','tipo'));
     }
 
     /**
@@ -31,9 +44,11 @@ class ProdutoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(){
+    
+        $produtos = Produto::all();
+        $tipos = Tipo::all();
+        return view('Produtos.create', compact('tipos'));
     }
 
     /**
@@ -42,9 +57,28 @@ class ProdutoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+
+        $this->Validate($request,[
+            
+            'imagem'=> 'image',
+    
+        ]);
+        $dados = $request->all();   
+        $request->hasFile('imagem');
+        $imagem = $request->file('imagem');
+        $imagem_nome = time().$imagem->getClientOriginalName();
+        $imagem->move("imagem/",$imagem_nome);
+        
+       // $imagem = Image::make("imagem/".$imagem_nome)->resize(198,141)->save("imagem/_pequena".$imagem_nome);
+         
+        $auxNome = ("imagem/".$imagem_nome);
+        
+        $dados['imagem']= $auxNome;
+
+        Produto::create($dados);
+
+        return redirect()->route('produtos.index');
     }
 
     /**
@@ -54,7 +88,11 @@ class ProdutoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {}
+    {
+        $produto = Produto::find($id);
+ 
+        return view('produtos.show', compact('produto'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -64,7 +102,10 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-        //
+       $tipo = Tipo::all();
+       $produto = Produto::find($id);
+ 
+        return view('produtos.edit', compact('produto','tipo'));
     }
 
     /**
@@ -76,7 +117,23 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+ 
+        $produto = Produto::find($id);
+
+        $imagem = $request->file('imagem');
+        $imagem_nome = time().$imagem->getClientOrignalName();
+        $imagem->move("imagens/",$imagem_nome);
+
+        $tipo=Tipo::find($produto->tipo_id);
+
+        $dados = $request->all();
+        $produto->update($dados);
+        $tipo->update($dados);
+
+        
+         
+        return redirect()->route('produtos.index');
+    
     }
 
     /**
@@ -87,34 +144,17 @@ class ProdutoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Produto::find($id)->delete();
+        return redirect()->route('produtos.index');
     }
-    public function addPost(Request $request){
-      $rules = array(
-        'nome' => 'required',
-        'descricao' => 'required',
-        'valor' => 'required',
-      );
-        $validator = Validator::make ( Input::all(), $rules);
-        if ($validator->fails())
-        return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
+    public function remover($id)
+    {
+        $produto = Produto::find($id);
+        
 
-    else {
-        $produto = new Produto;
-        $produto->nome = $request->nome;
-        $produto->descricao = $request->descricao;
-        $produto->valor = $request->valor;
-        $produto->save();
-      return response()->json($produto);
+ 
+        return view('produtos.remove', compact('produto'));
     }
-}
-    public function editPost(request $request){
-        $produto = Produto::find ($request->id);
-        $produto->nome = $request->nome;
-        $produto->descricao = $request->descricao;
-        $produto->valor = $request->valor;
-        $produto->save();
-        return response()->json($produto);
-    }   
-
+    
+    
 }

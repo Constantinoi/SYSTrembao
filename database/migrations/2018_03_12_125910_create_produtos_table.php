@@ -19,11 +19,14 @@ class CreateProdutosTable extends Migration
             $table->string('descricao');
             $table->timestamps();
         });
-        Schema::create('produtos', function (Blueprint $table) {
+        chema::create('produtos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
             $table->string('descricao');
+            $table->string('imagem');
             $table->float('valor');
+            $table->integer('tipo_id')->unsigned();
+            $table->foreign('tipo_id')->references('id')->on('tipos')->onDelete('cascade');
             $table->timestamps();
         });
 

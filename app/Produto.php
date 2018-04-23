@@ -12,6 +12,14 @@ class Produto extends Model
    public function pedidos(){
        return $this->belongsToMany(Pedido::class);
    }
+   public function tipo(){
+        return $this->belongsTo('App\Tipo','tipo_id');
+        
+    }
+   public function imagem(){
+        return $this->hasMany('App\Imagem');
+        
+    }
 
    
 }
