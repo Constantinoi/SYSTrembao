@@ -89,6 +89,9 @@ class ProdutoController extends Controller
      */
     public function show($id)
     {
+        if(Gate::denies('Manter Produtos')){
+            abort(403,"Não autorizado!");
+        }  
         $produto = Produto::find($id);
  
         return view('produtos.show', compact('produto'));
