@@ -8,6 +8,7 @@ use App\Tipo;
 use Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
 
 class TipoController extends Controller
 {

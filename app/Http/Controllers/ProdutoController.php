@@ -9,6 +9,7 @@ use App\Tipo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Intervention\Image\ImageManagerStatic as Image; 
+use Illuminate\Support\Facades\Gate;
 
 
 class ProdutoController extends Controller
@@ -72,9 +73,9 @@ class ProdutoController extends Controller
         $imagem_nome = time().$imagem->getClientOriginalName();
         $imagem->move("imagem/",$imagem_nome);
         
-       // $imagem = Image::make("imagem/".$imagem_nome)->resize(198,141)->save("imagem/_pequena".$imagem_nome);
-         
-        $auxNome = ("imagem/".$imagem_nome);
+       $imagem = Image::make("imagem/".$imagem_nome)->resize(198,141)->save("imagem/_pequena".$imagem_nome);
+        
+       $auxNome = ("imagem/_pequena".$imagem_nome);
         
         $dados['imagem']= $auxNome;
 
@@ -124,7 +125,7 @@ class ProdutoController extends Controller
         $produto = Produto::find($id);
 
         $imagem = $request->file('imagem');
-        $imagem_nome = time().$imagem->getClientOrignalName();
+        $imagem_nome = time().$imagem->getClientOriginalName();
         $imagem->move("imagens/",$imagem_nome);
 
         $tipo=Tipo::find($produto->tipo_id);

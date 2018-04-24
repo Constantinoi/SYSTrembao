@@ -16,13 +16,13 @@ class CreateProdutosTable extends Migration
         Schema::create('tipos', function (Blueprint $table){
             $table->increments('id');
             $table->string('nome');
-            $table->string('descricao');
+            $table->string('descricao')->nullable();
             $table->timestamps();
         });
         Schema::create('produtos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('descricao');
+            $table->string('descricao')->nullable();
             $table->string('imagem');
             $table->float('valor');
             $table->integer('tipo_id')->unsigned();
