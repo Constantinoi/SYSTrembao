@@ -117,7 +117,7 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ClienteRequest $request, $id)
     {
         if(Gate::denies('Manter Clientes')){
             abort(403,"Não autorizado!");

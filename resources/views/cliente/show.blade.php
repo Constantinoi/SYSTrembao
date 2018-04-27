@@ -9,7 +9,7 @@
                 <div class="row">
                         <div class="col-md-12">
                         
-                            <h4>Sobre o Cargo</h4>
+                            <h4>Sobre o Cliente</h4>
 
                             <p>Nome Cliente : {{$cliente->nome}}</p>
                             <p>Data de Nascimento: {{$cliente->data_nascimento}}</p>
@@ -20,5 +20,5 @@
                 </div>
             </div>
     </div>
-        <a href="{{ url()->previous() }}" class="btn btn-default">Voltar</a>
+        <a href="{{ url()->previous() }}" class="btn btn-danger">Voltar</a>
 @endsection    
