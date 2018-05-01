@@ -51,8 +51,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('mesa','MesaController');
     Route::get('mesa/index','MesaController@index');
 
-    Route::resource('produto', 'ProdutoController');
+    Route::get('/produtos/remove/{id}','ProdutoController@remover')->name('produtos.remove');
+    Route::resource('produtos','ProdutoController');
 
+    Route::get('/tipos/remove/{id}','TipoController@remover')->name('tipos.remove');
+    Route::resource('tipos','TipoController');
 });
 
 // END----------------------------- ADMIN --------------------------------END //

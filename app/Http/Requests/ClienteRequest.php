@@ -20,10 +20,12 @@ class ClienteRequest extends FormRequest
             'nome.required'=>'Informe o nome do Cliente',
             'nome.min'=>'Mínimo 4 Caracteres',
             'nome.max'=>'Máximo 100 Caracteres',
-            'telefone_1.min'=>'O Campo Telefone deve Conter no mínimo 14 dígitos',
-            'telefone_1.max'=>'O Campo Telefone deve Conter até 15 dígitos',
-            'telefone_2.min'=>'O Campo Celular deve Conter no mínimo 15 dígitos',
-            'telefone_2.max'=>'O Campo Celular deve Conter até 15 dígitos'
+            'data_nascimento.required'=>'Informe a Data de Nascimento',
+            'telefone_2.required'=>'Informe o Celular',
+            'cep.required'=>'Informe o Cep',
+            'logradouro.required'=>'Informe o Endereço',
+            'bairro.required'=>'Informe o Bairro',
+            'num.required'=>'Informe o Numero',
         ];
     }
     /**
@@ -35,8 +37,12 @@ class ClienteRequest extends FormRequest
     {
         return [
             'nome'=> 'required|min:4|max:100',
-            'telefone_1'=>'required|min:14|max:15',
-            'telefone_2'=>'required|min:15|max:15'
+            'data_nascimento'=>'required',
+            'telefone_2'=>'required',
+            'cep'=>'required',
+            'logradouro'=>'required',
+            'bairro'=>'required',
+            'num'=>'required'
         ];
     }
 }

@@ -16,7 +16,7 @@
                         <br />
                         @include('errors._erro')
                         <form action="{{route('cliente.store')}}" method="post" data-parsley-validate class="form-horizontal form-label-left">
-                        {{ csrf_field() }}
+                          {{ csrf_field() }}
                           @include('cliente._dados')
                           <div class="ln_solid"></div>      
 
@@ -24,7 +24,7 @@
                               <button type="submit" class="btn btn-success">Cadastrar</button>
                               <button class="btn btn-primary" type="reset">Limpar</button>          
                           </div>
-
+                          
                         </form>           
                       </div>
                   </div>                                

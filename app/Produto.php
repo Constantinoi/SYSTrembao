@@ -17,8 +17,13 @@ class Produto extends Model
             return $this->belongsTo(ProdutoStatus::class,'produto_status_id');
     }
 
+    public function imagem(){
+            return $this->hasMany('App\Imagem');
+            
+    }
+
     public function tipoProduto(){
-            return $this->belongsTo(TipoProduto::class,'tipo_produto_id');
+        return $this->belongsTo(TipoProduto::class,'tipo_produto_id');
     }
    
 }

@@ -24,8 +24,8 @@
                         <tr>
                           <th>Nome</th>
                           <th>Data Nascimento</th>
-                          <th>Celular</th>
                           <th>Telefone</th>
+                          <th>Celular</th>
                           <th>Observação</th>
                           <th>Cep</th>
                           <th>Logradouro</th>
@@ -33,6 +33,7 @@
                           <th>Bairro</th>
                           <th>Complemento</th>
                           <th>Ações</th>
+
                         </tr>
                       </thead>
 
@@ -40,7 +41,7 @@
                           @foreach ($clientes as $cliente)
                         <tr>
                             <td>{{$cliente->nome}}</td>
-                            <td>{{date( 'd/m/Y', strtotime ($cliente->data_nascimento))}}</td>
+                            <td>{{$cliente->data_nascimento}}</td>
                             <td>{{$cliente->telefone_1}}</td>                                                                 
                             <td>{{$cliente->telefone_2}}</td>
                             <td>{{$cliente->observacao}}</td>
@@ -49,10 +50,11 @@
                             <td>{{$cliente->endereco->num}}</td>
                             <td>{{$cliente->endereco->bairro}}</td>
                             <td>{{$cliente->endereco->complemento}}</td>
-                            <td>                            
-                                <a class="btn btn-info btn-xs" href="{{route('cliente.edit', $cliente->id)}}">Editar</a>
-                                <a class="btn btn-danger btn-xs" href="{{route('cliente.remove',$cliente->id)}}">Excluir</a>
-                            </td>
+                           
+                            <td>
+                              <a href="{{route('cliente.edit', $cliente->id)}}"><i class="fa fa-edit"></i></a>
+                              <a href="" data-toggle="modal" data-target="#removeCliente"> <i class="fa fa-trash-o"></i></a>
+                              <a href="" data-toggle="modal" data-target="#showCliente"><i class="fa fa-eye"></i></a></td>
                         </tr>
                         @endforeach
                       </tbody>
@@ -61,6 +63,10 @@
                   </div>
                 </div>
               </div>
-   
-@endsection
 
+
+
+
+@include('cliente._modal')
+
+@endsection
