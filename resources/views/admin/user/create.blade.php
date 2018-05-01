@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('conteudo')    
-@can('Criar usuário')
+@can('Administrador')
         <div class="clearfix"></div>
             <div class="row">
               <div class="col-md-10 col-sm-10 col-xs-12">
@@ -26,7 +26,7 @@
                             <label for="password" class="control-label col-md-3 col-sm-3 col-xs-12">Senha</label>
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="password" type="password" class="form-control col-md-7 col-xs-12" name="password" required>
+                                <input id="password" type="password" class="form-control col-md-7 col-xs-12" name="password" >
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -40,7 +40,7 @@
                             <label for="password-confirm" class="control-label col-md-3 col-sm-3 col-xs-12">Confirmar Senha</label>
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="password-confirm" type="password" class="form-control col-md-7 col-xs-12" name="password_confirmation" required>
+                                <input id="password-confirm" type="password" class="form-control col-md-7 col-xs-12" name="password_confirmation" >
                             </div>
                         </div>
 

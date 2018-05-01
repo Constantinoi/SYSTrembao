@@ -46,7 +46,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pedido/index', 'PedidoController@index');
 
     Route::get('/cliente/remove/{id}','ClienteController@remover')->name('cliente.remove');
-
+    Route::post('/cliente/store','ClienteController@store');
+    
     Route::resource('mesa','MesaController');
     Route::get('mesa/index','MesaController@index');
 

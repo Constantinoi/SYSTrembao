@@ -1,7 +1,10 @@
 @extends('layouts.base')
 
 @section('conteudo')
-<a href="{{ route('papeis.index') }}" class="btn btn-primary">Voltar</a>
+            <div class="col-md-10 col-sm-10 col-xs-12"  >
+              <a href="{{ route('user.index') }}" class="btn btn-primary">Voltar</a>
+            </div>
+            
             <div class="col-md-10 col-sm-10 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
@@ -42,7 +45,7 @@
                 </div>
               </div>
 
-         <div class="col-md-10 col-sm-10 col-xs-12">
+              <div class="col-md-10 col-sm-10 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Lista de Papéis para {{$usuario->name}}<small></small></h2>

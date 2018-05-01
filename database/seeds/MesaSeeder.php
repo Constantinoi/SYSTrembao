@@ -13,43 +13,43 @@ class MesaSeeder extends Seeder
     {
         $mesa = Mesa::firstOrCreate([
             'numero' => 1,
-            'status' => 'A'
+            'mesa_status_id' => 1
         ]);
         $mesa2 = Mesa::firstOrCreate([
             'numero' => 2,
-            'status' => 'A'
+            'mesa_status_id' => 1
         ]);
         $mesa3 = Mesa::firstOrCreate([
             'numero' => 3,
-            'status' => 'A'
+            'mesa_status_id' => 1
         ]);
         $mesa4 = Mesa::firstOrCreate([
             'numero' => 4,
-            'status' => 'A'
+            'mesa_status_id' => 1
         ]);
         $mesa5 = Mesa::firstOrCreate([
             'numero' => 5,
-            'status' => 'A'
+            'mesa_status_id' => 1
         ]);
         $mesa6 = Mesa::firstOrCreate([
             'numero' => 6,
-            'status' => 'A'
+            'mesa_status_id' => 1
         ]);
         $mesa7 = Mesa::firstOrCreate([
             'numero' => 7,
-            'status' => 'A'
+            'mesa_status_id' => 1
         ]);
         $mesa8 = Mesa::firstOrCreate([
             'numero' => 8,
-            'status' => 'A'
+            'mesa_status_id' => 1
         ]);
         $mesa9 = Mesa::firstOrCreate([
             'numero' => 9,
-            'status' => 'A'
+            'mesa_status_id' => 1
         ]);
         $mesa10 = Mesa::firstOrCreate([
             'numero' => 10,
-            'status' => 'A'
+            'mesa_status_id' => 1
         ]);
 
         echo "Mesas criadas com sucesso | 10 mesas em ABERTO";

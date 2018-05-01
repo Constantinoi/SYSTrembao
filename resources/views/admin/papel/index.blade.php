@@ -36,7 +36,7 @@
                                         <a title="Editar" class="btn btn-primary btn-xs" href="{{ route('papeis.edit',$registro->id) }}">Editar</a>
                                         <a title="Permissões" class="btn btn-primary btn-xs" href="{{route('papeis.permissao',$registro->id)}}">Permissoes</a>
                                         @endcan
-                                        @can('Deletar papel')
+                                        @can('Administrador')
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}
                                             <button title="Deletar" class="btn btn-danger btn-xs">Apagar</button>

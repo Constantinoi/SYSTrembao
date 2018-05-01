@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMesasTable extends Migration
+class CreatePedidoStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,12 @@ class CreateMesasTable extends Migration
      */
     public function up()
     {
-       
+        Schema::create('pedido_status', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nome');
+            $table->string('descricao')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +28,6 @@ class CreateMesasTable extends Migration
      */
     public function down()
     {
-        
+        Schema::dropIfExists('pedido_status');
     }
 }

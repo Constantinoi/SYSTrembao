@@ -11,10 +11,10 @@
     
     <div class="clearfix"></div>
         <div class="row">
-              <div class="col-md-10  col-sm-6 col-xs-12">
+              <div class="col-md-10  col-sm-10 col-xs-10">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2><i class="fa fa-align-left"></i> Informações <small></small></h2>
+                    <h2> Informações <small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li> 
@@ -39,52 +39,45 @@
                         </label>
                       </div>
                       <div class="form-group">
-                        <label class="" for="tipo_pedido">Tipo: 
-                          <select id="tipo_pedido" name="tipo_pedido">
-                            <option value="Local">Local</option>
-                            <option value="Viagem">Viagem</option>
-                            <option value="Delivery">Delivery</option>                          
+                        <label class="" for="tipo_pedido_id">Tipo:
+                          <select id="tipo_pedido_id" name="tipo_pedido_id">
+                          @foreach($tipos as $tipo)
+                            <option value="{{$tipo->id}}">{{ $tipo->nome }}</option>                            
+                          @endforeach 
                           </select>
                         </label>    
                       </div>
                       <div class="form-group">
-                          <label class="" for="cliente_id">Cliente:                          
-                          <input name"cliente_id" type="text" disabled>
+                          <label   for="cliente_id">Cliente:
+                            <select id="cliente_id" name="cliente_id">
+                              @foreach($clientes as $cliente)
+                                <option value="{{$cliente->id}}">{{ $cliente->nome }}</option>                            
+                              @endforeach 
+                            </select>                         
                           </label>   
                       </div>
-                        <button class="btn btn-primary fa fa-ok"> Escolher </button>
-                        <button class="btn btn-success fa fa-plus"> Cadastrar Cliente</button>                        
+                        <a class="btn btn-success fa fa-plus" data-toggle="modal" data-target="#create"> Cadastrar Cliente</a>                        
                     </form>                 
                   </div>
                 </div>
               </div>
             
 
-              <div class="col-md-10  col-sm-6 col-xs-12">
+              <div class="col-md-10  col-sm-10 col-xs-10">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Produtos <small>lista de produtos</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Bebida</a>
-                          </li>
-                          <li><a href="#">Refeição</a>
-                          </li>
-                        </ul>
-                      </li>
-                     
-                      </li>
+                      </li>                     
+                      
                     </ul>
                     <div class="clearfix"></div>
                   </div>
                   
                   <div class="x_content">
 
-                    <table class="table table-hover">
+                    <table id="datatable-responsive" class="table table-hover">
                       <thead>
                         <tr>                          
                           <th>Nome</th>
@@ -109,7 +102,7 @@
               </div>
 
 
-              <div class="col-md-10 col-sm-6 col-xs-12">
+              <div class="col-md-10 col-sm-10 col-xs-10">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Pedido <small>Detalhes do Pedido</small></h2>
@@ -149,7 +142,40 @@
                   </div>
                 </div>
               </div>
-              
+ 
+
+
+
+                {{-- Modal Form Create  --}}
+    <!-- modal cliente-->
+    <div class="modal fade bs-example-modal-lg" id="create" tabindex="-1" role="dialog" aria-labelledby="clienteModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="false">&times;</span></button>
+              <h4 class="modal-title" id="orientadorModalLabel">Cadastre um Cliente</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form-horizontal" role="form">              
+                
+                @include('cliente._dados')
+
+                <div class="ln_solid"></div>      
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+              <a id="add"  class="btn btn-primary">Cadastrar</a>
+              <!-- menssagem de erro -->
+              <div class="success margin-top-20">
+                  @include('errors._erro')
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <!-- END modal cliente-->
+   
 
 @endsection
 
@@ -157,7 +183,39 @@
 <script>
 
 // --------------------------- Jquery-functions  -------------------------------------------//
-   
+    //addCliente
+    $("#add").click( function() {
+        
+        $.ajax({
+            type: 'POST',
+            url: '/cliente/store',
+            data: {
+                nome :  $('input[name=nome]').val() ,
+                data_nascimento:  $('input[name=data_nascimento]').val(),
+                telefone_1:  $('input[name=telefone_1]').val(),
+                telefone_2:  $('input[name=telefone_2]').val(),
+                observacao:  $('input[name=observacao]').val(),
+                cep:  $('input[name=cep]').val(),
+                logradouro:  $('input[name=logradouro]').val(),
+                num:  $('input[name=num]').val(),
+                bairro:  $('input[name=bairro]').val()
+              }     
+
+            ,
+            success: function(cliente){
+                    
+                    $('#cliente_id').append('<option value="'+cliente.id+'" selected>'+cliente.nome+'</option>');
+
+                    $('#create').modal('hide');  
+                   
+            },
+            erro: function(erro){              
+                console.log(erro.response);
+            }
+        });
+      
+                      
+    });
 
     $(".add-to-cart").click(function(event){
         event.preventDefault(); // prever outros clicks
@@ -215,12 +273,13 @@
     $("#finish-cart").click(function(event){
         // cópia do cart
         var cartArray = shoppingCart.listCart();
-        //alert(cartArray);
+        
         var cart = JSON.stringify(cartArray);
-        //alert(cart);
+        
         var valorTotal = shoppingCart.totalCost();
-        mesa_id = $('#mesa_id').val();
-        //alert(mesa_id);
+
+        cliente_id = $('#cliente_id').val()
+        
 
         $.ajax({
             type: "POST",
@@ -228,7 +287,9 @@
             data: { 
               produtos : cart,
               valor_total : valorTotal,
-              mesa_id : $('#mesa_id ').val()
+              mesa_id : $('#mesa_id ').val(),
+              tipo_pedido_id : $('#tipo_pedido_id').val(),
+              cliente_id : $('#cliente_id').val()
               },
             dataType: "json",
             

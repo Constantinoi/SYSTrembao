@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Mesa;
+use App\MesaStatus;
 use Illuminate\Http\Request;
 
 class MesaController extends Controller
@@ -14,7 +15,8 @@ class MesaController extends Controller
     public function index()
     {   
         //collection com todas as mesas LIVRES em ordem crescente
-        $mesas = Mesa::where('status','A')->get()->sort();
+        $statusMesaAberta = MesaStatus::where('nome','Livre')->first();
+        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta->id)->get()->sort();
         
         return response()->json($mesas);
     }

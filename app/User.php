@@ -33,10 +33,12 @@ class User extends Authenticatable
 
     public function adicionaPapel($papel)
     {
-        if (is_string($papel)) {
+        
+        if (is_string($papel)){        
             $papel = Papel::where('nome','=',$papel)->firstOrFail();
+           
         }
-
+      
         if($this->existePapel($papel)){
             return;
         }

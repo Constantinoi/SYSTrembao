@@ -13,23 +13,21 @@ class CreatePedidosTable extends Migration
      */
     public function up()
     {
-        Schema::create('mesas', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('numero');
-            $table->string('status');
-            $table->timestamps();
-        });
-
         Schema::create('pedidos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('numero_pedido')->unsigned();
-            $table->string('status');
+            $table->string('observacao')->nullable();            
             $table->float('valor_total')->default(0);
-            $table->string('observacao')->nullable();
+
             $table->integer('mesa_id')->unsigned();
+            $table->integer('cliente_id')->unsigned();
+            $table->integer('pedido_status_id')->unsigned();            
+            $table->integer('tipo_pedido_id')->unsigned();
 
             $table->foreign('mesa_id')->references('id')->on('mesas')->onDelete('cascade');
-
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+            $table->foreign('pedido_status_id')->references('id')->on('pedido_status')->onDelete('cascade');
+            $table->foreign('tipo_pedido_id')->references('id')->on('tipo_pedido')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -43,6 +41,5 @@ class CreatePedidosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('pedidos');
-        Schema::dropIfExists('mesas');
     }
 }

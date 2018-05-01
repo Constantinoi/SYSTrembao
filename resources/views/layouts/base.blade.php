@@ -23,7 +23,12 @@
     <link href="{{asset('/iCheck/skins/flat/green.css')}}" rel="stylesheet">
     <!-- bootstrap-progressbar -->
     <link href="{{asset('/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')}}" rel="stylesheet">
-    
+    <!-- Datatables -->
+    <link href="{{asset('/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
     <!-- PNotify 
     <link href="{{asset('pnotify/dist/pnotify.css')}}" rel="stylesheet">
     <link href="{{asset('pnotify/dist/pnotify.buttons.css')}}" rel="stylesheet">
@@ -58,152 +63,48 @@
             <!-- /menu profile quick info -->
 
             
-        
+            
             <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
-                <h3>Painel de ações</h3>
-                
-                <ul class="nav side-menu">
-                @can('Administrador')
-                 <li><a><i class="fa fa-dashboard"></i> Administrativo <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{route ('user.index')}}">Usuários</a></li>
-                      <li><a href="{{route ('papeis.index')}}">Papéis</a></li>
-                      
-                    </ul>
-                  </li>
-                @endcan
-                @can('Manter Pedidos')
-                  <li><a><i class="fa fa-list"></i> Pedidos <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{ route('pedido.create') }}">Iniciar Pedido</a></li>
-                      <li><a href="#">Histórico</a></li>
-                      
-                    </ul>
-                  </li>
-                  @endcan
-                  @can('Manter Produtos')
-                  <li><a><i class="fa fa-cutlery"></i> Produtos <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="#">Cadastrar Produto</a></li>
-                      <li><a href="#">Lista de Produtos</a></li>
-                      
-                    </ul>
-                  </li>
-                  @endcan
-                  @can('Manter Clientes')
-                  <li><a><i class="fa fa-users"></i> Clientes <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{route('cliente.create')}}">Cadastrar Cliente</a></li>
-                      <li><a href="{{route('cliente.index')}}">Lista de Clientes</a></li>             
-                    </ul>
-                  </li>
-                  @endcan
-                </ul>
-              </div>
-            </div>
+            @include('layouts._sidebar')            
             <!-- /sidebar menu -->
-
+            
            
           </div>
         </div>
 
         <!-- top navigation -->
-        <div class="top_nav">
-          <div class="nav_menu">
-            <nav>
-              <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-              </div>
-
-              <ul class="nav navbar-nav navbar-right">
-                <!-- Authentication Links -->
-                @guest
-                        <li><a href="{{ route('login') }}">Entrar</a></li>
-                        
-                @else
-                  <li class="">
-                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      <img src="#" alt="">{{ Auth::user()->name }}
-                      <span class=" fa fa-angle-down"></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-usermenu pull-right">
-                      <li><a href="javascript:;"> Perfil</a></li>
-                      <li>
-                        <a href="javascript:;">
-                          <span class="badge bg-red pull-right">50%</span>
-                          <span>Configurações</span>
-                        </a>
-                      </li>
-                      <li><a href="javascript:;">Ajuda</a></li>
-                      <li>
-                          <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                          <i class="fa fa-sign-out pull-right"></i>Sair</a>
-                          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                          </form>
-                      </li>
-                    </ul>
-                  @endguest
-                  </li>
-
-                  <li role="presentation" class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-envelope-o"></i>
-                      <span class="badge bg-green">6</span>
-                    </a>
-                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                      <li>
-                        <a>
-                          <span class="image"><img src="#" alt="Profile Image" /></span>
-                          <span>
-                            <span>John Smith</span>
-                            <span class="time">3 mins ago</span>
-                          </span>
-                          <span class="message">
-                            Film festivals used to be do-or-die moments for movie makers. They were where...
-                          </span>
-                        </a>
-                      </li>
-                    
-                    
-                      <li>
-                        <div class="text-center">
-                          <a>
-                            <strong>See All Alerts</strong>
-                            <i class="fa fa-angle-right"></i>
-                          </a>
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-               
-              </ul>
-            </nav>
-          </div>
-        </div>
-   
+        @include('layouts._navbar')   
         <!-- /top navigation -->
 
         <!-- Conteudo -->
         
         <div class="right_col" role="main">
-          <div class="">
+          
             @yield('conteudo')
-
-          </div>
-          <div class="clearfix"></div>
-        </div> 
-        
+          
+          
+        </div>        
+        <!-- footer content -->
+         @include('layouts._footer') 
+        <!-- /footer content -->
     
-
         <!-- FimConteudo -->
+
+         <!-- Modais -->
+  
+
+  
+
+        </div>
+    </div>
+
     <!-- jQuery -->
     <script src="{{asset('jquery/dist/jquery.min.js')}}"></script>
+
     <script src="{{asset('js/jquery.mask.min.js')}}"></script>
     <!-- filtros -->
-    <script src="{{asset('js/filtros.js')}}"></script> <!-- cep -->
+    <script src="{{asset('js/filtros.js')}}"></script> 
+    <!-- cep -->
     <script src="{{asset('js/mask.js')}}"></script>
     <!-- Bootstrap -->
     <script src="{{asset('bootstrap/dist/js/bootstrap.min.js')}}"></script>
@@ -220,11 +121,8 @@
     <script src="{{asset('pnotify/dist/pnotify.buttons.js')}}"></script>
     <script src="{{asset('pnotify/dist/pnotify.nonblock.js')}}"></script>
 
-    <!-- Custom Theme Scripts -->
-    <script src="{{asset('build/js/custom.min.js')}}"></script>  
-
      <!-- Datatables -->
-     <script src="{{asset('datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
     <script src="{{asset('datatables.net-buttons-bs/js/buttons.bootstrap.min.js')}}"></script>
@@ -236,7 +134,9 @@
     <script src="{{asset('datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
     <script src="{{asset('datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
-    <
+    
+    <!-- Custom Theme Scripts -->
+    <script src="{{asset('build/js/custom.min.js')}}"></script>  
     
     <!-- Carrinho de compras -->
     <script src="{{asset('js/shoppingCart.js')}}"></script>
@@ -249,12 +149,43 @@
     });
     </script>
     
-    @yield('scripts');
+    @yield('scripts')
+    <script>
+     // ---------------- create ------------------- //
+  //  $("#add").click( function() {
+        
+  //       $.ajax({
+  //           type: 'POST',
+  //           url: '/cliente/store',
+  //           data: {
+  //               nome :  $('input[name=nome]').val() ,
+  //               data_nascimento:  $('input[name=data_nascimento]').val(),
+  //               telefone_1:  $('input[name=telefone_1]').val(),
+  //               telefone_2:  $('input[name=telefone_2]').val(),
+  //               observacao:  $('input[name=observacao]').val(),
+  //               cep:  $('input[name=cep]').val(),
+  //               logradouro:  $('input[name=logradouro]').val(),
+  //               num:  $('input[name=num]').val(),
+  //               bairro:  $('input[name=bairro]').val()
+  //             }     
 
+  //           ,
+  //           success: function(cliente){
+                    
+  //                   $('#cliente_id').append('<option value="'+cliente.id+'" selected>'+cliente.nome+'</option>');
 
-      </div>
-      <div class="clearfix"></div>
-    </div>
+  //                   $('#create').modal('hide');  
+                   
+  //           },
+  //           erro: function(erro){              
+  //               console.log(erro.response);
+  //           }
+  //       });
+      
+                      
+  //   });
+    </script>
+
   </body>
   
 </html>

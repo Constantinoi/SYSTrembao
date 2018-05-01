@@ -15,6 +15,8 @@ class ProdutoSeeder extends Seeder
             'nome' => 'Suco de Laranja',
             'descricao' => 'Jarra de 750ml',
             'valor' => 8.50,
+            'tipo_produto_id' => 2,
+            'produto_status_id' => 1
         ]);
 
 
@@ -22,12 +24,24 @@ class ProdutoSeeder extends Seeder
             'nome' => 'Lasanha',
             'descricao' => 'Bolonhesa',
             'valor' => 30.50,
+            'tipo_produto_id' => 1,
+            'produto_status_id' => 1
         ]);
 
         $prod2 = Produto::firstOrCreate([
             'nome' => 'Batata-Frita',
             'descricao' => 'Porção Grande',
             'valor' => 12.50,
+            'tipo_produto_id' => 1,
+            'produto_status_id' => 1
+        ]);
+
+        $prod3 = Produto::firstOrCreate([
+            'nome' => 'Coca Cola',
+            'descricao' => '2litros',
+            'valor' => 5.50,
+            'tipo_produto_id' => 2,
+            'produto_status_id' => 2
         ]);
     }
 }

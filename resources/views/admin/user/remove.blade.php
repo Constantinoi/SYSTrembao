@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('conteudo')   
-@can('Deletar usuário')
+@can('Administrador')
 	@if($errors->any())
 			<div class="alert alert-danger" role="alert">
 				@foreach ($errors->all() as $error)

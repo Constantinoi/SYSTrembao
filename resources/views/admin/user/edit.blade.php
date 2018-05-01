@@ -1,14 +1,8 @@
 @extends('layouts.base')
 
 @section('conteudo')
-@can('Editar usuário') 
-    @if($errors->any())
-            <div class="alert alert-danger" role="alert">
-                @foreach ($errors->all() as $error)
-                    {{ $error }}<br>
-                @endforeach
-            </div>
-    @endif
+@can('Administrador') 
+
 
         <div class="clearfix"></div>
             <div class="row">
@@ -31,13 +25,37 @@
                             
                         
                         @include('admin.user._user')
+                       
+
+<!--                         
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="control-label col-md-3 col-sm-3 col-xs-12">Senha</label>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="password" type="password" class="form-control col-md-7 col-xs-12" name="password" value="{{ isset($user->password) ? $user->password : old('password') }}" >
+
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password-confirm" class="control-label col-md-3 col-sm-3 col-xs-12">Confirmar Senha</label>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="password-confirm" type="password" class="form-control col-md-7 col-xs-12" name="password_confirmation" value="{{ isset($user->password) ? $user->password : old('password') }}" >
+                            </div>
+                        </div> -->
 
                         <div class="ln_solid"></div>
                     
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                 <a href="{{ route('user.index') }}" class="btn btn-primary">Voltar</a>
-                                <button href="{{ url()->previous() }}" type="submit" class="btn btn-success">Atualizar                               
+                                <button  type="submit" class="btn btn-success">Atualizar                               
                                 </button>                                
                             </div>
                         </div>

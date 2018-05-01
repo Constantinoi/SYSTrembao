@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Pedido;
 use App\Mesa;
+use App\PedidoStatus;
+use App\MesaStatus; 
 class HomeController extends Controller
 {
     /**
@@ -23,11 +25,15 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //collection com pedidos de hj
-        $pedidos = Pedido::where('status','A')->whereDate('created_at' , today())->get()->sort();
-        $mesas = Mesa::where('status','A')->get()->sort();
+    {   
+        $statusMesaAberta = MesaStatus::statusAberto();
         
+        $statusPedidoAberto = PedidoStatus::statusAberto();
+        
+        //collection com pedidos de hj
+        $pedidos = Pedido::where('pedido_status_id',$statusPedidoAberto)->whereDate('created_at' , today())->get()->sort();
+        $mesas = Mesa::where('mesa_status_id',$statusMesaAberta)->get()->sort();
+        // dd($mesas);
         //se existirem pedidos HOJE, Listar
         if($pedidos->isNotEmpty()){  
             //dd($pedidos);          
@@ -36,14 +42,15 @@ class HomeController extends Controller
         else{
             $mesas = Mesa::all();
             $mesas->sortBy('numero');
-            
+            $statusMesaFechada = MesaStatus::statusOcupado();
+            // dd($statusMesaFechada);
             foreach($mesas as $mesa){
-                if($mesa->status === 'F'){
-                    $mesa->status = 'A';
+                if($mesa->pedido_status_id === $statusMesaFechada  ){
+                    $mesa->pedido_status_id = $statusMesaAberta;
                     $mesa->save();
                 }
             }
-            //dd($mesas);
+            // dd($mesas);
             return view ('home', compact('pedidos','mesas'));   
         }
     }

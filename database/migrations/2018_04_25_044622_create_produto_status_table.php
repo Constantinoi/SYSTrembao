@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePapelsTable extends Migration
+class CreateProdutoStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePapelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('papeis', function (Blueprint $table) {
+        Schema::create('produto_status', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
             $table->string('descricao')->nullable();
@@ -28,6 +28,6 @@ class CreatePapelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('papeis');
+        Schema::dropIfExists('produto_status');
     }
 }

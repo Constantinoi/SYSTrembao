@@ -58,7 +58,7 @@ class UserController extends Controller
                 [
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => bcrypt($data['password'])                    
+                'password' => encrypt($data['password'])                    
                 ]);
 
             return redirect()->route('user.index');
@@ -112,8 +112,18 @@ class UserController extends Controller
     {
         if(Gate::denies('Administrador')){
             abort(403,"Não autorizado!");
-          }
-       
+        }
+          dd("passei do teste1");
+        if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
+        // The passwords matches
+        return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
+        }
+ 
+        if(strcmp($request->get('current-password'), $request->get('new-password')) == 0){
+            //Current password and new password are same
+            return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
+        }   
+        dd("passei do teste2");
 
         if($request['name']){
             $data = $request->all();
@@ -121,7 +131,8 @@ class UserController extends Controller
             User::find($id)->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => bcrypt($data['password'])
+                'password' => bcrypt($request->get('new-password'))
+               
                 ]);
         }
         
@@ -182,9 +193,14 @@ class UserController extends Controller
        if(Gate::denies('Administrador')){
          abort(403,"Não autorizado!");
        }
+
+
        $usuario = User::find($id);
        $dados = $request->all();
        $papel = Papel::find($dados['papel_id']);
+       if($papel->nome == 'Admin'){
+        return redirect()->back();
+       }
        $usuario->adicionaPapel($papel);
        return redirect()->back();
    }

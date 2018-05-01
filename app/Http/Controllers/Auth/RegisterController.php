@@ -67,5 +67,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => encrypt($data['password'])        
         ]);
+
+        //add papel de user aqui $user->adicionaPapel('Usuario');
     }
 }

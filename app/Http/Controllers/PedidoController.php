@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Pedido;
 use App\Produto;
 use App\Mesa;
+use App\TipoPedido;
+use App\MesaStatus;
+use App\PedidoStatus;
+use App\ProdutoStatus;
+use App\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -23,6 +28,7 @@ class PedidoController extends Controller
                 		
          dd($pedidos);
     }
+
     
     public function show(Request $request){
 
@@ -48,23 +54,37 @@ class PedidoController extends Controller
         if(Gate::denies('Manter Pedidos')){
             abort(403,"Não autorizado!");
         }  
-        $produtos = Produto::all();
-        $mesas = Mesa::where('status','A')->get()->sort();
+        $statusAtivo = ProdutoStatus::produtosAtivos();  
+        $produtos = Produto::where('produto_status_id', $statusAtivo)->get()->sort();
+
+        $statusMesaAberta = MesaStatus::statusAberto();
+        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sort();
+
+        $tipos = TipoPedido::all();
+        $clientes = Cliente::all();
         if($mesa){
             //dd($mesa);
-            return view('pedido.create', compact('produtos','mesa','mesas')); 
+            return view('pedido.create', compact('produtos','mesa','mesas','tipos','clientes')); 
         }
 
     }
+
+
     public function create(){     
         if(Gate::denies('Manter Pedidos')){
             abort(403,"Não autorizado!");
-        }  
-        $produtos = Produto::all();
-        $mesas = Mesa::where('status','A')->get()->sort();
-      
-        return view('pedido.create', compact('produtos','mesas')); 
+        }
+        $statusAtivo = ProdutoStatus::produtosAtivos();  
+        $produtos = Produto::where('produto_status_id', $statusAtivo)->get()->sort();
+
+        $statusMesaAberta = MesaStatus::statusAberto();
+        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sort();
+
+        $tipos = TipoPedido::all();
+        $clientes = Cliente::all();
+        return view('pedido.create', compact('produtos','mesas','tipos','clientes')); 
     }
+
 
     public function store(Request $request){   
         if(Gate::denies('Manter Pedidos')){
@@ -74,13 +94,15 @@ class PedidoController extends Controller
         $produtos_json = $request->input('produtos'); 
         $valor_total = $request->input('valor_total');
         $mesa_id = $request->input('mesa_id');
+        $tipo_pedido_id = $request->input('tipo_pedido_id');
+        $cliente_id = $request->input('cliente_id');
 
         // método que transforma JSON em uma array PHP associativa
         $produtos = json_decode($produtos_json, true);
         //print_r($produtos);       // Dump all data of the Array
         
         //criar pedido
-        $pedido = Pedido::novoPedido($valor_total, $mesa_id);
+        $pedido = Pedido::novoPedido($valor_total, $mesa_id, $tipo_pedido_id, $cliente_id);
        
         //verifica se existe um pedido
         if($pedido){
@@ -96,10 +118,9 @@ class PedidoController extends Controller
             }
         
         $mesa = Mesa::find($mesa_id);
-
-        $mesa->status = 'F';
-
-        $mesa->update();           
+        $statusMesaOcupada = MesaStatus::statusOcupado();
+        $mesa->mesaStatus()->associate($statusMesaOcupada);        
+        $mesa->save();           
         }     
 
         
@@ -108,37 +129,57 @@ class PedidoController extends Controller
         return response()->json($pedido);       
     }  
 
-    public function edit (Pedido $pedido)
+
+    public function edit(Pedido $pedido)
     {
 
         if(Gate::denies('Manter Pedidos')){
             abort(403,"Não autorizado!");
         }  
         
-        $produtos = Produto::all();
+        $statusAtivo = ProdutoStatus::produtosAtivos();  
+        $produtos = Produto::where('produto_status_id', $statusAtivo)->get()->sort();
 
-        return view('pedido.edit', compact('pedido','produtos'));
+        $mesa_id = $pedido->mesa_id;
+
+        $mesa = Mesa::find($mesa_id);
+        $status = MesaStatus::statusAberto();
+        $mesa->mesaStatus()->associate($status);        
+        $mesa->save(); 
+
+        $statusMesaAberta = MesaStatus::statusAberto();
+        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sort();
+
+        $tipos = TipoPedido::all();
+        $clientes = Cliente::all();
+
+        return view('pedido.edit', compact('pedido','produtos','mesas','tipos','clientes'));
     }
 
+
     public function update(Request $request)
-    {
+    {        
 
         if(Gate::denies('Manter Pedidos')){
             abort(403,"Não autorizado!");
         }  
+
         $produtos_json = $request->input('produtos'); 
         $valor_total = $request->input('valor_total');
-
-
+        $mesa_id = $request->input('mesa_id');
         $pedido_id = $request->input('pedido_id');
+        $tipo_pedido_id = $request->input('tipo_pedido_id');
+        $cliente_id = $request->input('cliente_id');
+
         // pega o pedido    
         $pedido = Pedido::find($pedido_id);
-
          // deleta todos os produtos       
         $pedido->produtos()->detach();
-
         /// atualiza o novo valorTotal 
         $pedido->valor_total = $valor_total;
+        $pedido->mesa()->associate($mesa_id);
+        $pedido->tipoPedido()->associate($tipo_pedido_id);
+        $pedido->cliente()->associate($cliente_id);
         $pedido->save();
        
         
@@ -160,13 +201,18 @@ class PedidoController extends Controller
                                         'quantidade' => $value['qtd'], 
                                         'valor' =>  $value['valor']                                                                                                
                                         ]);
-            }           
+            }
+
+            
+            $mesa = Mesa::find($mesa_id);
+            $statusMesaOcupada = MesaStatus::statusOcupado();
+            $mesa->mesaStatus()->associate($statusMesaOcupada);        
+            $mesa->save();                
         }     
         
         // retorna a array de produtos no formato json 
         return response()->json($produtos);       
     }
-
  
     //cancela Pedido
      public function cancelaPedido(Request $request){
@@ -177,12 +223,13 @@ class PedidoController extends Controller
 
         $pedido_id = $request->input('pedido_id'); 
         $pedido = Pedido::find($pedido_id);
-        $pedido->status = 'C';
-        $pedido->save();
         
-        $mesa = Mesa::find($pedido->mesa_id);
-        $mesa->status = 'A';
-        $mesa->update();
+        $mesa_id = $pedido->mesa_id;        
+
+        $mesa = Mesa::find($mesa_id);
+        $status = MesaStatus::statusAberto();
+        $mesa->mesaStatus()->associate($status);        
+        $mesa->save();    
 
         $pedido->delete();
 
@@ -192,128 +239,29 @@ class PedidoController extends Controller
         ]);
 
      }
+
+     //finaliza pedido
      public function destroy(Request $request ){
 
         if(Gate::denies('Manter Pedidos')){
             abort(403,"Não autorizado!");
         }  
         $pedido_id = $request->input('pedido_id'); 
-        $pedido = Pedido::find($pedido_id); 
-        $pedido->status = 'F';
+        $pedido = Pedido::find($pedido_id);
+        $status = PedidoStatus::statusFinalizado();
+        $pedido->pedidoStatus()->associate($status);
         $pedido->save();
 
-        $mesa = Mesa::find($pedido->mesa_id);
-        $mesa->status = 'A';
-        $mesa->update();
-        
+        $mesa_id = $pedido->mesa_id;
+
+        $mesa = Mesa::find($mesa_id);
+        $status = MesaStatus::statusAberto();
+        $mesa->mesaStatus()->associate($status);        
+        $mesa->save();    
+
         return response()->json([
             'success' => 'Record has been deleted successfully!'
         ]);
     }
-    // public function produtoDestroy($pedido_id,$produto_id)
-    // {
-
-    //     //$this->middleware('VerifyCsrfToken');
-
-    //    // $dados = $request->all();
-        
-    //     $pedido = Pedido::find($pedido_id);
-    //     $produto = Produto::find($produto_id);
-    //     // $pedido = Pedido::consultaId([
-    //     //     'id'      => $idpedido,
-    //     //     'user_id' => $idusuario,
-    //     //     'status'  => 'RE' // Reservada
-    //     //     ]);
-
-    //     // if( empty($idpedido) ) {
-    //     //     $req->session()->flash('mensagem-falha', 'Pedido não encontrado!');
-    //     //     return redirect()->route('carrinho.index');
-    //     // }
-
-    //                 // $where_produto = [
-    //                 //     'pedido_id'  => $pedido_id,
-    //                 //     'produto_id' => $produto_id
-    //                 // ];
-
-    //                 //$produto = PedidoProduto::where($where_produto)->orderBy('id')->first();
-        
-        
-    //     // if( empty($produto->id) ) {
-    //     //     $req->session()->flash('mensagem-falha', 'Produto não encontrado no carrinho!');
-    //     //     return redirect()->route('carrinho.index');
-    //     // }
-
-    
-
-    //     //dd($produto);
-    //                 // $where_produto['id'] = $produto->id;
-    //                 // PedidoProduto::where($where_produto)->delete();
-
-    //     // $check_pedido = PedidoProduto::where([
-    //     //     'pedido_id' => $produto->pedido_id
-    //     //     ])->exists();
-
-    //     // if( !$check_pedido ) {
-    //     //     Pedido::where([
-    //     //         'id' => $produto->pedido_id
-    //     //         ])->delete();
-    //     // }
-
-    //    // $req->session()->flash('mensagem-sucesso', 'Produto removido do carrinho com sucesso!');
-    //    $pedido->removeProduto($produto);
-    //    $produtos = Produto::all();
-    //     //$detalhes = PedidoProduto::where('pedido_id','=',$pedido->id)->get();
-
-    //    //dd($pedido,$dados,$produto,$detalhes);
-    //    return view('pedido.produto', compact('pedido', 'produtos'));
-
-       
-    // }
-
-
-    public function produtoStore(Request $request)
-    {
-
-        if(Gate::denies('Manter Pedidos')){
-            abort(403,"Não autorizado!");
-        }  
-        
-        $dados = $request->all();
-        $produtos = [];
-        dd($dados);
-        $pedido = Pedido::find($pedido->id);
-        $produto = Produto::find($dados['produto_id']);
-        //dd($pedido);
-        $quantidade = $dados['quantidade'];
-
-        if( empty($produto->id) ) {
-           // $req->session()->flash('mensagem-falha', 'Produto não encontrado em nossa loja!');
-            return redirect()->back();
-        }
-
-        // verificar se está aberto e se pertence ao cliente
-        // $pedido = Pedido::checkPedido([
-        //     'status'  => 'A',
-        //     'id'      => $pedido->id // aberto
-        //     ]);
-        //dd($pedido);
-        
-        if( empty($pedido) ) {
-            $pedido = Pedido::create([
-                'status' => 'A'
-            ]);
-        }
-
-            //dd($pedido_novo); 
-
-        $pedido->produtos()->attach($produto->id, 
-                                    [
-                                    'quantidade' => $dados['quantidade'], 
-                                    'valor' => 00.00                                                                                                
-                                    ]);     
-             
-        $produtos = Produto::all();      
-        //dd($pedido,$dados,$produto,$detalhes);
-        return view('pedido.create', compact('pedido', 'produtos')); 
-      }
+      
 }

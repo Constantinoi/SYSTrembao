@@ -13,17 +13,6 @@ class CreateClientesTable extends Migration
      */
     public function up()
     {
-         
-        
-         Schema::create('enderecos', function (Blueprint $table){
-            $table->increments('id');
-            $table->string('cep');
-            $table->string('bairro');
-            $table->string('logradouro');
-            $table->integer('num');
-            $table->string('complemento');
-            $table->timestamps();
-        });
         Schema::create('clientes', function (Blueprint $table){
             $table->increments('id');
             $table->string('nome');
@@ -31,8 +20,11 @@ class CreateClientesTable extends Migration
             $table->string('telefone_1');
             $table->string('telefone_2');
             $table->string('observacao')->nullable();
+
             $table->integer('endereco_id')->unsigned();
+
             $table->foreign('endereco_id')->references('id')->on('enderecos')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }
@@ -44,8 +36,6 @@ class CreateClientesTable extends Migration
      */
     public function down()
     {
-         
-         Schema::dropIfExists('clientes');
-         Schema::dropIfExists('enderecos');
+        Schema::dropIfExists('clientes');
     }
 }

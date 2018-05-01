@@ -3,13 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\PedidoStatus;
 class Pedido extends Model
 {
     protected $table = "pedidos";
 
-    protected $fillable = ['numero_pedido','valor_total','observacao','status','mesa_id'];
-    // status do pedido  = A = aberto, F = fechado, C = cancelado
+    protected $fillable = ['numero_pedido','valor_total','observacao','mesa_id','cliente_id','pedido_status_id','tipo_pedido_id'];
+                                                             // 
 
     
     
@@ -24,24 +24,32 @@ class Pedido extends Model
             ->withPivot('quantidade', 'valor')
             ->withTimestamps();
     }
+    public function cliente(){
+        return $this->belongsTo(Cliente::class,'cliente_id');
+    }
+
+    public function pedidoStatus(){
+        return $this->belongsTo(PedidoStatus::class,'pedido_status_id');
+    }
+
+    public function tipoPedido(){
+        return $this->belongsTo(TipoPedido::class,'tipo_pedido_id');
+    }
+
 
     // END Métodos de Relacionamento END  //
+
 
 
     // -------------- Métodos para MANTER Pedidos --------------  //
     
     //cria um pedido e incrementa o numero do mesmo
-    public static function novoPedido($valorTotal, $mesa){
-        $numeroPedido;
-        // se existir um pedido com essa mesa 
-        // $verificaMesa = Pedido::existePedido($mesa);
-        // if( $verificaMesa == null){
-        //     //encerrar; tratar retorno
-        //     return;
-        // }       
+    public static function novoPedido($valorTotal, $mesa_id, $tipo_pedido_id, $cliente_id){
+        $numeroPedido;    
 
         //puxa o último  pedido do dia
         $pedido = Pedido::ultimoPedido();
+
         if($pedido){
             //add +1 ao num do último pedido
             $numeroPedido = $pedido->numero_pedido + 1;
@@ -50,12 +58,15 @@ class Pedido extends Model
             $numeroPedido = 1 ;
         }        
 
+        
+        $statusPedido = PedidoStatus::where('nome','=','Aberto')->first();
         $pedido = Pedido::create([
             'numero_pedido' => $numeroPedido,
-            'status' => 'A',
             'valor_total' => $valorTotal,
-            'mesa_id' => $mesa,
-           
+            'mesa_id' => $mesa_id,
+            'cliente_id' => $cliente_id,
+            'pedido_status_id' => $statusPedido->id,
+            'tipo_pedido_id' =>  $tipo_pedido_id           
         ]);
         
         return $pedido;        

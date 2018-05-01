@@ -31,7 +31,7 @@
                             </td>                                                  
                             <td>
                                 
-                                <a class="btn btn-info btn-xs " href="{{route('user.edit', $user->id)}}"> Editar</a>
+                                <!-- <a class="btn btn-info btn-xs " href="{{route('user.edit', $user->id)}}"> Editar</a> -->
                                 <a class="btn btn-danger btn-xs " href="{{route('user.remove', $user->id)}}"> Remover</a>                                            
                             </td>
                         </tr>

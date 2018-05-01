@@ -1,10 +1,10 @@
 @extends('layouts.base')
 
 @section('conteudo')
-
+@can('Manter Pedidos')
         
         <div class="clearfix"></div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-7 col-sm-7 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2><i class="fa fa-align-left"></i> Pedidos <small>Vizualizar/Editar o Pedido</small></h2>
@@ -26,7 +26,7 @@
                     <div id="remove{{$pedido->id}}">
                       <div  class="panel">
                         <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#pedido{{$pedido->id}}" aria-expanded="true" aria-controls="collapseOne">
-                          <h4 class="panel-title">Pedido  {{$pedido->numero_pedido }}   <label> Mesa      <span >{{ $pedido->mesa->numero}} </span></label></h4>
+                          <h4 class="panel-title">Pedido:  {{$pedido->numero_pedido }}   | <label> Mesa: <span >{{ $pedido->mesa->numero}} |</span></label>  <span> Tipo: {{ $pedido->tipoPedido->nome}} |</span>  <label><span> Cliente: {{ $pedido->cliente->nome}} </span></label>   </h4>
                          
                         </a>
                         <div id="pedido{{$pedido->id}}" data-idd="{{$pedido->id}}" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
@@ -77,7 +77,7 @@
               </div>
 
 
-              <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="col-md-5 col-sm-5 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2><i class="fa fa-align-left"></i> Mesas <small>Iniciar/acessar um Pedido</small></h2>
@@ -100,7 +100,7 @@
                 </div>
               </div>
             <div class="clearfix"></div>
-   
+@endcan 
 @section('scripts')
 <script>
  $(document).ready(function(){
@@ -212,13 +212,13 @@
     }
   });
 
-  $(".delete-item").click(function(event){
+  $(".delete-item").click(function(event){  
     if (!(confirm("Tem certeza que deseja apagar esse pedido?"))) {
           return;
     }else {       
       
       var i =  $(this).attr("data-id");
-      alert(i);
+      
       $.ajax({
           type: "post",
           url: "pedido/cancelaPedido",

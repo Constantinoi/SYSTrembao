@@ -14,6 +14,65 @@
             <div class="clearfix"></div>
 
     <div class="row">
+              <div class="col-md-10  col-sm-10 col-xs-10">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2> Informações <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li> 
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <form class="form-inline">
+                      <div class="form-group">
+                        <label class="" for="mesa_id">Mesa: 
+                        <select class="" name="mesa_id" id="mesa_id">
+                              
+                              @foreach($mesas as $mesa)
+                                @if($pedido->mesa->numero == $mesa->numero )
+                                  <option value="{{$mesa->id}}" selected>{{$mesa->numero}}</option>
+                                @else
+                                  <option value="{{$mesa->id}}" >{{$mesa->numero}}</option>
+                                @endif    
+                              @endforeach                           
+                            
+                        </select>
+                        </label>
+                      </div>
+                      <div class="form-group">
+                        <label class="" for="tipo_pedido_id">Tipo:
+                          <select id="tipo_pedido_id" name="tipo_pedido_id">
+                          @foreach($tipos as $tipo)
+                            @if($pedido->tipoPedido->id  == $tipo->id)
+                              <option value="{{$tipo->id}}" selected>{{ $tipo->nome }}</option>
+                            @else
+                              <option value="{{$tipo->id}}" >{{ $tipo->nome }}</option> 
+                            @endif                            
+                          @endforeach 
+                          </select>
+                        </label>    
+                      </div>
+                      <div class="form-group">
+                          <label   for="cliente_id">Cliente:
+                            <select id="cliente_id" name="cliente_id">
+                              @foreach($clientes as $cliente)
+                              @if($pedido->cliente->id == $cliente->id)
+                                <option value="{{$cliente->id}}" selected >{{ $cliente->nome }}</option>
+                              @else
+                                <option value="{{$cliente->id}}">{{ $cliente->nome }}</option>
+                              @endif                                                            
+                              @endforeach 
+                            </select>                         
+                          </label>   
+                      </div>
+                                        
+                    </form>                 
+                  </div>
+                </div>
+              </div>
+
               <div class="col-md-10  col-sm-6 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
@@ -21,23 +80,13 @@
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Bebida</a>
-                          </li>
-                          <li><a href="#">Refeição</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
+
                     </ul>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
 
-                    <table class="table table-hover">
+                    <table id="datatable-responsive" class="table table-hover">
                       <thead  >
                         <tr>                          
                           <th>Nome</th>
@@ -73,23 +122,13 @@
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
+
                     </ul>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
                   <button class="btn btn-danger btn-xs " id="clear-cart">Limpar Pedido</button>
-                    <table class="table table-bordered">
+                    <table  class="table table-bordered">
                       <thead id="pedido_id" data-id="{{ $pedido->id }}" >
                         <tr>
                           <th>Produto </th>
@@ -265,6 +304,9 @@
               produtos : cart,
               valor_total : valorTotal,
               pedido_id :  $(this).attr("data-id"),
+              mesa_id : $('#mesa_id ').val(),
+              tipo_pedido_id : $('#tipo_pedido_id').val(),
+              cliente_id : $('#cliente_id').val(),
               _method : "put"
               },
             dataType: "json",

@@ -65,16 +65,40 @@ class ClienteController extends Controller
     {
         if(Gate::denies('Manter Clientes')){
             abort(403,"Não autorizado!");
-        }   
-        $dados = $request->all();
+        }
+        
+        if($request->ajax()){
+            $dados = $request->all();
+            // $nome = $request->nome ,
+            // $data_nascimento$request->data_nascimento,
+            // $telefone_1    telefone_1,
+            // $telefone_2    telefone_2,
+            // $observacao    observacao,
+            // $cep    cep,
+            // $logradouro    logradouro,
+            // $num    num,
+            // $bairro    bairro
+            
+            $endereco = Endereco::create($dados);
+            $dados['endereco_id'] = $endereco->id;
+    
+            $cliente = Cliente::create($dados,'endereco_id');
+            return response()->json($cliente);
 
-        //dd($dados);
-        $endereco = Endereco::create($dados);
-        $dados['endereco_id'] = $endereco->id;
+         }
+         else{
 
-        Cliente::create($dados,'endereco_id');
+            $dados = $request->all();
 
-        return redirect()->route('cliente.index');
+            $endereco = Endereco::create($dados);
+            $dados['endereco_id'] = $endereco->id;
+    
+            Cliente::create($dados,'endereco_id');
+    
+            return redirect()->route('cliente.index');
+
+        }
+       
     }
 
     /**
