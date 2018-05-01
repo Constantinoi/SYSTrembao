@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Request\ProdutoRequest;
 use App\Produto;
-use App\Tipo;
+use App\TipoProduto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Intervention\Image\ImageManagerStatic as Image; 
@@ -35,8 +35,7 @@ class ProdutoController extends Controller
         if($buscar){
             $produtos = Produto::where('nome','=', $buscar)->paginate($qtd);
         }else{  
-            $produtos =Produto::paginate($qtd);
- 
+            $produtos =Produto::paginate($qtd); 
         }
         $produtos = $produtos->appends(Request::capture()->except('page'));
         return view('produtos.index', compact('produtos','tipo'));
@@ -50,7 +49,7 @@ class ProdutoController extends Controller
     public function create(){
     
         $produtos = Produto::all();
-        $tipos = Tipo::all();
+        $tipos = TipoProduto::all();
         return view('Produtos.create', compact('tipos'));
     }
 
@@ -128,7 +127,7 @@ class ProdutoController extends Controller
         $imagem_nome = time().$imagem->getClientOriginalName();
         $imagem->move("imagens/",$imagem_nome);
 
-        $tipo=Tipo::find($produto->tipo_id);
+        $tipo=TipoProduto::find($produto->tipo_id);
 
         $dados = $request->all();
         $produto->update($dados);

@@ -24,8 +24,8 @@
                   @can('Manter Produtos')
                   <li><a><i class="fa fa-cutlery"></i> Produtos <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="#">Cadastrar Produto</a></li>
-                      <li><a href="#">Lista de Produtos</a></li>
+                      <li><a href="{{route ('produtos.create')}}">Cadastrar Produto</a></li>
+                      <li><a href="{{route ('produtos.index')}}">Lista de Produtos</a></li>
                       
                     </ul>
                   </li>
