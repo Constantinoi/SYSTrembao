@@ -24,17 +24,17 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    //     foreach ($this->listaPermissoes() as $permissao) {
-    //         Gate::define($permissao->nome,function($user) use($permissao){
-    //        return $user->temUmPapelDestes($permissao->papeis);
-    //         });
-    //    }
+        foreach ($this->listaPermissoes() as $permissao) {
+            Gate::define($permissao->nome,function($user) use($permissao){
+           return $user->temUmPapelDestes($permissao->papeis);
+            });
+       }
   
       }
   
-    //   public function listaPermissoes()
-    //   {
-    //     return Permissao::with('papeis')->get();
-    //    }
+      public function listaPermissoes()
+      {
+        return Permissao::with('papeis')->get();
+       }
     
 }
