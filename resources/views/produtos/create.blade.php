@@ -58,9 +58,9 @@
                         </div>
                       </div>
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tipo_id">Selecione a tipo: </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tipo_produto_id">Selecione a tipo: </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                      <select class="form-control" name="tipo_id" required>
+                      <select class="form-control" name="tipo_produto_id" required>
                       @foreach($tipos as $tipo)            
                         <option value="{{$tipo->id}}">{{$tipo->nome}}</option>      
                       @endforeach

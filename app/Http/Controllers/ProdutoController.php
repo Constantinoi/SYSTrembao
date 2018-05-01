@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Request\ProdutoRequest;
 use App\Produto;
-use App\Tipo;
+use App\TipoProduto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Intervention\Image\ImageManagerStatic as Image; 
@@ -20,9 +20,9 @@ class ProdutoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        if(Gate::denies('Manter Produtos')){
-            abort(403,"Não autorizado!");
-        } 
+        // if(Gate::denies('Manter Produtos')){
+        //     abort(403,"Não autorizado!");
+        // } 
 
         $qtd = $request['qtd'] ?: 8;
         $page = $request['page'] ?: 1;
@@ -50,7 +50,7 @@ class ProdutoController extends Controller
     public function create(){
     
         $produtos = Produto::all();
-        $tipos = Tipo::all();
+        $tipos = TipoProduto::all();
         return view('Produtos.create', compact('tipos'));
     }
 
@@ -106,7 +106,7 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-       $tipo = Tipo::all();
+       $tipo = TipoProduto::all();
        $produto = Produto::find($id);
  
         return view('produtos.edit', compact('produto','tipo'));
@@ -128,7 +128,7 @@ class ProdutoController extends Controller
         $imagem_nome = time().$imagem->getClientOriginalName();
         $imagem->move("imagens/",$imagem_nome);
 
-        $tipo=Tipo::find($produto->tipo_id);
+        $tipo=TipoProduto::find($produto->tipo_id);
 
         $dados = $request->all();
         $produto->update($dados);

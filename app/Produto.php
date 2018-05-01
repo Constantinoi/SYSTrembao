@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Produto extends Model
 {
     protected $table = "produtos";
-    protected $fillable = ['nome','descricao','valor','tipo_produto_id','produto_status_id'];
+    protected $fillable = ['nome','descricao','valor','imagem','tipo_produto_id','produto_status_id'];
 
     public function pedidos(){
         return $this->belongsToMany(Pedido::class);
