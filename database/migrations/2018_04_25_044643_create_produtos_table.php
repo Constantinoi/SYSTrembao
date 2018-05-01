@@ -17,10 +17,10 @@ class CreateProdutosTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('descricao')->nullable();
-            //$table->string('imagem');
+            $table->string('imagem');
             $table->float('valor');
             
-            $table->integer('produto_status_id')->unsigned();
+            $table->integer('produto_status_id')->nullable();
             $table->integer('tipo_produto_id')->unsigned();
 
             $table->foreign('tipo_produto_id')->references('id')->on('tipo_produto')->onDelete('cascade');

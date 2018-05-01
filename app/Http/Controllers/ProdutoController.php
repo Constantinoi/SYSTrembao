@@ -20,9 +20,9 @@ class ProdutoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        if(Gate::denies('Manter Produtos')){
-            abort(403,"Não autorizado!");
-        } 
+        // if(Gate::denies('Manter Produtos')){
+        //     abort(403,"Não autorizado!");
+        // } 
 
         $qtd = $request['qtd'] ?: 8;
         $page = $request['page'] ?: 1;
@@ -105,7 +105,7 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-       $tipo = Tipo::all();
+       $tipo = TipoProduto::all();
        $produto = Produto::find($id);
  
         return view('produtos.edit', compact('produto','tipo'));

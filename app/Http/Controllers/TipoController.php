@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Produto;
-use App\Tipo;
+use App\TipoProduto;
 use Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
@@ -40,9 +40,9 @@ class TipoController extends Controller
         });
 
         if($buscar){
-            $tipos = Tipo::where('tipo','=', $buscar)->paginate($qtd);
+            $tipos = TipoProduto::where('tipo','=', $buscar)->paginate($qtd);
         }else{  
-            $tipos = Tipo::paginate($qtd);
+            $tipos = TipoProduto::paginate($qtd);
 
         }
         $tipos = $tipos->appends(Request::capture()->except('page'));
@@ -56,7 +56,7 @@ class TipoController extends Controller
      */
     public function create()
     {
-        $tipos = Tipo::all();
+        $tipos = TipoProduto::all();
         return view('tipos.create', compact('tipos'));
     }
 
@@ -74,7 +74,7 @@ class TipoController extends Controller
         }
 
         $dados = $request->all(); // pega todas as informações do formulário e armazena em $dados
-        $tipo = Tipo::create($dados);
+        $tipo = TipoProduto::create($dados);
         return redirect()->route('tipos.index');
     }
 
@@ -86,7 +86,7 @@ class TipoController extends Controller
      */
     public function show($id)
     {
-         $tipos = Tipo::find($id);
+         $tipos = TipoProduto::find($id);
         return view('tipos.show', compact('tipos'));
     }
 
@@ -99,7 +99,7 @@ class TipoController extends Controller
     public function edit($id)
     {
         // verificar o relacionameto 1 N
-         $tipos = Tipo::find($id);
+         $tipos = TipoProduto::find($id);
          
         return view('tipos.edit', compact('tipos'));
     }
@@ -118,7 +118,7 @@ class TipoController extends Controller
             return redirect()->back()->withErrors($validator->erros());
         }
 
-        $tipo = Tipo::find($id);
+        $tipo = TipoProduto::find($id);
         $dados = $request->all();
         $tipo->update($dados);
 
@@ -137,7 +137,7 @@ class TipoController extends Controller
         return redirect()->route('tipos.index');
     }
     public function remover($id){
-        $tipo = Tipo::find($id);
+        $tipo = TipoProduto::find($id);
         return view('tipos.remove', compact('tipo'));
     }
 }
