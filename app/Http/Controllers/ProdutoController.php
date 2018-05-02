@@ -49,9 +49,9 @@ class ProdutoController extends Controller
      */
     public function create(){
     
-        $produtos = Produto::all();
+        
         $tipos = TipoProduto::all();
-        return view('Produtos.create', compact('tipos'));
+        return view('produtos.create', compact('tipos'));
     }
 
     /**
