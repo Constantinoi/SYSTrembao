@@ -22,7 +22,7 @@
                         <div class="col-md-55">
                         <div class="thumbnail">
                           <div class="image view view-first">
-                            <img style="width: 100%; display: block;" src="{{ url($produto->imagem)}}" alt="image" />
+                            <img style="width: 100%; display: block;" src="{{ url($produto->imagem) }}" alt="image" />
                             <div class="mask no-caption">
                               <div class="tools tools-bottom">
                                 <a href="{{route('produtos.edit', $produto->id)}}" ><i class="fa fa-edit"></i></a>

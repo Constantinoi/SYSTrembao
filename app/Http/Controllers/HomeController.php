@@ -41,12 +41,12 @@ class HomeController extends Controller
         }//se não, verificar se existem mesas fechadas com datas anteriores e liberar
         else{
             $mesas = Mesa::all();
-            $mesas->sortBy('numero');
+            
             $statusMesaFechada = MesaStatus::statusOcupado();
-            // dd($statusMesaFechada);
+            //dd($statusMesaFechada);
             foreach($mesas as $mesa){
-                if($mesa->pedido_status_id === $statusMesaFechada  ){
-                    $mesa->pedido_status_id = $statusMesaAberta;
+                if($mesa->mesa_status_id == $statusMesaFechada  ){
+                    $mesa->mesaStatus()->associate($statusMesaAberta);  
                     $mesa->save();
                 }
             }

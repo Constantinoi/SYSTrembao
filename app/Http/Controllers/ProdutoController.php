@@ -35,8 +35,7 @@ class ProdutoController extends Controller
         if($buscar){
             $produtos = Produto::where('nome','=', $buscar)->paginate($qtd);
         }else{  
-            $produtos =Produto::paginate($qtd);
- 
+            $produtos =Produto::paginate($qtd); 
         }
         $produtos = $produtos->appends(Request::capture()->except('page'));
         return view('produtos.index', compact('produtos','tipo'));
