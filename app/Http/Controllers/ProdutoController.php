@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Request\ProdutoRequest;
 use App\Produto;
 use App\TipoProduto;
+use App\ProdutoStatus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Intervention\Image\ImageManagerStatic as Image; 
@@ -48,7 +49,9 @@ class ProdutoController extends Controller
      */
     public function create(){
     
-        
+        $statusAtivo = ProdutoStatus::produtosAtivos();  
+        $produtos = Produto::where('produto_status_id', $statusAtivo)->get()->sort();
+
         $tipos = TipoProduto::all();
         return view('produtos.create', compact('tipos'));
     }

@@ -66,7 +66,17 @@
                       @endforeach
                       </select>
                     </div>   
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="produto_status_id">Status: </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                      <select class="form-control" name="produto_status_id" required>
+                      @foreach($produto_status as $dado)            
+                        <option value="{{$dado->id}}">{{$dado->nome}}</option>      
+                      @endforeach
+                      </select>
                     </div>   
+                    </div>
 
                       <div class="ln_solid"></div>                 
               </div>

@@ -135,8 +135,10 @@
     <script src="{{asset('datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
     <script src="{{asset('datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
     
+    
+
     <!-- Custom Theme Scripts -->
-    <script src="{{asset('build/js/custom.min.js')}}"></script>  
+    <script src="{{asset('build/js/custom.min.js')}}"></script
     
     <!-- Carrinho de compras -->
     <script src="{{asset('js/shoppingCart.js')}}"></script>

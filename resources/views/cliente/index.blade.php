@@ -33,7 +33,7 @@
                           <th>Bairro</th>
                           <th>Complemento</th>
                           <th>Ações</th>
-
+                          
                         </tr>
                       </thead>
 
@@ -53,20 +53,15 @@
                            
                             <td>
                               <a href="{{route('cliente.edit', $cliente->id)}}"><i class="fa fa-edit"></i></a>
-                              <a href="" data-toggle="modal" data-target="#removeCliente"> <i class="fa fa-trash-o"></i></a>
-                              <a href="" data-toggle="modal" data-target="#showCliente"><i class="fa fa-eye"></i></a></td>
+                              <a href="{{route('cliente.remove', $cliente->id)}}"> <i class="fa fa-trash-o"></i></a>
+                              <a href="{{route('cliente.show', $cliente->id)}}"><i class="fa fa-eye"></i></a></td>
                         </tr>
                         @endforeach
                       </tbody>
                     </table>
-                    <!-- <a href="{{route('cliente.create')}}"> <button class="btn btn-primary">Adicionar Cliente</button></a> -->
                   </div>
                 </div>
               </div>
 
-
-
-
-@include('cliente._modal')
 
 @endsection
