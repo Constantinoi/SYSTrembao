@@ -54,9 +54,10 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="valor"> Valor <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="valor"  class="form-control col-md-7 col-xs-12" value="{{old('valor')}}" required="required">
+                          <input type="text" name="valor"  class="form-control col-md-7 col-xs-12" id="valor" value="{{old('valor')}}" required="required">
                         </div>
                       </div>
+<<<<<<< HEAD
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tipo_produto_id">Selecione a tipo: </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -66,7 +67,28 @@
                         @endforeach
                         </select>
                       </div>   
+=======
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tipo_produto_id">Selecione a tipo: </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                      <select class="form-control" name="tipo_produto_id" required>
+                      @foreach($tipos as $tipo)            
+                        <option value="{{$tipo->id}}">{{$tipo->nome}}</option>      
+                      @endforeach
+                      </select>
                     </div>   
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="produto_status_id">Status: </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                      <select class="form-control" name="produto_status_id" required>
+                      @foreach($statusProduto as $status)            
+                        <option value="{{$status->id}}">{{$status->nome}}</option>      
+                      @endforeach
+                      </select>
+>>>>>>> f28d8693fe9df6e406899b7b3c0c8979eb839fdf
+                    </div>   
+                    </div>
 
                       <div class="ln_solid"></div>                 
               </div>

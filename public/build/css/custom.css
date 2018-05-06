@@ -3114,18 +3114,19 @@ ul.project_files li a i {
     border-right: 2px solid transparent
 }
 .thumbnail .image {
-    height: 120px;
+    height: 200px;
     overflow: hidden
 }
 .caption {
     padding: 9px 5px;
+    height: auto;
     background: #F7F7F7
 }
 .caption p {
     margin-bottom: 5px
 }
 .thumbnail {
-    height: 190px;
+    height: 200px;
     overflow: hidden
 }
 .view {

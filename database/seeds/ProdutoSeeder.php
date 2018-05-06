@@ -17,7 +17,7 @@ class ProdutoSeeder extends Seeder
             'valor' => 8.50,
             'tipo_produto_id' => 2,
             'produto_status_id' => 1,
-            'imagem' => 'imagem/vazio.jpg',
+            'imagem' => 'vazio.jpg',
             
 
         ]);
@@ -29,7 +29,7 @@ class ProdutoSeeder extends Seeder
             'valor' => 30.50,
             'tipo_produto_id' => 1,
             'produto_status_id' => 1,
-            'imagem' => 'imagem/vazio.jpg',
+            'imagem' => 'vazio.jpg',
             
         ]);
 
@@ -39,7 +39,7 @@ class ProdutoSeeder extends Seeder
             'tipo_produto_id' => 1,
             'produto_status_id' => 1,
             'valor' => 12.50,
-            'imagem' => 'imagem/vazio.jpg',
+            'imagem' => 'vazio.jpg',
             
         ]);
     }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Request\ProdutoRequest;
+use App\Http\Requests\ProdutoRequest;
 use App\Produto;
 use App\TipoProduto;
 use App\ProdutoStatus;
@@ -36,35 +36,33 @@ class ProdutoController extends Controller
         }
     }
 
-   
     public function create(){
-        //status
+      
+        $statusProduto = ProdutoStatus::all();
         $tipos = TipoProduto::all();
-        return view('produtos.create', compact('tipos'));
+        return view('produtos.create', compact('tipos','statusProduto'));
     }
 
    
-    public function store(Request $request){
+    public function store(ProdutoRequest $request){
 
-        
+
         $dados = $request->all();   
-        $request->hasFile('imagem');
-        $imagem = $request->file('imagem');
-        $imagem_nome = time().$imagem->getClientOriginalName();
-        $imagem->move("imagem/",$imagem_nome);
-        
-       $imagem = Image::make("imagem/".$imagem_nome)->resize(198,141)->save("imagem/_pequena".$imagem_nome);
-        
-       $auxNome = ("imagem/_pequena".$imagem_nome);
-        
-        $dados['imagem']= $auxNome;
 
+        if($request->hasFile('imagem')){
+            $imagem = $request->file('imagem');
+            $imagem_nome = time().'.'.$imagem->getClientOriginalExtension();
+            Image::make($imagem)->save(public_path('imagem/'.$imagem_nome ) );
+                    
+            $dados['imagem']= ("imagem/".$imagem_nome);
+        }else{
+            $dados['imagem']= ("imagem/vazio.jpg");
+        }
         Produto::create($dados);
 
         return redirect()->route('produtos.index');
     }
 
-   
     public function show($id)
     {
          
@@ -73,50 +71,53 @@ class ProdutoController extends Controller
         return view('produtos.show', compact('produto'));
     }
 
-   
+  
     public function edit($id)
     {
-       // status
+       
        $tipo = TipoProduto::all();
+       $statusProduto = ProdutoStatus::all();
        $produto = Produto::find($id);
  
-        return view('produtos.edit', compact('produto','tipo'));
+        return view('produtos.edit', compact('produto','tipo','statusProduto'));
     }
 
   
-    public function update(Request $request, $id)
+   
+    
+    public function update(ProdutoRequest $request, $id)
     {
  
         $produto = Produto::find($id);
+                
+        $dados = $request->all();
+        if($request->hasFile('imagem')){
 
         $imagem = $request->file('imagem');
-        $imagem_nome = time().$imagem->getClientOriginalName();
-        $imagem->move("imagens/",$imagem_nome);
-
-        $tipo=TipoProduto::find($produto->tipo_id);
-
-        $dados = $request->all();
-        $produto->update($dados);
-        $tipo->update($dados);
-
+        $imagem_nome = time().'.'.$imagem->getClientOriginalExtension();
+        Image::make($imagem)->save(public_path('imagem/'.$imagem_nome ) );
+                
+        $dados['imagem']= ("imagem/".$imagem_nome);
         
-         
+        }
+        $produto->update($dados);           
+        
         return redirect()->route('produtos.index');
     
     }
 
   
+   
     public function destroy($id)
     {
         Produto::find($id)->delete();
         return redirect()->route('produtos.index');
     }
+
     public function remover($id)
     {
         $produto = Produto::find($id);
-        
 
- 
         return view('produtos.remove', compact('produto'));
     }
     

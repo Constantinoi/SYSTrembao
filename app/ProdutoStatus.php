@@ -14,7 +14,11 @@ class ProdutoStatus extends Model
     }
 
     public static function produtosAtivos(){
-        $statusProduto = ProdutoStatus::where('nome','=','Disponível')->first();
-        return $statusProduto->id;
+        $statusProdutoDisponivel = ProdutoStatus::where('nome','=','Disponível')->first();
+        return $statusProdutoDisponivel->id;
+    }
+    public static function produtosInativos(){
+        $statusProdutoIndisponivel = ProdutoStatus::where('nome','=','Indisponível')->first();
+        return $statusProdutoIndisponivel->id;
     }
 }

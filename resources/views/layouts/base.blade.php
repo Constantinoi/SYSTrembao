@@ -9,8 +9,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>TremBão </title>
+    <title>SysFood </title>
 
+  
     <!-- Bootstrap -->
     <link href="{{ asset ('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Custom Theme Style -->
@@ -133,12 +134,21 @@
     <script src="{{asset('datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
     <script src="{{asset('datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
+<<<<<<< HEAD
     <!-- validator -->
     <script src="{{asset('/validator/validator.js')}}"></script>
     <!-- Switchery -->
     <script src="{{asset('/switchery/dist/switchery.min.js')}}"></script>
     <!-- Custom Theme Scripts -->
     <script src="{{asset('build/js/custom.min.js')}}"></script>      
+=======
+    
+    
+
+    <!-- Custom Theme Scripts -->
+    <script src="{{asset('build/js/custom.min.js')}}"></script
+    
+>>>>>>> f28d8693fe9df6e406899b7b3c0c8979eb839fdf
     <!-- Carrinho de compras -->
     <script src="{{asset('js/shoppingCart.js')}}"></script>
    
