@@ -15,8 +15,8 @@ class MesaController extends Controller
     public function index()
     {   
         //collection com todas as mesas LIVRES em ordem crescente
-        $statusMesaAberta = MesaStatus::where('nome','Livre')->first();
-        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta->id)->get()->sort();
+        $statusMesaAberta = MesaStatus::statusAberto();
+        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sortBy('numero');
         
         return response()->json($mesas);
     }

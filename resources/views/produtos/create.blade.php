@@ -14,7 +14,7 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>
-    <div class="x_content">
+              <div class="x_content">
                     <br />
                     @if(count($errors) > 0)
                       <div class="alert alert-danger">
@@ -57,15 +57,15 @@
                           <input type="text" name="valor"  class="form-control col-md-7 col-xs-12" value="{{old('valor')}}" required="required">
                         </div>
                       </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tipo_produto_id">Selecione a tipo: </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                      <select class="form-control" name="tipo_produto_id" required>
-                      @foreach($tipos as $tipo)            
-                        <option value="{{$tipo->id}}">{{$tipo->nome}}</option>      
-                      @endforeach
-                      </select>
-                    </div>   
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tipo_produto_id">Selecione a tipo: </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select class="form-control" name="tipo_produto_id" required>
+                        @foreach($tipos as $tipo)            
+                          <option value="{{$tipo->id}}">{{$tipo->nome}}</option>      
+                        @endforeach
+                        </select>
+                      </div>   
                     </div>   
 
                       <div class="ln_solid"></div>                 

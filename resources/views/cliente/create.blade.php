@@ -15,7 +15,7 @@
                   <div class="x_content">
                         <br />
                         @include('errors._erro')
-                        <form action="{{route('cliente.store')}}" method="post" data-parsley-validate class="form-horizontal form-label-left">
+                        <form action="{{route('cliente.store')}}" method="post"  class="form-horizontal form-label-left">
                           {{ csrf_field() }}
                           @include('cliente._dados')
                           <div class="ln_solid"></div>      

@@ -188,20 +188,21 @@ class UserController extends Controller
      return view('admin.user.papel',compact('usuario','papel'));
    }
 
-   public function papelStore(Request $request,$id)
+   public function papelStore(Request $request, $user, $papel_id)
    {
        if(Gate::denies('Administrador')){
          abort(403,"Não autorizado!");
        }
 
-
-       $usuario = User::find($id);
+       
+       $usuario = User::find($user);
        $dados = $request->all();
-       $papel = Papel::find($dados['papel_id']);
+       $papel = Papel::find($papel_id);
+        
        if($papel->nome == 'Admin'){
         return redirect()->back();
        }
-       $usuario->adicionaPapel($papel);
+       $usuario->adicionaPapel($papel); 
        return redirect()->back();
    }
 

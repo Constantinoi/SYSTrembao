@@ -20,10 +20,5 @@ class TipoPedidoSeeder extends Seeder
             'nome' => 'Viagem',
             'descricao' => 'Pedido para o cliente levar'
         ]);
-
-        $tipoPedido3 = TipoPedido::firstOrCreate([
-            'nome' => 'Delivery',
-            'descricao' => 'Pedido para ser entregue à residencia do cliente'
-        ]);
     }
 }

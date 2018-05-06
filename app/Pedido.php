@@ -46,7 +46,8 @@ class Pedido extends Model
     //cria um pedido e incrementa o numero do mesmo
     public static function novoPedido($valorTotal, $mesa_id, $tipo_pedido_id, $cliente_id){
         $numeroPedido;    
-
+        
+        
         //puxa o último  pedido do dia
         $pedido = Pedido::ultimoPedido();
 

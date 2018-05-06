@@ -18,6 +18,12 @@ class PapelUserSeeder extends Seeder
             'user_id' => '1'
            
         ]);
+        DB::table('papel_user')->insert([
+            'papel_id' => '2',
+            'user_id' => '1'
+           
+        ]);
+
         //gerente
         DB::table('papel_user')->insert([
             'papel_id' => '2',

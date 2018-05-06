@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Request\ProdutoRequest;
 use App\Produto;
 use App\TipoProduto;
+use App\ProdutoStatus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Intervention\Image\ImageManagerStatic as Image; 
@@ -14,58 +15,38 @@ use Illuminate\Support\Facades\Gate;
 
 class ProdutoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index(Request $request){
         // if(Gate::denies('Manter Produtos')){
         //     abort(403,"Não autorizado!");
         // } 
+        $statusAtivo = ProdutoStatus::produtosAtivos();
+        if($request->ajax()){
+            $filtro  = $request->input('filtro');
 
-        $qtd = $request['qtd'] ?: 8;
-        $page = $request['page'] ?: 1;
-        $buscar = $request['buscar'];
- 
-        Paginator::currentPageResolver(function () use ($page){
-            return $page;
-        });
- 
-        if($buscar){
-            $produtos = Produto::where('nome','=', $buscar)->paginate($qtd);
-        }else{  
-            $produtos =Produto::paginate($qtd); 
+            $produtos = Produto::where([
+                ['produto_status_id', '=', $statusAtivo],
+                ['tipo_produto_id', '=', $filtro]
+                ])->get()->sort();
+            return (response()->json($produtos));          
+
+        }else{            
+            $produtos = Produto::all();
+            return view('produtos.index', compact('produtos','tipo'));
         }
-        $produtos = $produtos->appends(Request::capture()->except('page'));
-        return view('produtos.index', compact('produtos','tipo'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function create(){
-    
-        $produtos = Produto::all();
+        //status
         $tipos = TipoProduto::all();
-        return view('Produtos.create', compact('tipos'));
+        return view('produtos.create', compact('tipos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request){
 
-        $this->Validate($request,[
-            
-            'imagem'=> 'image',
-    
-        ]);
+        
         $dados = $request->all();   
         $request->hasFile('imagem');
         $imagem = $request->file('imagem');
@@ -83,12 +64,7 @@ class ProdutoController extends Controller
         return redirect()->route('produtos.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($id)
     {
          
@@ -97,27 +73,17 @@ class ProdutoController extends Controller
         return view('produtos.show', compact('produto'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function edit($id)
     {
+       // status
        $tipo = TipoProduto::all();
        $produto = Produto::find($id);
  
         return view('produtos.edit', compact('produto','tipo'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function update(Request $request, $id)
     {
  
@@ -139,12 +105,7 @@ class ProdutoController extends Controller
     
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy($id)
     {
         Produto::find($id)->delete();

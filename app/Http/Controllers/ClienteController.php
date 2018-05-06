@@ -23,22 +23,10 @@ class ClienteController extends Controller
             abort(403,"Não autorizado!");
         }   
 
-        $qtd = $request['qtd'] ?: 8;
-        $page = $request['page'] ?: 1;
-        $buscar = $request['buscar'];
- 
-        Paginator::currentPageResolver(function () use ($page){
-            return $page;
-        });
- 
-        if($buscar){
-            $clientes = Cliente::where('nome','=', $buscar)->paginate($qtd);
-        }else{  
-            $clientes = Cliente::paginate($qtd);
- 
-        }
-        $clientes = $clientes->appends(Request::capture()->except('page'));
-        return view('cliente.index', compact('clientes','endereco'));
+
+        $clientes = Cliente::all(); 
+        
+        return view('cliente.index', compact('clientes'));
     }
 
     /**
@@ -94,7 +82,7 @@ class ClienteController extends Controller
             $dados['endereco_id'] = $endereco->id;
     
             Cliente::create($dados,'endereco_id');
-    
+            
             return redirect()->route('cliente.index');
 
         }
@@ -128,8 +116,9 @@ class ClienteController extends Controller
         if(Gate::denies('Manter Clientes')){
             abort(403,"Não autorizado!");
         }   
-       $endereco = Endereco::all();
+       
        $cliente = Cliente::find($id);
+       $endereco = Endereco::find($cliente->id);
  
         return view('cliente.edit', compact('cliente','endereco'));
     }
@@ -152,9 +141,7 @@ class ClienteController extends Controller
 
         $dados = $request->all();
         $cliente->update($dados);
-        $endereco->update($dados);
-
-        
+        $endereco->update($dados);       
          
         return redirect()->route('cliente.index');
     

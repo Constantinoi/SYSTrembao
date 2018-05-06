@@ -23,7 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::put('user/{id}/edit', ['as'=>'user.edit','uses' => 'Admin\UserController@update']);
     Route::get('user/papel/{id}', ['as'=>'user.papel','uses'=>'Admin\UserController@papel']);
-    Route::post('user/papel/{papel}', ['as'=>'user.papel.store','uses'=>'Admin\UserController@papelStore']);
+    Route::post('user/papel/{usuario}/{papel}', ['as'=>'user.papel.store','uses'=>'Admin\UserController@papelStore']);
     Route::delete('user/papel/{usuario}/{papel}', ['as'=>'user.papel.destroy','uses'=>'Admin\UserController@papelDestroy']);
 
 
@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/produtos/remove/{id}','ProdutoController@remover')->name('produtos.remove');
     Route::resource('produtos','ProdutoController');
+   
 
     Route::get('/tipos/remove/{id}','TipoController@remover')->name('tipos.remove');
     Route::resource('tipos','TipoController');

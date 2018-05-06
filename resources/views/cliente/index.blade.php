@@ -23,11 +23,8 @@
                       <thead>
                         <tr>
                           <th>Nome</th>
-                          <th>Data Nascimento</th>
-                          <th>Telefone</th>
                           <th>Celular</th>
                           <th>Observação</th>
-                          <th>Cep</th>
                           <th>Logradouro</th>
                           <th>Número</th>
                           <th>Bairro</th>
@@ -40,21 +37,20 @@
                       <tbody>
                           @foreach ($clientes as $cliente)
                         <tr>
-                            <td>{{$cliente->nome}}</td>
-                            <td>{{$cliente->data_nascimento}}</td>
-                            <td>{{$cliente->telefone_1}}</td>                                                                 
+                            <td>{{$cliente->nome}}</td>                                                               
                             <td>{{$cliente->telefone_2}}</td>
-                            <td>{{$cliente->observacao}}</td>
-                            <td>{{$cliente->endereco->cep}}</td>
+                            <td>{{$cliente->observacao}}</td>                        
                             <td>{{$cliente->endereco->logradouro}}</td>
                             <td>{{$cliente->endereco->num}}</td>
                             <td>{{$cliente->endereco->bairro}}</td>
                             <td>{{$cliente->endereco->complemento}}</td>
                            
                             <td>
-                              <a href="{{route('cliente.edit', $cliente->id)}}"><i class="fa fa-edit"></i></a>
-                              <a href="" data-toggle="modal" data-target="#removeCliente"> <i class="fa fa-trash-o"></i></a>
-                              <a href="" data-toggle="modal" data-target="#showCliente"><i class="fa fa-eye"></i></a></td>
+                              <a href="{{route('cliente.edit', $cliente->id)}}"></a>
+                              <a class="btn btn-info btn-xs" href="{{route('cliente.edit', $cliente->id)}}">Editar</a>
+                              <a class="btn btn-danger btn-xs" href="{{route('cliente.remove',$cliente->id)}}">Excluir</a>
+                              <!-- <a href="" data-toggle="modal" data-target="#removeCliente"> <i class="fa fa-trash-o"></i></a>
+                              <a href="" data-toggle="modal" data-target="#showCliente"><i class="fa fa-eye"></i></a></td> -->
                         </tr>
                         @endforeach
                       </tbody>
