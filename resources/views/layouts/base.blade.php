@@ -24,12 +24,15 @@
     <link href="{{asset('/iCheck/skins/flat/green.css')}}" rel="stylesheet">
     <!-- bootstrap-progressbar -->
     <link href="{{asset('/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')}}" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="{{asset('/switchery/dist/switchery.min.css')}}" rel="stylesheet">
     <!-- Datatables -->
     <link href="{{asset('/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
+
     <!-- PNotify 
     <link href="{{asset('pnotify/dist/pnotify.css')}}" rel="stylesheet">
     <link href="{{asset('pnotify/dist/pnotify.buttons.css')}}" rel="stylesheet">
@@ -42,7 +45,7 @@
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
-        <div class="col-md-3 left_col">
+        <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             
             <div class="navbar nav_title" style="border: 0;">
@@ -101,16 +104,22 @@
 
       <!-- jQuery -->
     <script src="{{asset('jquery/dist/jquery.min.js')}}"></script>
-
     <script src="{{asset('js/jquery.mask.min.js')}}"></script>
     <!-- filtros -->
     <script src="{{asset('js/filtros.js')}}"></script> 
+<<<<<<< HEAD
     <!-- preview -->
     <script src="{{asset('js/html5.image.preview.js')}}"></script> 
     <!-- cep -->
     <script src="{{asset('js/mask.js')}}"></script>
+=======
+    <!-- cep -->    
+    <script src="{{asset('js/mask.js')}}"></script> 
+>>>>>>> a64f86e25e973d9c1c96fe788e8e95ad2b5fbeaf
     <!-- Bootstrap -->
     <script src="{{asset('bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <!-- Parsley JS -->
+    <!-- <script src="{{ asset('parsleyjs/dist/parsley.min.js') }}"></script> -->
     <!-- FastClick -->
     <script src="{{asset('fastclick/lib/fastclick.js')}}"></script>
     <!-- NProgress -->
@@ -119,12 +128,7 @@
     <script src="{{asset('/bootstrap-progressbar/bootstrap-progressbar.min.js')}}"></script>
     <!-- iCheck -->
     <script src="{{asset('iCheck/icheck.min.js')}}"></script>
-    <!-- PNotify -->
-    <script src="{{asset('pnotify/dist/pnotify.js')}}"></script>
-    <script src="{{asset('pnotify/dist/pnotify.buttons.js')}}"></script>
-    <script src="{{asset('pnotify/dist/pnotify.nonblock.js')}}"></script>
-
-     <!-- Datatables -->
+    <!-- Datatables -->
     <script src="{{asset('datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
@@ -137,15 +141,25 @@
     <script src="{{asset('datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
     <script src="{{asset('datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
+<<<<<<< HEAD
+    <!-- validator -->
+    <script src="{{asset('/validator/validator.js')}}"></script>
+    <!-- Switchery -->
+    <script src="{{asset('/switchery/dist/switchery.min.js')}}"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{{asset('build/js/custom.min.js')}}"></script>      
+=======
     
     
 
     <!-- Custom Theme Scripts -->
     <script src="{{asset('build/js/custom.min.js')}}"></script
     
+>>>>>>> f28d8693fe9df6e406899b7b3c0c8979eb839fdf
     <!-- Carrinho de compras -->
     <script src="{{asset('js/shoppingCart.js')}}"></script>
-
+   
+    <!-- Ajax SetUp -->
     <script>
     $.ajaxSetup({
         headers: {
@@ -156,39 +170,207 @@
     
     @yield('scripts')
     <script>
-     // ---------------- create ------------------- //
-  //  $("#add").click( function() {
-        
-  //       $.ajax({
-  //           type: 'POST',
-  //           url: '/cliente/store',
-  //           data: {
-  //               nome :  $('input[name=nome]').val() ,
-  //               data_nascimento:  $('input[name=data_nascimento]').val(),
-  //               telefone_1:  $('input[name=telefone_1]').val(),
-  //               telefone_2:  $('input[name=telefone_2]').val(),
-  //               observacao:  $('input[name=observacao]').val(),
-  //               cep:  $('input[name=cep]').val(),
-  //               logradouro:  $('input[name=logradouro]').val(),
-  //               num:  $('input[name=num]').val(),
-  //               bairro:  $('input[name=bairro]').val()
-  //             }     
-
-  //           ,
-  //           success: function(cliente){
-                    
-  //                   $('#cliente_id').append('<option value="'+cliente.id+'" selected>'+cliente.nome+'</option>');
-
-  //                   $('#create').modal('hide');  
-                   
-  //           },
-  //           erro: function(erro){              
-  //               console.log(erro.response);
-  //           }
-  //       });
+  // --------------------------- Jquery-functions  -------------------------------------------//
+   //filtro bebida
+    $('.filtro').on('click', '.bebidas',function(event){
+      event.preventDefault();
+      var tipo = Number ($(this).attr("data-filtro"));
+     
+      $.ajax({
+        tyep: 'GET',
+        url: '/produtos',
+        data: {
+          filtro  : tipo
+        },
       
-                      
-  //   });
+        success: function(produtos){
+          var output;
+          for(var i in produtos ){
+           
+            output += ' <tr>\
+                            <td name="prod_nome" >'+produtos[i]["nome"]+'</td>\
+                            <td name="prod_descr" >'+produtos[i]["descricao"]+'</td>\
+                            <td name="prod_valor" >'+produtos[i]["valor"]+'</td>\
+                            <td><button data-id="'+produtos[i]["id"]+'" data-nome="'+produtos[i]["nome"]+'"  data-valor="'+produtos[i]["valor"]+'"   class="add-to-cart btn btn-primary btn-xs"> Adicionar </button></td>\
+                        </tr>';
+            
+          }
+          $("#produtos").html(output);
+        },
+        erro: function(erro){
+          alert(erro);
+        }   
+      });
+    });
+    //filtro refeicao
+    $('.filtro').on('click', '.refeicoes',function(event){
+      event.preventDefault();
+      var tipo = Number ($(this).attr("data-filtro"));
+     
+      $.ajax({
+        tyep: 'GET',
+        url: '/produtos',
+        data: {
+          filtro  : tipo
+        },
+      
+        success: function(produtos){
+          var output;
+          for(var i in produtos ){
+           
+            output += ' <tr>\
+                            <td name="prod_nome" >'+produtos[i]["nome"]+'</td>\
+                            <td name="prod_descr" >'+produtos[i]["descricao"]+'</td>\
+                            <td name="prod_valor" >'+produtos[i]["valor"]+'</td>\
+                            <td><button data-id="'+produtos[i]["id"]+'" data-nome="'+produtos[i]["nome"]+'"  data-valor="'+produtos[i]["valor"]+'"   class="add-to-cart btn btn-primary btn-xs"> Adicionar </button></td>\
+                        </tr>';
+            
+          }
+          $("#produtos").html(output);
+        },
+        erro: function(erro){
+          alert(erro);
+        }   
+      });
+    });
+    
+    //addCliente
+    $("#add").click( function() {  
+      $.ajax({
+          type: 'POST',
+          url: '/cliente/store',
+          data: {
+              nome :  $('input[name=nome]').val() ,
+              data_nascimento:  $('input[name=data_nascimento]').val(),
+              telefone_1:  $('input[name=telefone_1]').val(),
+              telefone_2:  $('input[name=telefone_2]').val(),
+              observacao:  $('input[name=observacao]').val(),
+              cep:  $('input[name=cep]').val(),
+              logradouro:  $('input[name=logradouro]').val(),
+              num:  $('input[name=num]').val(),
+              bairro:  $('input[name=bairro]').val()
+            }    
+          ,
+          success: function(cliente){
+                  
+                  $('#cliente_id').append('<option value="'+cliente.id+'" selected>'+cliente.nome+'</option>');
+
+                  $('#create').modal('hide');                   
+          },
+          error: function(data){              
+              
+              $('#response').addClass("alert alert-danger");
+
+              var errors = $.parseJSON(data.responseText);
+
+              $.each(errors, function (key, value) {
+              // $('#' + key).parent().addClass('error');
+                output="";
+                if($.isPlainObject(value)) {
+                      $.each(value, function (key, value) {                       
+                        console.log(key+ " " +value);
+                        output+=value+"<br/>";
+                      });
+
+                      $('#response').show().html(output);
+                }
+              });
+          }
+      });                     
+    });
+    //add item ao cart
+    $("#produtos").on('click','.add-to-cart', function(event){
+        event.preventDefault(); // prever outros clicks
+        var nome = $(this).attr("data-nome");
+        var valor = Number ($(this).attr("data-valor")); // Number String to Number
+        var id = Number ($(this).attr("data-id"));        
+        shoppingCart.addProduto(id, nome, valor, 1);
+        displayCart();
+    });
+    //limpa o cart
+    $("#clear-cart").click(function(event){
+        shoppingCart.clearCart();
+        displayCart();
+    });
+    //lista os itens do cart
+    function displayCart(){        
+       var cartArray = shoppingCart.listCart();
+       var output = "";
+        for(var i in cartArray){ 
+          //alert(cartArray[i].qtd);                               
+          output += '<tr>\
+            <td>'+cartArray[i].nome+'</td>\
+            <td><button class="subtract-item glyphicon glyphicon-minus btn btn-warning btn-xs" data-nome="'+cartArray[i].nome+'"></button>\
+            <span>'+cartArray[i].qtd+'</span>\
+            <button class="plus-item glyphicon glyphicon-plus btn btn-success btn-xs" data-nome="'+cartArray[i].nome+'"></button></td>\
+            <td><button class="delete-item glyphicon glyphicon-remove  btn btn-danger btn-xs" data-nome="'+cartArray[i].nome+'"></button></td>\
+            <td>'+cartArray[i].total+'</td>\
+            </tr>';
+        }
+        $("#show-cart").html(output);
+        $("#count-cart").html( shoppingCart.countCart() );
+        $("#total-cart").html( shoppingCart.totalCost() );
+    }
+    //deleta um elemento especifico
+    $("#show-cart").on("click", ".delete-item", function(event){
+        var name = $(this).attr("data-nome");
+        shoppingCart.removeProdutoAll(name);
+        displayCart();
+    });
+    //subtrai em uma unidade o elemento selecionado  
+    $("#show-cart").on("click", ".subtract-item", function(event){
+        var nome = $(this).attr("data-nome");
+        shoppingCart.removeProduto(nome);
+        displayCart();
+    });
+    //adiciona em uma unidade o elemento selecionado
+    $("#show-cart").on("click", ".plus-item", function(event){
+        var nome = $(this).attr("data-nome");
+        var id = Number($(this).attr("data-id"));
+        shoppingCart.addProduto(id,nome,0,1,null);
+        displayCart();
+    });
+    //finaliza o pedido
+    $("#finish-cart").click(function(event){
+        // cópia do cart
+        var cartArray = shoppingCart.listCart();
+        
+        var cart = JSON.stringify(cartArray);
+        
+        var valorTotal = shoppingCart.totalCost();        
+        if(jQuery.isEmptyObject(cartArray)){
+          alert("Selecione algum produto!")
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "/pedido/store",
+                data: { 
+                  produtos : cart,
+                  valor_total : valorTotal,
+                  mesa_id : $('#mesa_id ').val(),
+                  tipo_pedido_id : $('#tipo_pedido_id').val(),
+                  cliente_id : $('#cliente_id').val()
+                  },
+                dataType: "json",
+                
+                success: function(data){
+                    var gg= JSON.stringify(data);
+                    var loc = window.location;
+                    window.location = null;
+                  // window.location = "welcome";
+                    window.location ="/";
+                },
+                error: function(data) { // What to do if we fail
+                  var erro= JSON.stringify(data);
+                    alert("Errou"+erro);
+                }       
+            });
+        } 
+    });
+
+
+
+// END--------------------------- Jquery-functions  -------------------------------------------END //
     </script>
 
   </body>

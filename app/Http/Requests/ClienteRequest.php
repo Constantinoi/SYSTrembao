@@ -18,14 +18,14 @@ class ClienteRequest extends FormRequest
     public function Messages(){
         return [
             'nome.required'=>'Informe o nome do Cliente',
-            'nome.min'=>'Mínimo 4 Caracteres',
-            'nome.max'=>'Máximo 100 Caracteres',
+            'nome.min'=>'O nome deve ter no mínimo 4 Caracteres',
+            'nome.max'=>'O nome deve ter no máximo 30 Caracteres',
             'data_nascimento.required'=>'Informe a Data de Nascimento',
             'telefone_2.required'=>'Informe o Celular',
             'cep.required'=>'Informe o Cep',
             'logradouro.required'=>'Informe o Endereço',
             'bairro.required'=>'Informe o Bairro',
-            'num.required'=>'Informe o Numero',
+            'num.required'=>'Informe o numero da casa',
         ];
     }
     /**

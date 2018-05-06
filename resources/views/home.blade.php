@@ -10,6 +10,7 @@
                     <h2><i class="fa fa-align-left"></i> Pedidos <small>Vizualizar/Editar o Pedido</small></h2>
                     
                     <ul class="nav navbar-right panel_toolbox">
+                   
                       <a class="btn btn-success btn-xs  "  href="{{ route('pedido.create') }}"><i class ="fa fa-plus"></i>Novo </a>
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
 
@@ -26,7 +27,7 @@
                     <div id="remove{{$pedido->id}}">
                       <div  class="panel">
                         <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#pedido{{$pedido->id}}" aria-expanded="true" aria-controls="collapseOne">
-                          <h4 class="panel-title">Pedido:  {{$pedido->numero_pedido }}   | <label> Mesa: <span >{{ $pedido->mesa->numero}} |</span></label>  <span> Tipo: {{ $pedido->tipoPedido->nome}} |</span>  <label><span> Cliente: {{ $pedido->cliente->nome}} </span></label>   </h4>
+                          <h4 class="panel-title">Pedido:  {{$pedido->numero_pedido }}   |<label><span> Tipo: {{ $pedido->tipoPedido->nome}} |</span></label>   Mesa: <span >{{ $pedido->mesa->numero}} |</span>   <label><span> Cliente: {{ $pedido->cliente->nome}} </span></label>   </h4>
                          
                         </a>
                         <div id="pedido{{$pedido->id}}" data-idd="{{$pedido->id}}" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
@@ -54,7 +55,7 @@
                             </table>
                               <tfooter>
                                  <label> Sub Total:      <span >{{ $pedido->valor_total}} </span></label>
-                                 <label> Mesa      <span >{{ $pedido->mesa->numero}} </span></label>
+                                 
                                  <div class="col-md-offset-6">
                                     <button data-pedido="{{ $pedido->id }}"  class="finaliza-pedido glyphicon glyphicon-ok  btn btn-warning btn-xs" >Finalizar  </button>
                                     <a href="{{ route('pedido.edit', $pedido) }}" class="glyphicon glyphicon-edit  btn btn-primary btn-xs"> Editar</a>
@@ -142,7 +143,7 @@
 
  function displayMesa(){
       // alert("entrei no displayMesa");
-      var output = "";        
+            
       
        $.ajax({
          type: "get",
@@ -155,9 +156,9 @@
           // mesas.sort(function(a, b) { 
           //   return a.id > b.id ;
           // });
-
+          var output = ""; 
           for(var i in mesas){ 
-                                       
+                                   
             output += '<div class="panel panel-success">\
             <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#mesa'+mesas[i]["id"]+'" aria-expanded="false" aria-controls="collapseTwo">\
             <h4 class="panel-title">Mesa '+mesas[i]["numero"]+'</h4>\

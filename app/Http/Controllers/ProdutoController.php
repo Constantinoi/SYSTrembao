@@ -20,11 +20,20 @@ class ProdutoController extends Controller
         // if(Gate::denies('Manter Produtos')){
         //     abort(403,"Não autorizado!");
         // } 
+        $statusAtivo = ProdutoStatus::produtosAtivos();
+        if($request->ajax()){
+            $filtro  = $request->input('filtro');
 
-         
-            $produtos =Produto::all(); 
-        
-        return view('produtos.index', compact('produtos'));
+            $produtos = Produto::where([
+                ['produto_status_id', '=', $statusAtivo],
+                ['tipo_produto_id', '=', $filtro]
+                ])->get()->sort();
+            return (response()->json($produtos));          
+
+        }else{            
+            $produtos = Produto::all();
+            return view('produtos.index', compact('produtos','tipo'));
+        }
     }
 
     public function create(){
@@ -73,6 +82,8 @@ class ProdutoController extends Controller
         return view('produtos.edit', compact('produto','tipo','statusProduto'));
     }
 
+  
+   
     
     public function update(ProdutoRequest $request, $id)
     {
@@ -89,14 +100,13 @@ class ProdutoController extends Controller
         $dados['imagem']= ("imagem/".$imagem_nome);
         
         }
-        $produto->update($dados);     
-
-        
+        $produto->update($dados);           
         
         return redirect()->route('produtos.index');
     
     }
 
+  
    
     public function destroy($id)
     {

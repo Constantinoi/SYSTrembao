@@ -26,18 +26,24 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <form class="form-horizontal" action="{{route('user.papel.store',$usuario->id)}}" method="post">
-                            {{ csrf_field() }}
-                            @foreach($papel as $valor)
+                        
+                            @foreach($papel as $valor)  
+                            <form class="form-horizontal" action="{{route('user.papel.store',[$usuario->id,$valor->id])}}" method="post">
+                              {{ csrf_field() }}
                                 <tr>                          
                                     <td>{{$valor->nome}}</td>
                                     <td>{{$valor->descricao}}</td>
-                                    <td> 
-                                        <button name="papel_id" class="btn btn-primary"  value="{{$valor->id}}">Adicionar</button>
+                                    <td>  
+                                      
+                                        <button name="papel_id"  class="btn btn-primary"  value="{{$valor->id}}">Adicionar
+                                            
+                                        </button>
+                                      
                                     </td>
                                 </tr>
+                              </form>
                             @endforeach
-                        </form>
+                        
                       </tbody>
                     </table>                 
 

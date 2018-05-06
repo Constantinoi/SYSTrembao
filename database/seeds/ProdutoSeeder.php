@@ -27,7 +27,7 @@ class ProdutoSeeder extends Seeder
             'nome' => 'Lasanha',
             'descricao' => 'Bolonhesa',
             'valor' => 30.50,
-            'tipo_produto_id' => 2,
+            'tipo_produto_id' => 1,
             'produto_status_id' => 1,
             'imagem' => 'vazio.jpg',
             
@@ -36,7 +36,7 @@ class ProdutoSeeder extends Seeder
         $prod2 = Produto::firstOrCreate([
             'nome' => 'Batata-Frita',
             'descricao' => 'Porção Grande',
-            'tipo_produto_id' => 2,
+            'tipo_produto_id' => 1,
             'produto_status_id' => 1,
             'valor' => 12.50,
             'imagem' => 'vazio.jpg',

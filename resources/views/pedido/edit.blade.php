@@ -13,8 +13,8 @@
 
             <div class="clearfix"></div>
 
-    <div class="row">
-              <div class="col-md-10  col-sm-10 col-xs-10">
+      <div class="row">
+              <div class="col-md-10  col-sm-10 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2> Informações <small></small></h2>
@@ -73,49 +73,10 @@
                 </div>
               </div>
 
-              <div class="col-md-10  col-sm-6 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Produtos <small>lista de produtos</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-
-                    <table id="datatable-responsive" class="table table-hover">
-                      <thead  >
-                        <tr>                          
-                          <th>Nome</th>
-                          <th>Descrição</th>
-                          <th>Valor Unit</th>                   
-                          <th>Ações</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($produtos as $produto)
-                     
-                        <tr>
-                            <td name="prod_nome" >{{$produto->nome}}</td>
-                            <td name="prod_descr" >{{$produto->descricao}}</td>
-                            <td name="prod_valor" >{{$produto->valor}}</td>
-                            <td><button data-id="{{$produto->id}}" data-nome="{{$produto->nome}}"  data-valor="{{$produto->valor}}"   class="add-to-cart btn btn-primary btn-xs"> Adicionar </button></td>
-
-                        </tr>
-                        
-                       @endforeach                        
-                      </tbody>
-                    </table>
-
-                  </div>
-                </div>
-              </div>
+              @include('pedido._produtos')
 
 
-              <div class="col-md-10 col-sm-6 col-xs-12">
+              <div class="col-md-10 col-sm-10 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Itens no Pedido <small>Edite aqui os itens no Pedido Atual</small></h2>
@@ -127,6 +88,7 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
+                 
                   <button class="btn btn-danger btn-xs " id="clear-cart">Limpar Pedido</button>
                     <table  class="table table-bordered">
                       <thead id="pedido_id" data-id="{{ $pedido->id }}" >
@@ -141,16 +103,7 @@
                         {{csrf_field()}} 
                        
                         <tbody id ="show-cart"> 
-                            <!-- @foreach($pedido->produtos as $detalhe)
-                                <tr>                                  
-                                  <td>{{$detalhe->nome}}</td>
-                                  <td><button class="subtract-item glyphicon glyphicon-minus btn btn-warning btn-xs" data-nome="{{$detalhe->nome}}'"></button>
-                                  <span>{{$detalhe->pivot->quantidade}}</span>
-                                  <button class="plus-item glyphicon glyphicon-plus btn btn-success btn-xs" data-nome="{{$detalhe->nome}}"></button></td>
-                                  <td><button class="delete-item glyphicon glyphicon-remove  btn btn-danger btn-xs" data-nome="{{$detalhe->nome}}"></button></td>
-                                  <td>{{$detalhe->valor * $detalhe->pivot->quantidade }} </td>                                 
-                                </tr>
-                            @endforeach  -->
+                           
                           
                         </tbody>
                     </table>
@@ -163,7 +116,7 @@
                         <div class="col-md-offset-7">
                           <a class="btn btn-primary  glyphicon glyphicon-arrow-left" href="{{ url()->previous() }}" >   Voltar </a>
                               <button  data-id="{{ $pedido->id }}" class="delete-item btn btn-danger glyphicon glyphicon-remove" >Cancelar </button>
-                              <button id="finish-cart" data-id="{{ $pedido->id }}" class="btn btn-success glyphicon glyphicon-ok"> Finalizar</button>    
+                              <button id="edit-cart" data-id="{{ $pedido->id }}" class="btn btn-success glyphicon glyphicon-ok"> Finalizar</button>    
                         </div>     
                                  
                     </tfoot>
@@ -205,20 +158,7 @@
               
     });
 
-    $(".add-to-cart").click(function(event){
-            event.preventDefault(); // prever outros clicks
-            var nome = $(this).attr("data-nome");
-            var valor = Number ($(this).attr("data-valor")); // Number String to Number
-            var id = Number ($(this).attr("data-id"));        
-            shoppingCart.addProduto(id, nome, valor, 1);
-            displayCart();
-    });
 
-
-    $("#clear-cart").click(function(event){
-        shoppingCart.clearCart();
-        displayCart();
-    });
 
     function displayCart(){        
        var cartArray = shoppingCart.listCart();
@@ -240,24 +180,7 @@
     }
 
     
-    $("#show-cart").on("click", ".delete-item", function(event){
-        var name = $(this).attr("data-nome");
-        shoppingCart.removeProdutoAll(name);
-        displayCart();
-    });
-
-    $("#show-cart").on("click", ".subtract-item", function(event){
-        var nome = $(this).attr("data-nome");
-        shoppingCart.removeProduto(nome);
-        displayCart();
-    });
-
-    $("#show-cart").on("click", ".plus-item", function(event){
-        var nome = $(this).attr("data-nome");
-        var id = Number($(this).attr("data-id"));
-        shoppingCart.addProduto(id,nome,0,1,null);
-        displayCart();
-    });
+   
 
     $(".delete-item").click(function(event){
       if (!(confirm("Tem certeza que deseja apagar esse pedido?"))) {
@@ -288,7 +211,7 @@
       }
     });
 
-    $("#finish-cart").click(function(event){
+    $("#edit-cart").click(function(event){
         // cópia do cart
         var cartArray = shoppingCart.listCart();
         // JSON array no formato String

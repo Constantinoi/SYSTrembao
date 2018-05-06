@@ -12,4 +12,14 @@ class TipoProduto extends Model
     public function produto(){
         return $this->hasOne(Produto::class, 'tipo_produto_id');
     }
+
+    public static function tipoBebida(){
+        $tipoBebida = TipoProduto::where('nome','=','Bebidas')->first();
+        return $tipoBebida->id;
+    }
+
+    public static function tipoRefeicao(){
+        $tipoRefeicao = TipoProduto::where('nome','=','Refeição')->first();
+        return $tipoRefeicao->id;
+    }
 }

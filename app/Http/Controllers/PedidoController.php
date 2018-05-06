@@ -6,6 +6,7 @@ use App\Pedido;
 use App\Produto;
 use App\Mesa;
 use App\TipoPedido;
+use App\TipoProduto;
 use App\MesaStatus;
 use App\PedidoStatus;
 use App\ProdutoStatus;
@@ -60,11 +61,14 @@ class PedidoController extends Controller
         $statusMesaAberta = MesaStatus::statusAberto();
         $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sort();
 
+        $tipoBebida = TipoProduto::tipoBebida();
+        $tipoRefeicao = TipoProduto::tipoRefeicao();
+
         $tipos = TipoPedido::all();
         $clientes = Cliente::all();
         if($mesa){
             //dd($mesa);
-            return view('pedido.create', compact('produtos','mesa','mesas','tipos','clientes')); 
+            return view('pedido.create', compact('produtos','mesa','mesas','tipos','clientes', 'tipoBebida', 'tipoRefeicao')); 
         }
 
     }
@@ -74,15 +78,19 @@ class PedidoController extends Controller
         if(Gate::denies('Manter Pedidos')){
             abort(403,"Não autorizado!");
         }
+        //recebe o id do status ativo
         $statusAtivo = ProdutoStatus::produtosAtivos();  
         $produtos = Produto::where('produto_status_id', $statusAtivo)->get()->sort();
 
         $statusMesaAberta = MesaStatus::statusAberto();
         $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sort();
 
+        $tipoBebida = TipoProduto::tipoBebida();
+        $tipoRefeicao = TipoProduto::tipoRefeicao();
+
         $tipos = TipoPedido::all();
         $clientes = Cliente::all();
-        return view('pedido.create', compact('produtos','mesas','tipos','clientes')); 
+        return view('pedido.create', compact('produtos', 'mesas', 'tipos', 'clientes', 'tipoBebida', 'tipoRefeicao')); 
     }
 
 
@@ -150,10 +158,13 @@ class PedidoController extends Controller
         $statusMesaAberta = MesaStatus::statusAberto();
         $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sort();
 
+        $tipoBebida = TipoProduto::tipoBebida();
+        $tipoRefeicao = TipoProduto::tipoRefeicao();
+
         $tipos = TipoPedido::all();
         $clientes = Cliente::all();
 
-        return view('pedido.edit', compact('pedido','produtos','mesas','tipos','clientes'));
+        return view('pedido.edit', compact('pedido','produtos','mesas','tipos','clientes', 'tipoBebida', 'tipoRefeicao'));
     }
 
 
