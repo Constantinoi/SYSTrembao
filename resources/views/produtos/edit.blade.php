@@ -17,7 +17,7 @@
                   </div>
     <div class="x_content">
                     <br>
-                    <form action="{{route('produtos.update',$produto->id)}}" method="post" data-parsley-validate class="form-horizontal form-label-left">
+                    <form action="{{route('produtos.update',$produto->id)}}" method="post" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                       <div class="form-group">
@@ -37,7 +37,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="valor">Valor<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="valor"  class="form-control col-md-7 col-xs-12" value="{{$produto->valor}}">
+                          <input type="text" name="valor" id="valor" class="form-control col-md-7 col-xs-12" value="{{$produto->valor}}">
                         </div>
                       </div>
                       <div class="form-group">
@@ -52,12 +52,24 @@
                               </select>
                           </div>   
                     </div> 
+                      <div class="form-group">
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="produto_status_id">Status: </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <select class="form-control" name="produto_status_id" required>
+                                @foreach($statusProduto as $status)            
+                                  <option value="{{$status->id}}"
+                                    {{(isset($produto->produto_status_id) && $produto->produto_status_id == $status->id ?'selected' : '')}}>{{$status->nome}} 
+                                  </option>      
+                                @endforeach
+                              </select>
+                          </div>   
+                    </div> 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" > 
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            
-                              <img width="100" src="{{ url($produto->imagem) }}" alt="" />
+                              <img width="200px" src="{{ url($produto->imagem) }}" alt="" />
                            
                         </div>
                       </div>
@@ -65,7 +77,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="imagem"> Imagem
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type='file' id="imagem" name="imagem" value="{{$produto->imagem}}">
+                          <input type='file' id="imagem" name="imagem" value="{{url($produto->imagem)}}">
                         </div>
                       </div>                     
                       <div class="ln_solid"></div>                 

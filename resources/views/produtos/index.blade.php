@@ -22,7 +22,7 @@
                         <div class="col-md-55">
                         <div class="thumbnail ">
                           <div class="image view view-first">
-                            <img style="width: 100%; display: block;" src="{{ url($produto->imagem) }}" alt="image" />
+                            <img style="width: 100%; display: block;" src="{{url($produto->imagem)}}" alt="image" />
                             <div class="mask no-caption">
                               <div class="tools tools-bottom">
                                 <a href="{{route('produtos.edit', $produto->id)}}" ><i class="fa fa-edit"></i></a>
@@ -35,7 +35,7 @@
                             <p class="center"><strong>{{$produto->nome}}</strong>
                             </p>
                             <p>{{$produto->descricao}}</p>
-                              <p><span class="label label-default">teste</span></p>
+                              <p><span class="sProd label label-default">{{$produto->produtoStatus->nome}}</span></p>
                           </div>
                         </div>
                       </div>
