@@ -32,6 +32,11 @@ class PermissaoSeeder extends Seeder
             'nome' =>'Manter Clientes',
             'descricao' =>'Acesso a todas a funcionalidades de Clientes'
         ]);
+
+        $cozinha = Permissao::firstOrCreate([
+            'nome' => 'Cozinha',
+            'descricao' => 'Vizualiza Pedidos'
+        ]);
        
         // $usuarios2 = Permissao::firstOrCreate([
         //     'nome' =>'Criar usuário',

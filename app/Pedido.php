@@ -44,7 +44,7 @@ class Pedido extends Model
     // -------------- Métodos para MANTER Pedidos --------------  //
     
     //cria um pedido e incrementa o numero do mesmo
-    public static function novoPedido($valorTotal, $mesa_id, $tipo_pedido_id, $cliente_id){
+    public static function novoPedido($valorTotal, $mesa_id, $tipo_pedido_id, $cliente_id, $observacao){
         $numeroPedido;    
         
         
@@ -67,7 +67,8 @@ class Pedido extends Model
             'mesa_id' => $mesa_id,
             'cliente_id' => $cliente_id,
             'pedido_status_id' => $statusPedido->id,
-            'tipo_pedido_id' =>  $tipo_pedido_id           
+            'tipo_pedido_id' =>  $tipo_pedido_id,
+            'observacao' => $observacao           
         ]);
         
         return $pedido;        

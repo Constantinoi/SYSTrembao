@@ -17,6 +17,11 @@ class PapelPermissaoSeeder extends Seeder
             'papel_id' => 1,
             'permissao_id' => 1
         ]);
+
+        DB::table('papel_permissao')->insert([
+            'papel_id' => 1,
+            'permissao_id' => 5
+        ]);
         //gerente
         DB::table('papel_permissao')->insert([
             'papel_id' => 2,
@@ -46,6 +51,17 @@ class PapelPermissaoSeeder extends Seeder
         DB::table('papel_permissao')->insert([
             'papel_id' => 4,
             'permissao_id' => 2
+        ]);
+
+        DB::table('papel_permissao')->insert([
+            'papel_id' => 4,
+            'permissao_id' => 4
+        ]);
+
+        //cozinheiro
+        DB::table('papel_permissao')->insert([
+            'papel_id' => 5,
+            'permissao_id' => 5
         ]);
 
 

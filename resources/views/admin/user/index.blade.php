@@ -14,7 +14,7 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <table class="table">
+                    <table id="datatable-responsive" class="table">
                       <thead>
                         <tr>
                             <th>Nome</th>

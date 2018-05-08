@@ -26,43 +26,32 @@
                   </div>
                   <div class="x_content">
                     <form class="form-inline">
+
+                       @include('pedido._tipo')
+
                       <div class="form-group">
-                        <label class="" for="mesa_id">Mesa: 
+                      <label class="" for="mesa_id">Mesa: 
                         <select class="" name="mesa_id" id="mesa_id">
                               
                               @foreach($mesas as $mesa)
-                                @if($pedido->mesa->numero == $mesa->numero )
-                                  <option value="{{$mesa->id}}" selected>{{$mesa->numero}}</option>
-                                @else
-                                  <option value="{{$mesa->id}}" >{{$mesa->numero}}</option>
-                                @endif    
+   
+                              <option value="{{$mesa->id}}" >{{$mesa->nome}}</option>
+                                  
                               @endforeach                           
-                            
+                              <option value="{{$pedido->mesa->id}}" selected>{{$pedido->mesa->nome}}</option>
                         </select>
                         </label>
+                         
                       </div>
                       <div class="form-group">
-                        <label class="" for="tipo_pedido_id">Tipo:
-                          <select id="tipo_pedido_id" name="tipo_pedido_id">
-                          @foreach($tipos as $tipo)
-                            @if($pedido->tipoPedido->id  == $tipo->id)
-                              <option value="{{$tipo->id}}" selected>{{ $tipo->nome }}</option>
-                            @else
-                              <option value="{{$tipo->id}}" >{{ $tipo->nome }}</option> 
-                            @endif                            
-                          @endforeach 
-                          </select>
-                        </label>    
-                      </div>
-                      <div class="form-group">
-                          <label   for="cliente_id">Cliente:
+                          <label id="cliente" for="cliente_id">Cliente:
                             <select id="cliente_id" name="cliente_id">
                               @foreach($clientes as $cliente)
-                              @if($pedido->cliente->id == $cliente->id)
-                                <option value="{{$cliente->id}}" selected >{{ $cliente->nome }}</option>
-                              @else
-                                <option value="{{$cliente->id}}">{{ $cliente->nome }}</option>
-                              @endif                                                            
+                                @if($pedido->cliente->id == $cliente->id)
+                                  <option value="{{$cliente->id}}" selected >{{ $cliente->nome }}</option>
+                                @else
+                                  <option value="{{$cliente->id}}">{{ $cliente->nome }}</option>
+                                @endif                                                            
                               @endforeach 
                             </select>                         
                           </label>   
@@ -108,13 +97,15 @@
                         </tbody>
                     </table>
                     <tfoot >
+                        <label> Observação: <input id="obsevacaoPedido"  name="observacao" type="text" value="{{ $pedido->observacao }}" ></label>
+                        <br>
                         <label> Total de itens: <span id="count-cart"></span></label>
                         <br>
                         <label> Sub Total:      <span id="total-cart"></span></label>
                         
                                              
                         <div class="col-md-offset-7">
-                          <a class="btn btn-primary  glyphicon glyphicon-arrow-left" href="{{ url()->previous() }}" >   Voltar </a>
+                          <a class="btn btn-primary  glyphicon glyphicon-arrow-left" href="{{ route('home') }}" >   Voltar </a>
                               <button  data-id="{{ $pedido->id }}" class="delete-item btn btn-danger glyphicon glyphicon-remove" >Cancelar </button>
                               <button id="edit-cart" data-id="{{ $pedido->id }}" class="btn btn-success glyphicon glyphicon-ok"> Finalizar</button>    
                         </div>     
@@ -130,7 +121,16 @@
 @section('scripts')
 <script>
 
+   
+
     $(document).ready(function(){
+          var id = $("#tipo_pedido_id").val();
+          var mesa = jQuery('#mesa_id');
+          //se não for local seta a mesa 0
+          if(id != 1){
+            $("#mesa_id").prop("disabled", true);
+            $("#mesa_id").append('<option value="'+1+'" selected></option>');
+          }
 
       $.ajax({
                 type: "get",
@@ -154,7 +154,7 @@
                 erro: function(produtos){
                   alert("ruim"+produtos);
                 }  
-        });
+      });
               
     });
 
@@ -230,7 +230,8 @@
               mesa_id : $('#mesa_id ').val(),
               tipo_pedido_id : $('#tipo_pedido_id').val(),
               cliente_id : $('#cliente_id').val(),
-              _method : "put"
+              _method : "put",
+              observacao: $('#obsevacaoPedido').val()
               },
             dataType: "json",
             

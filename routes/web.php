@@ -36,14 +36,15 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::resource('cliente', 'ClienteController');
     Route::resource('pedido', 'PedidoController');
-
+    
+    Route::get('pedido', 'PedidoController@index')->name('pedido.index');;
     Route::get('pedido/create/mesa/{mesa}' , 'PedidoController@createMesa');    
     Route::get('pedido/edit/{pedido}', 'PedidoController@edit')->name('pedido.edit');
     Route::put('pedido/update', 'PedidoController@update');
 
     Route::POST('/pedido/store', 'PedidoController@store');
     Route::delete('pedido/cancelaPedido', 'PedidoController@cancelaPedido');
-    Route::get('/pedido/index', 'PedidoController@index');
+
 
     Route::get('/cliente/remove/{id}','ClienteController@remover')->name('cliente.remove');
     Route::post('/cliente/store','ClienteController@store');

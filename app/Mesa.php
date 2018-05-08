@@ -7,7 +7,7 @@ use App\MesaStatus;
 class Mesa extends Model
 {
     protected $table = "mesas";
-    protected  $fillable = ['numero','mesa_status_id'];
+    protected  $fillable = ['nome','numero','mesa_status_id'];
 
     public function pedido(){
         return $this->hasOne(Pedido::class,'mesa_id');

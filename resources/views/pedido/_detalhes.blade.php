@@ -26,11 +26,14 @@
                         </tbody>
                     </table>
                     <tfoot >
+                        <label> Observação:     <input id="obsevacaoPedido"  name="observacaoPedido" type="text"  ></label>
+                        <br>
                         <label> Total de itens: <span id="count-cart"></span></label>
                         <br>
                         <label> Sub Total:      <span id="total-cart"></span></label>
                         
-                        <div class="col-md-offset-10">
+                        <div class="col-md-offset-9">
+                            <a class="btn btn-primary  glyphicon glyphicon-arrow-left" href="{{ route('home') }}"> Voltar </a>
                             <button id="finish-cart" class="btn btn-success glyphicon glyphicon-ok"> Finalizar</button>    
                         </div>               
                     </tfoot>

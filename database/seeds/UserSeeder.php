@@ -37,6 +37,13 @@ class UserSeeder extends Seeder
                 'password'       => bcrypt('password')                      
             ]);
 
+
+            User::create([
+                'name'           => 'Cozinheiro',
+                'email'          => 'cozinha@cozinha.com',
+                'password'       => bcrypt('password')                      
+            ]);
+
             echo "0 -Usuário Admin criado com sucesso!";
         }
     }

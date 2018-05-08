@@ -16,7 +16,7 @@
     $('#data_nascimento').mask('00/00/0000');
     $('#num').mask('00000');
     $('#rg').mask('00000000');
-    $('#valor').mask('0000000000');
+    $('#valor').mask('00.00');
     
 })(jQuery);
  

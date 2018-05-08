@@ -82,11 +82,12 @@
                       </div>                     
                       <div class="ln_solid"></div>                 
                   </div>
-                </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button type="submit" class="btn btn-success">Editar</button>
-						             <a href="{{ url()->previous() }}" class="btn btn-default">Voltar</a>         
+                          <a href="{{route('produtos.index') }}" class="btn btn-primary">Voltar</a>  
+                          <button type="submit" class="btn btn-success">Editar</button>						                     
                       </div>
+                </div>
+                     
                     </form>
                      
                   </div>             

@@ -16,7 +16,8 @@ class MesaController extends Controller
     {   
         //collection com todas as mesas LIVRES em ordem crescente
         $statusMesaAberta = MesaStatus::statusAberto();
-        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sortBy('numero');
+        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)
+                       ->where('numero','>',0)->get()->sortBy('numero');
         
         return response()->json($mesas);
     }

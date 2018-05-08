@@ -20,9 +20,10 @@ class PapelRequest extends FormRequest
         return [
             'nome.required'=>'Informe o nome do Papel',
             'nome.min'=>'Mínimo 4 Caracteres',
-            'nome.max'=>'Máximo 100 Caracteres',
-            'descricao.min'=>'O Campo Email deve Conter no mínimo 10 dígitos',
-            'descricao.max'=>'O Campo Email deve Conter até 30 dígitos',
+            'nome.max'=>'Máximo 30 Caracteres',
+            'descricao.min'=>'Mínimo 4 Caracteres',
+            'descricao.max'=>'Máximo 30 Caracteres',
+            'descricao.required'=>'Informe a descrição do papel'
             
            
         ];
@@ -33,7 +34,7 @@ class PapelRequest extends FormRequest
     {
         return [
             'nome'=> 'required|min:4|max:30',
-            'descricao'=>'required|min:10|max:30'           
+            'descricao'=>'required|min:4|max:30'           
         ];
     }
 }

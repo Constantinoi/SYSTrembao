@@ -27,7 +27,7 @@
                     <div id="remove{{$pedido->id}}">
                       <div  class="panel">
                         <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#pedido{{$pedido->id}}" aria-expanded="true" aria-controls="collapseOne">
-                          <h4 class="panel-title">Pedido:  {{$pedido->numero_pedido }}   |<label><span> Tipo: {{ $pedido->tipoPedido->nome}} |</span></label>   Mesa: <span >{{ $pedido->mesa->numero}} |</span>   <label><span> Cliente: {{ $pedido->cliente->nome}} </span></label>   </h4>
+                          <h4 class="panel-title">Pedido:  {{$pedido->numero_pedido }}   |<label><span> Tipo: {{ $pedido->tipoPedido->nome}} |</span></label>   Mesa: <span >{{ $pedido->mesa->nome}} |</span>   <label><span> Cliente: {{ $pedido->cliente->nome}} </span></label>   </h4>
                          
                         </a>
                         <div id="pedido{{$pedido->id}}" data-idd="{{$pedido->id}}" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
@@ -54,7 +54,9 @@
                               
                             </table>
                               <tfooter>
-                                 <label> Sub Total:      <span >{{ $pedido->valor_total}} </span></label>
+                                  
+                                 <label><span>  Observação:  {{ $pedido->observacao}} </span>  </label><br>
+                                 <label> <span ><h4> Sub Total: R$ {{ $pedido->valor_total}} </span> </h4> </label>
                                  
                                  <div class="col-md-offset-6">
                                     <button data-pedido="{{ $pedido->id }}"  class="finaliza-pedido glyphicon glyphicon-ok  btn btn-warning btn-xs" >Finalizar  </button>
@@ -106,56 +108,19 @@
 <script>
  $(document).ready(function(){
    displayMesa();
-//    $.ajax({
-//             type: "get",
-//             url: "pedido/index",            
-            
-            
-//             success: function(pedidos){
-//                //chamar função para listar
-//                alert(pedidos);
-//                var pedidosJson = JSON.parse(pedidos); 
-//                console.log(pedidosJson);
-//                var output = "";
-//                alert(pedidosJson);
 
-//                for(var i in pedidosJson){ 
-//                 // converte json string to JS object
-                
-                
-//                 output += '<tr>\
-//                   <td>'+pedidosJson[i].nome+'</td>\
-//                   <td><button class="subtract-item glyphicon glyphicon-minus btn btn-warning btn-xs" data-nome="'+pedidosJson[i].nome+'"></button>\
-//                   <span>'+pedidosJson[i].qtd+'</span>\
-//                   <button class="plus-item glyphicon glyphicon-plus btn btn-success btn-xs" data-nome="'+pedidosJson[i].nome+'"></button></td>\
-//                   <td><button class="delete-item glyphicon glyphicon-remove  btn btn-danger btn-xs" data-nome="'+pedidosJson[i].nome+'"></button></td>\
-//                   <td>'+pedidosJson[i].total+'</td>\
-//                   </tr>';
-//                }
-//                $("#show-cart").html(output);
-//             },
-//             error: function(data) { // What to do if we fail
-//               var data= JSON.stringify(data);
-//                 alert("algo errado   : "+data);
-//             }       
-//         });
  });
 
  function displayMesa(){
-      // alert("entrei no displayMesa");
-            
-      
+
+
        $.ajax({
          type: "get",
          url: "mesa",
          dataType: "json",
 
          success: function(mesas){ 
-          // mesas = JSON.stringify(mesas);
-          // alert(mesas);
-          // mesas.sort(function(a, b) { 
-          //   return a.id > b.id ;
-          // });
+
           var output = ""; 
           for(var i in mesas){ 
                                    

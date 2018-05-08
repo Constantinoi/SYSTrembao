@@ -19,16 +19,38 @@ class PedidoController extends Controller
     
     public function index(){
 
-        if(Gate::denies('Manter Pedidos')){
+        if(Gate::denies('Cozinha')){
             abort(403,"Não autorizado!");
         }  
-        // $pedidos = Pedido::whereDate('created_at', today())->get(); 
-        $pedidos = Pedido::where('status', 'A')->get(); 
-        // $pedido = Pedido::latest()->first();
+        $statusMesaAberta = MesaStatus::statusAberto();
         
-                		
-         dd($pedidos);
+        $statusPedidoAberto = PedidoStatus::statusAberto();
+        
+        //collection com pedidos de hj
+        $pedidos = Pedido::where('pedido_status_id',$statusPedidoAberto)->whereDate('created_at' , today())->get()->sort();
+        $mesas = Mesa::where('mesa_status_id',$statusMesaAberta)->get()->sort();
+        // dd($mesas);
+        //se existirem pedidos HOJE, Listar
+        if($pedidos->isNotEmpty()){  
+            //dd($pedidos);          
+            return view ('pedido.index', compact('pedidos'));
+        }//se não, verificar se existem mesas fechadas com datas anteriores e liberar
+        else{
+            $mesas = Mesa::all();
+            
+            $statusMesaFechada = MesaStatus::statusOcupado();
+            //dd($statusMesaFechada);
+            foreach($mesas as $mesa){
+                if($mesa->mesa_status_id == $statusMesaFechada){
+                    $mesa->mesaStatus()->associate($statusMesaAberta);  
+                    $mesa->save();
+                }
+            }
+            // dd($mesas);
+            return view ('pedido.index', compact('pedidos'));   
+        }
     }
+    
 
     
     public function show(Request $request){
@@ -59,7 +81,8 @@ class PedidoController extends Controller
         $produtos = Produto::where('produto_status_id', $statusAtivo)->get()->sort();
 
         $statusMesaAberta = MesaStatus::statusAberto();
-        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sort();
+        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)
+        ->where('numero','>',0)->get()->sortBy('numero');
 
         $tipoBebida = TipoProduto::tipoBebida();
         $tipoRefeicao = TipoProduto::tipoRefeicao();
@@ -83,7 +106,8 @@ class PedidoController extends Controller
         $produtos = Produto::where('produto_status_id', $statusAtivo)->get()->sort();
 
         $statusMesaAberta = MesaStatus::statusAberto();
-        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sort();
+        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)
+        ->where('numero','>',0)->get()->sortBy('numero');
 
         $tipoBebida = TipoProduto::tipoBebida();
         $tipoRefeicao = TipoProduto::tipoRefeicao();
@@ -104,13 +128,14 @@ class PedidoController extends Controller
         $mesa_id = $request->input('mesa_id');
         $tipo_pedido_id = $request->input('tipo_pedido_id');
         $cliente_id = $request->input('cliente_id');
+        $observacao = $request->input('observacao');
 
         // método que transforma JSON em uma array PHP associativa
         $produtos = json_decode($produtos_json, true);
         //print_r($produtos);       // Dump all data of the Array
         
         //criar pedido
-        $pedido = Pedido::novoPedido($valor_total, $mesa_id, $tipo_pedido_id, $cliente_id);
+        $pedido = Pedido::novoPedido($valor_total, $mesa_id, $tipo_pedido_id, $cliente_id, $observacao);
        
         //verifica se existe um pedido
         if($pedido){
@@ -148,15 +173,11 @@ class PedidoController extends Controller
         $statusAtivo = ProdutoStatus::produtosAtivos();  
         $produtos = Produto::where('produto_status_id', $statusAtivo)->get()->sort();
 
-        $mesa_id = $pedido->mesa_id;
-
-        $mesa = Mesa::find($mesa_id);
-        $status = MesaStatus::statusAberto();
-        $mesa->mesaStatus()->associate($status);        
-        $mesa->save(); 
+        
 
         $statusMesaAberta = MesaStatus::statusAberto();
-        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)->get()->sort();
+        $mesas = Mesa::where('mesa_status_id', $statusMesaAberta)
+        ->where('numero','>',0)->get()->sortBy('numero');
 
         $tipoBebida = TipoProduto::tipoBebida();
         $tipoRefeicao = TipoProduto::tipoRefeicao();
@@ -181,11 +202,25 @@ class PedidoController extends Controller
         $pedido_id = $request->input('pedido_id');
         $tipo_pedido_id = $request->input('tipo_pedido_id');
         $cliente_id = $request->input('cliente_id');
+        $observacao = $request->input('observacao');
 
         // pega o pedido    
         $pedido = Pedido::find($pedido_id);
-         // deleta todos os produtos       
+
+        //libera antiga mesa
+        $mesa_antiga = $pedido->mesa_id;
+
+        $mesa = Mesa::find($mesa_antiga);
+        $status = MesaStatus::statusAberto();
+        $mesa->mesaStatus()->associate($status);        
+        $mesa->save(); 
+
+        // deleta todos os produtos       
         $pedido->produtos()->detach();
+
+        //add nova observação
+        $pedido->observacao = $observacao;
+
         /// atualiza o novo valorTotal 
         $pedido->valor_total = $valor_total;
         $pedido->mesa()->associate($mesa_id);
@@ -213,8 +248,9 @@ class PedidoController extends Controller
                                         'valor' =>  $value['valor']                                                                                                
                                         ]);
             }
-
             
+
+            //pega nova mesa
             $mesa = Mesa::find($mesa_id);
             $statusMesaOcupada = MesaStatus::statusOcupado();
             $mesa->mesaStatus()->associate($statusMesaOcupada);        

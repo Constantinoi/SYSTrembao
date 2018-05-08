@@ -134,21 +134,13 @@
     <script src="{{asset('datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
     <script src="{{asset('datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
-<<<<<<< HEAD
-    <!-- validator -->
-    <script src="{{asset('/validator/validator.js')}}"></script>
+
     <!-- Switchery -->
     <script src="{{asset('/switchery/dist/switchery.min.js')}}"></script>
     <!-- Custom Theme Scripts -->
     <script src="{{asset('build/js/custom.min.js')}}"></script>      
-=======
     
     
-
-    <!-- Custom Theme Scripts -->
-    <script src="{{asset('build/js/custom.min.js')}}"></script
-    
->>>>>>> f28d8693fe9df6e406899b7b3c0c8979eb839fdf
     <!-- Carrinho de compras -->
     <script src="{{asset('js/shoppingCart.js')}}"></script>
    
@@ -164,6 +156,53 @@
     @yield('scripts')
     <script>
   // --------------------------- Jquery-functions  -------------------------------------------//
+    $(document).on('click','#tipo', function(){
+          var id = $("#tipo_pedido_id").val();
+          var mesa = jQuery('#mesa_id');
+          
+          //se não for local seta a mesa 0(viagem e delivery)
+          if(id != 1){
+            $("#mesa_id").prop("disabled", true);
+            $("#mesa_id").append('<option value="'+1+'" selected></option>');
+          //
+          }else{
+            $("#mesa_id option[value="+1+"]").remove();
+            mesa.removeAttr("disabled");
+          }
+    });
+    
+    $(document).on('click','#cliente', function(){
+          var id = $("#cliente_id").val();
+          console.log(id);
+          $.ajax({
+            type: "GET",
+            url: "/cliente/show",
+            dataType: "json",
+            data: {id},
+            success: function(cliente){
+              console.log(cliente.nome);
+              $("#obsevacaoPedido").val(cliente.observacao);
+            },
+            error: function(data){
+
+              var errors = $.parseJSON(data.responseText);
+
+              $.each(errors, function (key, value) {
+                output="";
+                if($.isPlainObject(value)) {
+                      $.each(value, function (key, value) {                       
+                        console.log(key+ " " +value);
+                        output+=value+"<br/>";
+                      });
+
+                      // $('#response').show().html(output);
+                }
+              });
+            }
+          });
+         
+    });
+    
    //filtro bebida
     $('.filtro').on('click', '.bebidas',function(event){
       event.preventDefault();
@@ -247,7 +286,7 @@
           success: function(cliente){
                   
                   $('#cliente_id').append('<option value="'+cliente.id+'" selected>'+cliente.nome+'</option>');
-
+                  $("#obsevacaoPedido").val(cliente.observacao);
                   $('#create').modal('hide');                   
           },
           error: function(data){              
@@ -329,6 +368,8 @@
         var cartArray = shoppingCart.listCart();
         
         var cart = JSON.stringify(cartArray);
+
+        
         
         var valorTotal = shoppingCart.totalCost();        
         if(jQuery.isEmptyObject(cartArray)){
@@ -342,7 +383,8 @@
                   valor_total : valorTotal,
                   mesa_id : $('#mesa_id ').val(),
                   tipo_pedido_id : $('#tipo_pedido_id').val(),
-                  cliente_id : $('#cliente_id').val()
+                  cliente_id : $('#cliente_id').val(),
+                  observacao: $('#obsevacaoPedido').val()
                   },
                 dataType: "json",
                 

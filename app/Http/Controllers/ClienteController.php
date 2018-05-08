@@ -95,14 +95,24 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
         if(Gate::denies('Manter Clientes')){
             abort(403,"Não autorizado!");
-        }   
-        $cliente = Cliente::find($id);
+        }  
+       
+
+        if($request->ajax()){
+            $find = $request->input('id');
+            $cliente = Cliente::find($find);
+            return response()->json($cliente);
+        }else{
+            $cliente = Cliente::find($id); 
+            return view('cliente.show', compact('cliente'));
+        }
+        
  
-        return view('cliente.show', compact('cliente'));
+        
     }
 
     /**

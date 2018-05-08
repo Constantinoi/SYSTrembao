@@ -23,36 +23,27 @@
                   </div>
                   <div class="x_content">
                     <form class="form-inline">
+
+                      @include('pedido._tipo')
+                     
                       <div class="form-group">
-                        <label class="" for="mesa_id">Mesa: 
-                        <select class="" name="mesa_id" id="mesa_id">
+                        <label class="" for="mesa_id">  Mesa: 
+                          <select class="" name="mesa_id" id="mesa_id">                                
+                                @foreach($mesas as $valor)
+                                  @if(isset($mesa) && $mesa->numero === $valor->numero )
+                                    <option value="{{$valor->id}}" selected>{{$valor->numero}}</option>
+                                  @else
+                                    <option value="{{$valor->id}}" >{{$valor->nome}}</option>
+                                  @endif    
+                                @endforeach                         
                               
-                              @foreach($mesas as $valor)
-                                @if(isset($mesa) && $mesa->numero === $valor->numero )
-                                  <option value="{{$valor->id}}" selected>{{$valor->numero}}</option>
-                                @else
-                                  <option value="{{$valor->id}}" >{{$valor->numero}}</option>
-                                @endif    
-                              @endforeach                           
-                            
-                        </select>
-                        </label>
-                      </div>
-                      <div class="form-group">
-                        <label class="" for="tipo_pedido_id">Tipo:
-                          <select id="tipo_pedido_id" name="tipo_pedido_id">
-                          @foreach($tipos as $tipo)
-                            <option value="{{$tipo->id}}">{{ $tipo->nome }}</option>                            
-                          @endforeach 
                           </select>
-                        </label>    
+                        </label>
                       </div>
                           
 
-                      <div class="form-group">
-                       
-                          <label   for="cliente_id">Cliente:
-                            
+                      <div class="form-group">     
+                          <label id="cliente"   for="cliente_id">  Cliente:
                             <select id="cliente_id" name="cliente_id" type="button">
                               @foreach($clientes as $cliente)
                                 <option value="{{$cliente->id}}">{{ $cliente->nome }}</option>                            
@@ -117,7 +108,7 @@
 
   
 
-
+  
 
 
 

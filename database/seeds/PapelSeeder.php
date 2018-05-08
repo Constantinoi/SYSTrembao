@@ -27,6 +27,10 @@ class PapelSeeder extends Seeder
             'nome' => 'Garçom',
             'descricao' => 'Mantém pedidos'
         ]);
+        $cozinha = Papel::firstOrCreate([
+            'nome' => 'Cozinheiro',
+            'descricao' => 'Vizualiza Pedidos'
+        ]);
 
         echo "1 - Papéis criados com sucesso!";
     }

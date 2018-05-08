@@ -58,7 +58,7 @@ class UserController extends Controller
                 [
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => encrypt($data['password'])                    
+                'password' => bcrypt($data['password'])                    
                 ]);
 
             return redirect()->route('user.index');
