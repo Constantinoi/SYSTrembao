@@ -17,17 +17,21 @@
                   </div>
     <div class="x_content">
                     <br>
+                     @if(count($errors) > 0)
+                      <div class="alert alert-danger">
+                        <ul>
+                          @foreach($errors->all() as $error)
+                            <li>
+                              {{$error}}
+                            </li>
+                          @endforeach
+                        </ul>
+                      </div>
+                    @endif
                     <form action="{{route('produtos.update',$produto->id)}}" method="post" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-3 col-xs-12" > 
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-8">
-                              <p> Imagem Atual</p>
-                              <img width="200px" src="{{ url($produto->imagem) }}" alt="" />
-                        </div>
-                      </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Nome<span class="required">*</span>
                         </label>

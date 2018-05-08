@@ -107,15 +107,10 @@
     <script src="{{asset('js/jquery.mask.min.js')}}"></script>
     <!-- filtros -->
     <script src="{{asset('js/filtros.js')}}"></script> 
-<<<<<<< HEAD
     <!-- preview -->
     <script src="{{asset('js/html5.image.preview.js')}}"></script> 
     <!-- cep -->
     <script src="{{asset('js/mask.js')}}"></script>
-=======
-    <!-- cep -->    
-    <script src="{{asset('js/mask.js')}}"></script> 
->>>>>>> a64f86e25e973d9c1c96fe788e8e95ad2b5fbeaf
     <!-- Bootstrap -->
     <script src="{{asset('bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Parsley JS -->

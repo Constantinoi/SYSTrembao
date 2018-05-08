@@ -19,17 +19,6 @@
                    <div class="row">
                       @foreach ($produtos as $produto)
                         <div class="col-md-55">
-<<<<<<< HEAD
-                          <div class="thumbnail">
-                            <div class="image view view-first">
-                              <img style="width: 100%; display: block;" src="{{ url($produto->imagem) }}" alt="image" />
-                              <div class="mask no-caption">
-                                <div class="tools tools-bottom">
-                                  <a href="{{route('produtos.edit', $produto->id)}}" ><i class="fa fa-edit"></i></a>
-                                  <a href="{{route('produtos.remove',$produto->id)}}"><i class="fa fa-trash-o"></i></a>
-                                  <a href="{{route('produtos.show', $produto->id)}}" ><i class="fa fa-eye"></i></a>
-                                </div>
-=======
                         <div class="thumbnail ">
                           <div class="image view view-first">
                             <img style="width: 100%; display: block;" src="{{url($produto->imagem)}}" alt="image" />
@@ -38,7 +27,6 @@
                                 <a href="{{route('produtos.edit', $produto->id)}}" ><i class="fa fa-edit"></i></a>
                                 <a href="{{route('produtos.remove',$produto->id)}}"><i class="fa fa-trash-o"></i></a>
                                 <a href="{{route('produtos.show', $produto->id)}}" ><i class="fa fa-eye"></i></a>
->>>>>>> f28d8693fe9df6e406899b7b3c0c8979eb839fdf
                               </div>
                             </div>
                             <div class="caption">
@@ -47,8 +35,6 @@
                               <p>{{$produto->descricao}}</p>
                             </div>
                           </div>
-<<<<<<< HEAD
-=======
                           <div class="caption">
                             <p class="center"><strong>{{$produto->nome}}</strong>
                             </p>
@@ -56,7 +42,6 @@
                               <p><span class="sProd label label-default">{{$produto->produtoStatus->nome}}</span></p>
                           </div>
                         </div>
->>>>>>> f28d8693fe9df6e406899b7b3c0c8979eb839fdf
                       </div>
 
                       @endforeach  
