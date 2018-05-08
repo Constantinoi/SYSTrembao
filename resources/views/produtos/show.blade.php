@@ -12,7 +12,7 @@
                         
                             <h4>Sobre o Produto</h4>
 
-                                <p><img width="200px" src="{{ url($produto->imagem)}}" alt=""></p>
+                                <p><img class="img-rounded" width="256px" src="{{ url($produto->imagem)}}" alt=""></p>
                                 <p>Nome: {{$produto->nome}}</p>
                                 <p>Descrição: {{$produto->descricao}}</p>
                                 <p>Valor: R$ {{$produto->valor}}</p>

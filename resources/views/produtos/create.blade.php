@@ -32,7 +32,8 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="imagem"> Imagem
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type='file' id="imagem" name="imagem">
+                          <input type='file' id="imagem" name="imagem" onchange="previewImage(this,[256],4);">
+                          <div class="imagePreview"></div>
                         </div>
                       </div>
                       <div class="form-group">
@@ -56,7 +57,6 @@
                           <input type="number" min="0" max="200" step="0.01" name="valor"  class="form-control col-md-7 col-xs-12" id="valor" value="{{old('valor')}}" required="required">
                         </div>
                       </div>
-
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tipo_produto_id">Selecione a tipo: </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
