@@ -51,8 +51,8 @@ class ProdutoController extends Controller
 
         if($request->hasFile('imagem')){
             $imagem = $request->file('imagem');
-            $imagem_nome = time().'.'.$imagem->getClientOriginalExtension();
-            Image::make($imagem)->save(public_path('imagem/'.$imagem_nome ) );
+            $imagem_nome = time().$imagem->getClientOriginalName();
+            $imagem->move("imagem/",$imagem_nome);
                     
             $dados['imagem']= ("imagem/".$imagem_nome);
         }else{
@@ -92,13 +92,10 @@ class ProdutoController extends Controller
                 
         $dados = $request->all();
         if($request->hasFile('imagem')){
-
-        $imagem = $request->file('imagem');
-        $imagem_nome = time().'.'.$imagem->getClientOriginalExtension();
-        Image::make($imagem)->save(public_path('imagem/'.$imagem_nome ) );
-                
-        $dados['imagem']= ("imagem/".$imagem_nome);
-        
+            $imagem = $request->file('imagem');
+            $imagem_nome = time().$imagem->getClientOriginalName();
+            $imagem->move("imagem/",$imagem_nome);           
+            $dados['imagem']= ("imagem/".$imagem_nome);
         }
         $produto->update($dados);           
         

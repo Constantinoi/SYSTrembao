@@ -30,11 +30,7 @@
                                 <a href="{{route('produtos.show', $produto->id)}}" ><i class="fa fa-eye"></i></a>
                               </div>
                             </div>
-                            <div class="caption">
-                              <p class="center"><strong>{{$produto->nome}}</strong>
-                              </p>
-                              <p>{{$produto->descricao}}</p>
-                            </div>
+                            
                           </div>
                           <div class="caption">
                             <p class="center"><strong>{{$produto->nome}}</strong>
@@ -52,7 +48,7 @@
                 </div>
               </div>
           </div>
-    
+    </div>
 @endsection
 @section('scripts')
 <script>
