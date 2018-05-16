@@ -20,6 +20,8 @@ class CreateEnderecosTable extends Migration
             $table->string('logradouro');
             $table->integer('num');
             $table->string('complemento')->nullable();
+            $table->integer('cliente_id')->unsigned();
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Endereco extends Model{
     protected $fillable = ['cep','bairro','logradouro','num','complemento'];
 
-    public function cliente(){
-        return $this->hasOne('App\Cliente');
+
+
+        public function cliente(){
+            return $this->belongsTo('App\Cliente','cliente_id');
         
     }
 }

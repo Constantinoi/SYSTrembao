@@ -20,11 +20,7 @@ class CreateClientesTable extends Migration
             $table->string('telefone_1')->nullable();
             $table->string('telefone_2');
             $table->string('observacao')->nullable();
-
-            $table->integer('endereco_id')->unsigned();
-
-            $table->foreign('endereco_id')->references('id')->on('enderecos')->onDelete('cascade');
-            
+                        
             $table->timestamps();
         });
     }

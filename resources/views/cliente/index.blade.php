@@ -40,10 +40,10 @@
                             <td>{{$cliente->nome}}</td>                                                               
                             <td>{{$cliente->telefone_2}}</td>
                             <td>{{$cliente->observacao}}</td>                        
-                            <td>{{$cliente->endereco->logradouro}}</td>
-                            <td>{{$cliente->endereco->num}}</td>
-                            <td>{{$cliente->endereco->bairro}}</td>
-                            <td>{{$cliente->endereco->complemento}}</td>
+                            <td>{{$endereco->logradouro}}</td>
+                            <td>{{$endereco->num}}</td>
+                            <td>{{$endereco->bairro}}</td>
+                            <td>{{$endereco->complemento}}</td>
                            
                             <td>
                               <a href="{{route('cliente.edit', $cliente->id)}}"></a>

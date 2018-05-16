@@ -67,21 +67,27 @@ class ClienteController extends Controller
             // $num    num,
             // $bairro    bairro
             
-            $endereco = Endereco::create($dados);
-            $dados['endereco_id'] = $endereco->id;
     
-            $cliente = Cliente::create($dados,'endereco_id');
-            return response()->json($cliente);
-
-         }
-         else{
-
             $dados = $request->all();
 
             $endereco = Endereco::create($dados);
             $dados['endereco_id'] = $endereco->id;
     
             Cliente::create($dados,'endereco_id');
+            
+                
+            Cliente::create($dados);
+            return redirect()->route('cliente.index');
+
+         }
+         else{
+
+            $dados = $request->all();
+
+            $cliente = Cliente::create($dados);
+            $dados['cliente_id'] = $cliente->id;
+    
+            Endereco::create($dados,'cliente_id');
             
             return redirect()->route('cliente.index');
 

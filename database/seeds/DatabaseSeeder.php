@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
          $this->call(PapelPermissaoSeeder::class);
          $this->call(PapelUserSeeder::class);
 
-         $this->call(EnderecoSeeder::class);
-         $this->call(ClienteSeeder::class);
+        //  $this->call(EnderecoSeeder::class);
+        //  $this->call(ClienteSeeder::class);
 
          $this->call(MesaStatusSeeder::class);
          $this->call(MesaSeeder::class);
