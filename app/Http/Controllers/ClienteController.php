@@ -68,28 +68,16 @@ class ClienteController extends Controller
             // $bairro    bairro
             
     
-            $dados = $request->all();
-
-            $endereco = Endereco::create($dados);
-            $dados['endereco_id'] = $endereco->id;
-    
-            Cliente::create($dados,'endereco_id');
-            
-                
+            $dados = $request->all();           
             Cliente::create($dados);
             return redirect()->route('cliente.index');
 
          }
          else{
 
-            $dados = $request->all();
-
-            $cliente = Cliente::create($dados);
-            $dados['cliente_id'] = $cliente->id;
-    
-            Endereco::create($dados,'cliente_id');
-            
-            return redirect()->route('cliente.index');
+        $dados = $request->all();           
+        Cliente::create($dados);
+        return redirect()->route('cliente.index');
 
         }
        
@@ -134,9 +122,9 @@ class ClienteController extends Controller
         }   
        
        $cliente = Cliente::find($id);
-       $endereco = Endereco::find($cliente->id);
+       
  
-        return view('cliente.edit', compact('cliente','endereco'));
+        return view('cliente.edit', compact('cliente'));
     }
 
     /**
@@ -153,11 +141,11 @@ class ClienteController extends Controller
         }   
  
         $cliente = Cliente::find($id);
-        $endereco=Endereco::find($cliente->endereco_id);
+        
 
         $dados = $request->all();
         $cliente->update($dados);
-        $endereco->update($dados);       
+      
          
         return redirect()->route('cliente.index');
     
@@ -188,6 +176,4 @@ class ClienteController extends Controller
  
         return view('cliente.remove', compact('cliente'));
     }
-    
-    
 }

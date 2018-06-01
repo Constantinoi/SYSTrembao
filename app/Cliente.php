@@ -9,7 +9,7 @@ class Cliente extends Model{
     protected $fillable = ['nome','data_nascimento','telefone_1','telefone_2','observacao'];
     
     public function endereco(){
-        return $this->hasOne('App\Endereco');
+        return $this->hasMany('App\Endereco');
         
     }
 }

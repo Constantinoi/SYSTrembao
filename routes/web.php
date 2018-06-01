@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('cliente', 'ClienteController');
     Route::resource('pedido', 'PedidoController');
     
-    Route::get('pedido', 'PedidoController@index')->name('pedido.index');;
+    Route::get('pedido', 'PedidoController@index')->name('pedido.index');
     Route::get('pedido/create/mesa/{mesa}' , 'PedidoController@createMesa');    
     Route::get('pedido/edit/{pedido}', 'PedidoController@edit')->name('pedido.edit');
     Route::put('pedido/update', 'PedidoController@update');
@@ -58,7 +58,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/tipos/remove/{id}','TipoController@remover')->name('tipos.remove');
     Route::resource('tipos','TipoController');
-});
+
+    Route::resource('enderecos','EnderecoController');
+    Route::get('cliente/{cliente}/enderecos/create' , 'EnderecoController@create')->name('enderecos.create');
+    Route::get('cliente/{cliente}/enderecos/', 'EnderecoController@index')->name('enderecos.index');
+    Route::get('/enderecos/remove/{id}','EnderecoController@remover')->name('enderecos.remove');   
+    });
 
 // END----------------------------- ADMIN --------------------------------END //
 

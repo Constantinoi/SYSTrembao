@@ -23,28 +23,24 @@
                       <thead>
                         <tr>
                           <th>Nome</th>
+                          <th>Telefone</th>
                           <th>Celular</th>
                           <th>Observação</th>
-                          <th>Logradouro</th>
-                          <th>Número</th>
-                          <th>Bairro</th>
-                          <th>Complemento</th>
+                          <th>Endereços</th>
                           <th>Ações</th>
-                          
+
                         </tr>
                       </thead>
 
                       <tbody>
                           @foreach ($clientes as $cliente)
                         <tr>
-                            <td>{{$cliente->nome}}</td>                                                               
+                            <td style="text-transform:uppercase">{{$cliente->nome}}</td>    
+                            <td>{{$cliente->telefone_1}}</td>                                                           
                             <td>{{$cliente->telefone_2}}</td>
-                            <td>{{$cliente->observacao}}</td>                        
-                            <td>{{$endereco->logradouro}}</td>
-                            <td>{{$endereco->num}}</td>
-                            <td>{{$endereco->bairro}}</td>
-                            <td>{{$endereco->complemento}}</td>
-                           
+                            <td style="text-transform:uppercase">{{$cliente->observacao}}</td>                        
+                            <td>
+                              <a class="btn btn-success btn-xs" href="{{route('enderecos.index',$cliente->id)}}">Enderecos</a></td>
                             <td>
                               <a href="{{route('cliente.edit', $cliente->id)}}"></a>
                               <a class="btn btn-info btn-xs" href="{{route('cliente.edit', $cliente->id)}}">Editar</a>
